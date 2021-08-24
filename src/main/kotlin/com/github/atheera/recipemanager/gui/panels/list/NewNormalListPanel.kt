@@ -30,7 +30,7 @@ class NewNormalListPanel : JPanel(MigLayout()) {
     var jpList = JPanel(MigLayout())
     private var jpListOut = JPanel(MigLayout())
     private var jspList = JScrollPane(jpList)
-    var itemList = mutableListOf<String>()
+    private var itemList = mutableListOf<String>()
     private var itemCounter: Int = 0
     private val fontA = Font("Tahoma", Font.BOLD, 16)
     private val dim = Dimension(450, 600)
@@ -101,15 +101,9 @@ class NewNormalListPanel : JPanel(MigLayout()) {
     }
 
     fun createCard(item: String, removePane: JPanel, saved: Boolean) : JPanel {
-        val finalItem: String
-        val jlItem: JLabel
-        if(!saved) {
-            finalItem = upperCaseFirstWords(item)
-            jlItem = JLabel(finalItem)
-        } else {
-            finalItem = item
-            jlItem = JLabel(item)
-        }
+        val finalItem = if(saved) upperCaseFirstWords(item) else item
+        val jlItem = JLabel(finalItem)
+
         val jp = JPanel(MigLayout())
         val jbDelete = DeleteButton()
 

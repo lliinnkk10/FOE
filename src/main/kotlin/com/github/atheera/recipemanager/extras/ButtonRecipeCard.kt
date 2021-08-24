@@ -1,7 +1,6 @@
 package com.github.atheera.recipemanager.extras
 
 import com.github.atheera.recipemanager.buttonCard
-import com.github.atheera.recipemanager.dw
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.Graphics
@@ -20,9 +19,6 @@ class ButtonRecipeCard(title: String, cat: String, subCat: String, desc: String)
         icon = ImageIcon(buttonCard)
         minimumSize = Dimension(icon.iconWidth, icon.iconHeight)
         maximumSize = Dimension(icon.iconWidth, icon.iconHeight)
-
-        //println("$title $cat $subCat $desc")
-        //dw.add("$title $cat $subCat $desc")
     }
 
     override fun paintComponent(g: Graphics) {

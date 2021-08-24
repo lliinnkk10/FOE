@@ -5,7 +5,6 @@ import java.awt.Font
 import java.awt.event.FocusAdapter
 import java.awt.event.FocusEvent
 import javax.swing.JTextArea
-import javax.swing.JTextField
 
 class HintTextArea(hint: String) : JTextArea() {
     var gainFont = Font("Tahoma", Font.PLAIN, 20)

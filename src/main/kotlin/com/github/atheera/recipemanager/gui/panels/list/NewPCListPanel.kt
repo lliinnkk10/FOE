@@ -27,8 +27,10 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
     private var negButton = JButton("Add to cons side")
 
     private var htaPane = JPanel(MigLayout("align center", "[]10[]10[]", ""))
-    var htfTitle = HintTextField("Enter the list title here")
-    private var htfArg = HintTextField("Enter the argument here")
+    private val titleText = "Enter the list title here"
+    var htfTitle = HintTextField(titleText)
+    private val argText = "Enter the argument here"
+    private var htfArg = HintTextField(argText)
     var saveBtn = JButton("Press me to save the list to: $listPath/${listCategories[0]}")
     private var jlDesc = ToolTipLabel("NOTE: pressing enter or shift+enter adds to pros or cons respectively")
     private var jlPos = JLabel("Pros:")
@@ -75,7 +77,7 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
             addToList(false)
         }
         saveBtn.addActionListener {
-            if((htfTitle.text.isEmpty() || htfTitle.text == "Enter the list title here") || posList.isEmpty() || negList.isEmpty())
+            if((htfTitle.text.isEmpty() || htfTitle.text == titleText) || posList.isEmpty() || negList.isEmpty())
                 JOptionPane.showMessageDialog(this, "You need to enter information to save first!")
             else {
                 WriteListPC(listCategories[0], htfTitle.text, posList, negList)
@@ -122,8 +124,8 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
     }
 
     private fun clearInfo() {
-        htfArg.text = ""
-        htfTitle.text = ""
+        htfArg.text = argText
+        htfTitle.text = titleText
 
         posPane.removeAll()
         negPane.removeAll()
@@ -140,12 +142,13 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
 
         if(htfArg.text.isEmpty()) {
             JOptionPane.showMessageDialog(this, "You need to enter an argument!")
+            return
         }
         if(isPos) {
-            val argCard = createCard(htfArg.text, posPane)
+            val argCard = createCard(htfArg.text, posPane, false)
             posPane.add(argCard, "wrap")
         } else {
-            val argCard = createCard(htfArg.text, negPane)
+            val argCard = createCard(htfArg.text, negPane, false)
             negPane.add(argCard, "wrap")
         }
         htfArg.text = ""
@@ -154,19 +157,19 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
 
 
 
-    fun createCard(argument: String, removePane: JPanel) : JPanel {
-
+    fun createCard(argument: String, removePane: JPanel, saved: Boolean) : JPanel {
+        val arg = if(saved) upperCaseFirstWords(argument) else argument
         val jp = JPanel(MigLayout("", "[]10[]", ""))
-        val jlArg = JLabel(argument)
+        val jlArg = JLabel(arg)
         val jbDelete = DeleteButton()
 
         when (removePane) {
             posPane -> {
-                posList.add(posCounter, argument)
+                posList.add(posCounter, arg)
                 posCounter++
             }
             negPane -> {
-                negList.add(negCounter, argument)
+                negList.add(negCounter, arg)
                 negCounter++
             }
         }
@@ -181,11 +184,11 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
             updateUI()
             when (removePane) {
                 posPane -> {
-                    posList.remove(argument)
+                    posList.remove(arg)
                     posCounter--
                 }
                 negPane -> {
-                    negList.remove(argument)
+                    negList.remove(arg)
                     negCounter--
                 }
             }

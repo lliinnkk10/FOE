@@ -22,7 +22,6 @@ import javax.swing.*
 class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionListener {
 
     // Local
-    private val ml = MigLayout()
     private val fontA = Font("Tahoma", Font.BOLD, 20)
     private val fontB = Font("Tahoma", Font.PLAIN, 16)
     private val fontC = Font("Tahoma", Font.BOLD, 16)
@@ -84,7 +83,6 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
     lateinit var selectedMeasure: String
     private val ttlIng = ToolTipLabel("You can also press enter when typing the item to add!")
 
-
     // Instructions list
     private val jpIns = JPanel(MigLayout())
     private val jpInsOut = JPanel(MigLayout())
@@ -117,10 +115,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         //jspRecipe.minimumSize = Dimension(1025, 975)
         //jpRecipe.minimumSize = Dimension(1025, 975)
 
-
-
         // Add
-
         jpRecipe.add(htfTitle, "align center, wrap")
         jpRecipe.add(jpCats, "align center, wrap")
         jpRecipe.add(jpIntol, "align center, wrap")
@@ -160,10 +155,9 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         jlCat.foreground = if(isDark) Color.WHITE else Color.BLACK
         jlSubCat.foreground = if(isDark) Color.WHITE else Color.BLACK
         jlCF.foreground = if(isDark) Color.WHITE else Color.BLACK
-        //jpConv.background = if(isDark) Color.DARK_GRAY else WHITE
     }
 
-    fun addDescriptionList() {
+    private fun addDescriptionList() {
 
         jtaDesc.minimumSize = Dimension(300, 25)
         jtaDesc.maximumSize = Dimension(300, 25)
@@ -172,7 +166,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         jpDesc.add(jtaDesc)
     }
 
-    fun addSaveButtons() {
+    private fun addSaveButtons() {
         updateButtons(true)
 
         jbSave.addActionListener {
@@ -224,7 +218,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         jpButtons.add(jbFavorite, "align center")
     }
 
-    fun addInstructionList() {
+    private fun addInstructionList() {
 
         jtaIns.wrapStyleWord = true
         jtaIns.lineWrap = true
@@ -242,7 +236,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         jpInsIng.add(jpInsOut, "wrap")
     }
 
-    fun addIngredientList() {
+    private fun addIngredientList() {
         selectedMeasure = measures[0]
         jspIng.minimumSize = Dimension(440, 458)
         jspIng.maximumSize = Dimension(440, 458)
@@ -291,7 +285,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         jpInsIng.add(jpIngOut, "split 2")
     }
 
-    fun addDegreeConverter() {
+    private fun addDegreeConverter() {
 
         bgCF.add(jrbCCEls)
         bgCF.add(jrbCFahr)
@@ -325,19 +319,15 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
             }
 
         }
-        //jpDegrees.maximumSize = Dimension(700, 90)
-
-        //jpDegrees.add(jlDesc)
         jpDegrees.add(htfDegrees)
         jpDegrees.add(jlCF)
         jpConv.add(jrbCCEls, "wrap")
         jpConv.add(jrbCFahr)
         jpDegrees.add(jpConv)
         jpDegrees.add(jlConverted)
-
     }
 
-    fun addCheckBoxes() {
+    private fun addCheckBoxes() {
         jpIntol.add(jcbEgg)
         jpIntol.add(jcbGluten)
         jpIntol.add(jcbLactose)
@@ -480,7 +470,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         return c5
     }
 
-    fun clearInformation() {
+    private fun clearInformation() {
         htfTitle.text = ""
         selCategory = categories[0]
         jcbCategories.selectedIndex = 0
@@ -503,17 +493,12 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
     }
 
     private fun check() : Boolean {
-        val check = (htfIngAmount.text.isEmpty() || htfIngAmount.text == "Amount")
-        val check2 = (htfIngItem.text.isEmpty() || htfIngItem.text == "Item")
-        val info = "You need to enter some valid information first, numbers only!"
-        val info2 = "You need to enter an item to add first!"
-
-        if(check) {
-            JOptionPane.showMessageDialog(this, info)
+        if(htfIngAmount.text.isEmpty() || htfIngAmount.text == "Amount") {
+            JOptionPane.showMessageDialog(this, "You need to enter some valid information first, numbers only!")
             return false
         }
-        if(check2) {
-            JOptionPane.showMessageDialog(this, info2)
+        if(htfIngItem.text.isEmpty() || htfIngItem.text == "Item") {
+            JOptionPane.showMessageDialog(this, "You need to enter an item to add first!")
             return false
         }
 
@@ -521,17 +506,12 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
     }
 
     fun updateButtons(new: Boolean) {
-        if (new) {
-            updateUI()
-            jbSave.text = "Click me to save the recipe to: $recipePath$selCategory/$selSubCat"
-            jbFavorite.text = recipePath + "Favorites"
-            updateUI()
-        } else {
-            updateUI()
-            jbSave.text = "Click me to save the recipe to: $recipePath${jlCat.text}/${jlSubCat.text}"
-            jbFavorite.text = recipePath + "Favorites"
-            updateUI()
-        }
+        updateUI()
+        val txt = "Click me to save the recipe to: "
+        jbSave.text = if (new) "$txt$recipePath$selCategory/$selSubCat" else "$txt$recipePath${jlCat.text}/${jlSubCat.text}"
+
+        jbFavorite.text = recipePath + "Favorites"
+        updateUI()
     }
 
     override fun itemStateChanged(e: ItemEvent) {

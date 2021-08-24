@@ -32,11 +32,8 @@ class SavedRecipePanel : JPanel(MigLayout()), ItemListener, ActionListener {
         add(jpCat, "align center, wrap")
     }
 
-    fun loadRecipes() {
 
-    }
-
-    fun addJCBList() {
+    private fun addJCBList() {
 
         jcbCategories = JComboBox(categories.toTypedArray())
         jcbCategories.isEditable = false

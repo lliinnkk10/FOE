@@ -51,7 +51,7 @@ class DebugWindow : JFrame() {
     }
 
     init {
-        title = "Debug Window"
+        title = "Debug Window - (If empty, re-open from 'Settings')"
         minimumSize = Dimension(500, 500)
         maximumSize = Dimension(500, 500)
         defaultCloseOperation = DISPOSE_AND_FALSE

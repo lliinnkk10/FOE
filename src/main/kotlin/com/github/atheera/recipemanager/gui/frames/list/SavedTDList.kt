@@ -15,15 +15,16 @@ class SavedTDList(title: String, list: MutableList<String>, checkList: MutableLi
         defaultCloseOperation = DISPOSE_ON_CLOSE
 
         for(l in list.indices) {
-            val listItem = cp.createCard(list[l])
+            val listItem = cp.createCard(list[l], true)
             cp.jpList.add(listItem, "wrap")
         }
 
         for(l in checkList.indices) {
-            val cList = cp.createCard(checkList[l])
+            val cList = cp.createCard(checkList[l], true)
             cList.font = cp.fontS
-            cp.jpList.add(cList, "wrap")
             cList.doClick()
+            cList.isSelected = true
+            cp.jpList.add(cList, "wrap")
         }
 
         cp.jbSave.addActionListener {

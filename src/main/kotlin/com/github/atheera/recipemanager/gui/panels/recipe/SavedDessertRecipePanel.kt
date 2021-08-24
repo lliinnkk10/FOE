@@ -15,11 +15,11 @@ import javax.swing.*
 
 class SavedDessertRecipePanel : JPanel() {
 
-    private var jcbCat: JComboBox<String>
-    private var clCat: CardLayout
-    private var jpCat: JPanel
-    private var jpContent: JPanel
-    private var jspContent: JScrollPane
+    private var jcbCat = JComboBox(subCatDesserts.toTypedArray())
+    private var clCat = CardLayout()
+    private var jpCat = JPanel(clCat)
+    private var jpContent = JPanel(MigLayout())
+    private var jspContent = JScrollPane(jpCat)
 
     private var jpCakeCard = JPanel(MigLayout("wrap 1"))
     private var jpChocolateCard = JPanel(MigLayout("wrap 1"))
@@ -41,11 +41,6 @@ class SavedDessertRecipePanel : JPanel() {
     init {
 
         // Initialize
-        jcbCat = JComboBox(subCatDesserts.toTypedArray())
-        clCat = CardLayout()
-        jpCat = JPanel(clCat)
-        jpContent = JPanel(MigLayout())
-        jspContent = JScrollPane(jpCat)
         jspContent.verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
         jspContent.verticalScrollBar.unitIncrement = 16
         jspContent.minimumSize = Dimension(535, 550)
@@ -155,8 +150,6 @@ class SavedDessertRecipePanel : JPanel() {
             for(allFiles in files!!) {
                 val names = allFiles.name
                 val name = removeLast(names, 5)
-                println(allFiles)
-                dw.add(names)
 
                 when (type) {
                     subCatDesserts[0] -> {

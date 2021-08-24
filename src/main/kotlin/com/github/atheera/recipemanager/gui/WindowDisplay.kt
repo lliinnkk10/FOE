@@ -258,7 +258,7 @@ class WindowDisplay : JFrame() {
             States.FAVORITERECIPESTATE -> Dimension(600, 700)
             States.NEWPCLISTSTATE -> Dimension(800, 790)
             States.SAVEDLISTSTATE -> Dimension(600, 700)
-            States.NEWTODOLISTSTATE -> Dimension(420, 750)
+            States.NEWTODOLISTSTATE -> Dimension(590, 750)
             States.SAVEDDESSERTRECIPESTATE -> Dimension(600, 700)
             States.SAVEDEXTRARECIPESTATE -> Dimension(600, 700)
             States.SAVEDMEATRECIPESTATE -> Dimension(600, 700)

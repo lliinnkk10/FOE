@@ -16,11 +16,11 @@ import javax.swing.*
 
 class SavedExtraRecipePanel: JPanel() {
 
-    private var jcbCat: JComboBox<String> = JComboBox(subCatExtras.toTypedArray())
-    private var clCat: CardLayout = CardLayout()
-    private var jpCat: JPanel = JPanel(clCat)
-    private var jpContent: JPanel = JPanel(MigLayout())
-    private var jspContent: JScrollPane = JScrollPane(jpCat)
+    private var jcbCat = JComboBox(subCatExtras.toTypedArray())
+    private var clCat = CardLayout()
+    private var jpCat = JPanel(clCat)
+    private var jpContent = JPanel(MigLayout())
+    private var jspContent = JScrollPane(jpCat)
 
     private var jpBreadCard = JPanel(MigLayout("wrap 1"))
     private var jpGreenCard = JPanel(MigLayout("wrap 1"))
@@ -119,8 +119,6 @@ class SavedExtraRecipePanel: JPanel() {
             for(allFiles in files!!) {
                 val names = allFiles.name
                 val name = removeLast(names, 5)
-                println(allFiles)
-                dw.add(names)
 
                 when (type) {
                     subCatExtras[0] -> {

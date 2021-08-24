@@ -80,6 +80,7 @@ class CalculatorPanel : JPanel() {
     private fun addMemory(operator: Char) {
         if(jlNumbers.text == "0" && jlMemory.text == "0") {
             JOptionPane.showMessageDialog(this, "A number is needed first!")
+            return
         }
         if (jlNumbers.text.last() == '.') {
             return
@@ -102,8 +103,7 @@ class CalculatorPanel : JPanel() {
             jlNumbers.text = "0"
             updateUI()
         } else if (jlNumbers.text == "0") {
-            if (jlMemory.text.last() != operator) jlMemory.text = "${removeLast(jlMemory.text, 2)} $operator"
-            else jlMemory.text = jlMemory.text
+            jlMemory.text = if (jlMemory.text.last() != operator) "${removeLast(jlMemory.text, 2)} $operator" else jlMemory.text
             this.operator = operator
             updateUI()
         } else if (jlNumbers.text != "0" && jlMemory.text != "0" && jlNumbers.text.last() != '.' && jlMemory.text.isNotEmpty()) {
@@ -199,7 +199,7 @@ class CalculatorPanel : JPanel() {
         }
         jbMinusPlus.addActionListener {
             if(jlNumbers.text.contains('-')) {
-                jlNumbers.text = java.lang.StringBuilder(jlNumbers.text).deleteCharAt(0).toString()
+                jlNumbers.text = StringBuilder(jlNumbers.text).deleteCharAt(0).toString()
             } else {
                 jlNumbers.text = "-${jlNumbers.text}"
             }

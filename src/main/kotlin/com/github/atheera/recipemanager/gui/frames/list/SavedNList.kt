@@ -18,7 +18,6 @@ class SavedNList(title: String, list: MutableList<String>) : JFrame() {
         isVisible = true
 
         for(pos in list.indices) {
-            println(list[pos])
             val item = cp.createCard(list[pos], cp.jpList, true)
             cp.jpList.add(item, "wrap")
         }

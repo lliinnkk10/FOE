@@ -18,11 +18,8 @@ class ReadRecipeFavorite(fileName: String) {
     init {
         try {
             val reader = FileReader(file)
-            //println("File loaded at: $file")
-            //dw.add("File loaded at: $file")
             val obj: JsonObject = parser.parse(reader) as JsonObject
             parseRecipeObject(obj)
-            //recipe.toFormat()
         } catch(e: ParseException) {
             dw.exc(e)
             e.printStackTrace()

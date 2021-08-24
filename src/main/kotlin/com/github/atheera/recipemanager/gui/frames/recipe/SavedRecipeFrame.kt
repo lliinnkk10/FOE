@@ -6,7 +6,6 @@ import com.github.atheera.recipemanager.save.write.WriteRecipeFavorite
 import com.github.atheera.recipemanager.save.write.WriteRecipeSaves
 import java.awt.Dimension
 import javax.swing.JFrame
-import javax.swing.JOptionPane
 
 class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: String, ingr: MutableList<String>, desc: String, temp: Int, cTemp: Int, egg: Boolean, gluten: Boolean, lactose: Boolean, vegan: Boolean, veget: Boolean) : JFrame(){
 

@@ -21,8 +21,6 @@ class ReadSettings(saveLocation: String = settingsPath) {
 
         try {
             val reader = FileReader(saveLocation)
-            //println("File loaded at: $saveLocation")
-            //dw.add("File loaded at: $saveLocation")
             val obj: JsonObject = parser.parse(reader) as JsonObject
             parseSettingsObjects(obj)
         } catch (e: ParseException) {

@@ -31,9 +31,7 @@ class ChangeSaveDirectory : JFrame() {
             WriteSettingsFile(defaultPath, isDark)
             JOptionPane.showMessageDialog(this, "Successfully set save location to: c://FOE/")
             onStartUp()
-            Timer("SettingUp", false).schedule(300) {
-                dispose()
-            }
+            dispose()
         }
 
         jbSetNew.addActionListener {
@@ -43,10 +41,8 @@ class ChangeSaveDirectory : JFrame() {
                 Files().setPath(jtaCD.text + "/FOE/")
                 WriteSettingsFile(jtaCD.text + "/FOE/", isDark)
                 JOptionPane.showMessageDialog(this, "Successfully set save location to: ${jtaCD.text+"/FOE/"}")
-                Timer("SettingUp", false).schedule(300) {
-                    dispose()
-                }
                 onStartUp()
+                dispose()
             }
         }
 

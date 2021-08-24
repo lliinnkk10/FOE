@@ -42,8 +42,6 @@ class FavoriteRecipePanel : JPanel() {
             updateUI()
         }
 
-        dw.add("")
-
         jspContent.verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
         jspContent.verticalScrollBar.unitIncrement = 16
         jspContent.minimumSize = Dimension(535, 550)

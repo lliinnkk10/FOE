@@ -78,7 +78,7 @@ lateinit var dw: DebugWindow
 val GRAY = Color(43, 43, 43)
 val WHITE = Color(238, 238, 238)
 
-fun main() {
+fun main(args: Array<String>) {
     // This should only run first if debug edition!
     openDebug()
     // This should always run first, exc ^!
@@ -174,7 +174,7 @@ fun upperCaseFirstWords(inString: String) : String {
     for(i in splitItem.indices) {
         var uppercaseFirst = splitItem[i].substring(0, 1)
         val remRest = splitItem[i].substring(1)
-        uppercaseFirst = uppercaseFirst.toUpperCase()
+        uppercaseFirst = uppercaseFirst.uppercase()
         val combinedString = "$uppercaseFirst$remRest"
         combinedItem = combinedItem.plus("$combinedString ")
         if (i == splitItem.lastIndex) {
