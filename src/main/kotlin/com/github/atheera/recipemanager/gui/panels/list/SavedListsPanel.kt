@@ -2,6 +2,7 @@ package com.github.atheera.recipemanager.gui.panels.list
 
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.ButtonListCard
+import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.gui.frames.list.SavedNList
 import com.github.atheera.recipemanager.gui.frames.list.SavedPCList
 import com.github.atheera.recipemanager.gui.frames.list.SavedTDList
@@ -118,7 +119,7 @@ class SavedListsPanel : JPanel() {
             jpTdCard.removeAll()
             jpNCard.removeAll()
         } catch (e: Exception) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
         for(type in listCategories) { // Loop through all list types

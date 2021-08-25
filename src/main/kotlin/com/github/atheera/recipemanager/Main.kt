@@ -3,6 +3,7 @@ package com.github.atheera.recipemanager
 import com.github.atheera.recipemanager.extras.LoadImage
 import com.github.atheera.recipemanager.gui.DebugWindow
 import com.github.atheera.recipemanager.gui.WindowDisplay
+import com.github.atheera.recipemanager.gui.*
 import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteSettingsFile
@@ -64,11 +65,8 @@ var isDark: Boolean = false
 // Loading all images for use across the code
 val backgroundImage = LoadImage().loadImage("notepadBG.png")!!
 val imageIcon = LoadImage().loadImage(("icon.png"))!!
-val logo = LoadImage().loadImage("logo.png")!!
 val toolTip = LoadImage().loadImage("hoverTooltip.png")!!
 val buttonCard = LoadImage().loadImage("ButtonCard.png")!!
-val arrowUp = LoadImage().loadIcon("arrowUp.png")!!
-val arrowDown = LoadImage().loadIcon("arrowDown.png")!!
 val deleteButton = LoadImage().loadIcon("deleteButton.png")!!
 val searchButton = LoadImage().loadIcon("searchButton.png")!!
 
@@ -157,14 +155,14 @@ fun getCurrentTime() : String {
 fun openDebug() {
     var text = ""
     try {
-        text = dw.jtaInfo.text
+        text = jtaInfo.text
         dw.dispose()
     } catch (e: Exception) { }
 
     dw = DebugWindow()
-    dw.jtaInfo.text = text
+    jtaInfo.text = text
     dw.setLocationRelativeTo(null)
-    dw.isOpened = true
+    isOpened = true
 }
 
 fun upperCaseFirstWords(inString: String) : String {

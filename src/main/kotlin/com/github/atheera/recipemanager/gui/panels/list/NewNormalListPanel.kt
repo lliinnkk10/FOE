@@ -4,6 +4,7 @@ import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.DeleteButton
 import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.extras.ToolTipLabel
+import com.github.atheera.recipemanager.gui.info
 import com.github.atheera.recipemanager.listCategories
 import com.github.atheera.recipemanager.listPath
 import com.github.atheera.recipemanager.save.write.WriteNormalList
@@ -55,7 +56,7 @@ class NewNormalListPanel : JPanel(MigLayout()) {
                 JOptionPane.showMessageDialog(this, "You need to enter some information to save first!")
             else {
                 WriteNormalList(listCategories[2], htfTitle.text, itemList)
-                dw.add(listPath)
+                info(listPath)
                 JOptionPane.showMessageDialog(this, "Successfully saved list to: $listPath/${listCategories[2]}")
                 clearInfo()
             }

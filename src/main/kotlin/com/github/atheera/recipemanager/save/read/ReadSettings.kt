@@ -1,6 +1,6 @@
 package com.github.atheera.recipemanager.save.read
 
-import com.github.atheera.recipemanager.dw
+import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.isDark
 import com.github.atheera.recipemanager.path
 import com.github.atheera.recipemanager.save.objects.Settings
@@ -24,13 +24,13 @@ class ReadSettings(saveLocation: String = settingsPath) {
             val obj: JsonObject = parser.parse(reader) as JsonObject
             parseSettingsObjects(obj)
         } catch (e: ParseException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         } catch(e: FileNotFoundException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         } catch(e: IOException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
 

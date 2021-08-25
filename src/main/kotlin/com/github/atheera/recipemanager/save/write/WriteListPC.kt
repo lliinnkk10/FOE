@@ -1,6 +1,6 @@
 package com.github.atheera.recipemanager.save.write
 
-import com.github.atheera.recipemanager.dw
+import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.objects.ListPC
 import com.google.gson.GsonBuilder
@@ -26,7 +26,7 @@ class WriteListPC(type: String, title: String, posList: MutableList<String>, neg
         try {
             FileWriter(file.absoluteFile).use { writer -> gson.toJson(list, writer) }
         } catch (e: IOException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
     }

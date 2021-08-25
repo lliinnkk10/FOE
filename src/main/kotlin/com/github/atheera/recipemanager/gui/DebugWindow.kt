@@ -11,19 +11,19 @@ import java.awt.event.WindowEvent
 import java.io.*
 import javax.swing.*
 
+private val jpInfo = JPanel(MigLayout())
+val jtaInfo = JTextArea()
+private val jspInfo = JScrollPane(jtaInfo)
+private val tlnInfo = TextLineNumber(jtaInfo)
+private val fontB = Font("Tahoma", Font.PLAIN, 14)
+
+private val jmb = JMenuBar()
+private val jm = JMenu("Save")
+private val jmi = JMenuItem("Save error log")
+
+var isOpened = false;
+
 class DebugWindow : JFrame() {
-
-    private val jpInfo = JPanel(MigLayout())
-    val jtaInfo = JTextArea()
-    private val jspInfo = JScrollPane(jtaInfo)
-    private val tlnInfo = TextLineNumber(jtaInfo)
-    private val fontB = Font("Tahoma", Font.PLAIN, 14)
-
-    private val jmb = JMenuBar()
-    private val jm = JMenu("Save")
-    private val jmi = JMenuItem("Save error log")
-
-    var isOpened = false;
 
     object Constants {
         const val DISPOSE_AND_FALSE = 4
@@ -36,7 +36,7 @@ class DebugWindow : JFrame() {
             if (defaultCloseOperation == DISPOSE_AND_FALSE) {
                 isOpened = false
                 dispose()
-                add("$isOpened")
+                info("$isOpened")
                 println("$isOpened")
             }
         }
@@ -83,22 +83,6 @@ class DebugWindow : JFrame() {
         add(jspInfo)
     }
 
-    fun add(info: String) {
-        jtaInfo.foreground = Color.BLACK
-        jtaInfo.append("$info\n")
-        jtaInfo.updateUI()
-    }
-
-    fun exc(e: Exception) {
-        val sw = StringWriter()
-        val pw = PrintWriter(sw)
-        e.printStackTrace(pw)
-        val str = sw.toString()
-        jtaInfo.foreground = Color.RED
-        jtaInfo.append("$str\n")
-        jtaInfo.updateUI()
-    }
-
     private fun saveLog() {
         try {
             val file = File("${errorPath}error_log-${getCurrentTime()}.txt")
@@ -113,4 +97,20 @@ class DebugWindow : JFrame() {
         }
     }
 
+}
+
+fun info(info: String) {
+    jtaInfo.foreground = Color.BLACK
+    jtaInfo.append("$info\n")
+    jtaInfo.updateUI()
+}
+
+fun exc(e: Exception) {
+    val sw = StringWriter()
+    val pw = PrintWriter(sw)
+    e.printStackTrace(pw)
+    val str = sw.toString()
+    jtaInfo.foreground = Color.RED
+    jtaInfo.append("$str\n")
+    jtaInfo.updateUI()
 }

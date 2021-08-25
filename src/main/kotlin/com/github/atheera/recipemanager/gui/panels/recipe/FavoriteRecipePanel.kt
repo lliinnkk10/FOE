@@ -3,6 +3,7 @@ package com.github.atheera.recipemanager.gui.panels.recipe
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.ButtonRecipeCard
 import com.github.atheera.recipemanager.extras.HintTextField
+import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.gui.frames.recipe.SavedRecipeFrame
 import com.github.atheera.recipemanager.save.read.ReadRecipeFavorite
 import com.github.atheera.recipemanager.save.read.ReadSettings
@@ -171,7 +172,7 @@ class FavoriteRecipePanel : JPanel() {
             jpCat.removeAll()
             alLoaded.clear()
         } catch (e: Exception) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
 

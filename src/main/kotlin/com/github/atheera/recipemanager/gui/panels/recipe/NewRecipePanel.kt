@@ -5,6 +5,7 @@ import com.github.atheera.recipemanager.extras.DeleteButton
 import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.extras.TextLineNumber
 import com.github.atheera.recipemanager.extras.ToolTipLabel
+import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteRecipeFavorite
 import com.github.atheera.recipemanager.save.write.WriteRecipeSaves
@@ -255,7 +256,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
                     val ingCard = createCard()
                     jpIng.add(ingCard, "wrap")
                 } catch (e: NumberFormatException) {
-                    dw.exc(e)
+                    exc(e)
                     e.printStackTrace()
                     JOptionPane.showMessageDialog(this, "You need to enter some valid information first, numbers only!")
                 }
@@ -269,7 +270,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
                     jpIng.add(ingCard, "wrap")
                     htfIngAmount.requestFocus()
                 } catch (e: NumberFormatException) {
-                    dw.exc(e)
+                    exc(e)
                     e.printStackTrace()
                     JOptionPane.showMessageDialog(this, "You need to enter some valid information first, numbers only!")
                 }
@@ -301,7 +302,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
                 jlCF.text = "° C"
                 updateUI()
             } catch(e: NumberFormatException) {
-                dw.exc(e)
+                exc(e)
                 JOptionPane.showMessageDialog(this, "That is not a whole number! Try again!")
             }
         }
@@ -314,7 +315,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
                 jlCF.text = "° F"
                 updateUI()
             } catch(e: NumberFormatException) {
-                dw.exc(e)
+                exc(e)
                 JOptionPane.showMessageDialog(this, "That is not a whole number! Try again!")
             }
 

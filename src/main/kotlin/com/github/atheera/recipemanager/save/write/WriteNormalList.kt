@@ -1,9 +1,9 @@
 package com.github.atheera.recipemanager.save.write
 
-import com.github.atheera.recipemanager.dw
+import com.github.atheera.recipemanager.gui.exc
+import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.objects.NormalList
 import com.google.gson.GsonBuilder
-import com.github.atheera.recipemanager.save.Files
 import java.io.FileWriter
 import java.io.IOException
 
@@ -25,7 +25,7 @@ class WriteNormalList(type: String, title: String, list: MutableList<String>) {
         try {
             FileWriter(file.absoluteFile).use { writer -> gson.toJson(lists, writer) }
         } catch (e: IOException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
     }

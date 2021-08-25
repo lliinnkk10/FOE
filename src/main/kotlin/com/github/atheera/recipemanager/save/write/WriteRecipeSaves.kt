@@ -1,6 +1,6 @@
 package com.github.atheera.recipemanager.save.write
 
-import com.github.atheera.recipemanager.dw
+import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.objects.Recipe
 import com.google.gson.GsonBuilder
@@ -34,7 +34,7 @@ class WriteRecipeSaves(title: String, cat: String, subCat: String, instr: String
         try {
             FileWriter(file.absoluteFile).use { writer -> gson.toJson(rec, writer) }
         } catch (e: IOException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
     }

@@ -1,6 +1,7 @@
 package com.github.atheera.recipemanager.extras
 
 import com.github.atheera.recipemanager.dw
+import com.github.atheera.recipemanager.gui.exc
 import java.awt.image.BufferedImage
 import java.io.IOException
 import javax.imageio.ImageIO
@@ -13,7 +14,7 @@ class LoadImage {
         try {
             return ImageIO.read(url)
         } catch (e: IOException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
         return null
@@ -25,7 +26,7 @@ class LoadImage {
             val image = ImageIO.read(url)
             return ImageIcon(image)
         } catch (e: IOException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
         return null

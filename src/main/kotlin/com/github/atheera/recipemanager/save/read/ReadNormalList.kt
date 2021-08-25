@@ -1,6 +1,7 @@
 package com.github.atheera.recipemanager.save.read
 
 import com.github.atheera.recipemanager.*
+import com.github.atheera.recipemanager.gui.exc
 import com.google.gson.JsonParser
 import com.github.atheera.recipemanager.save.objects.NormalList
 import com.google.gson.JsonObject
@@ -18,19 +19,16 @@ class ReadNormalList(fileName: String) {
     init {
         try {
             val reader = FileReader(file)
-            println("File loaded at: $file")
-            dw.add("File loaded at: $file")
             val obj: JsonObject = parser.parse(reader) as JsonObject
             parseListObject(obj)
-            list.toFormat()
         } catch(e: ParseException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         } catch(e: FileNotFoundException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         } catch(e: IOException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
     }

@@ -2,6 +2,7 @@ package com.github.atheera.recipemanager.gui.panels.recipe
 
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.ButtonRecipeCard
+import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.gui.frames.recipe.SavedRecipeFrame
 import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.read.ReadRecipe
@@ -109,7 +110,7 @@ class SavedExtraRecipePanel: JPanel() {
             jpSauceCard.removeAll()
             jpSoupCard.removeAll()
         } catch (e: IOException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
 

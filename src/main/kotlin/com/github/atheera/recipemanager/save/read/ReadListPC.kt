@@ -1,6 +1,7 @@
 package com.github.atheera.recipemanager.save.read
 
 import com.github.atheera.recipemanager.*
+import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.save.objects.ListPC
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -21,13 +22,13 @@ class ReadListPC(fileName: String) {
             val obj: JsonObject = parser.parse(reader) as JsonObject
             parseListObject(obj)
         } catch(e: ParseException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         } catch(e: FileNotFoundException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         } catch(e: IOException) {
-            dw.exc(e)
+            exc(e)
             e.printStackTrace()
         }
     }

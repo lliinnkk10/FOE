@@ -219,7 +219,7 @@ class WindowDisplay : JFrame() {
         jmiSettings = JMenuItem("Change save location"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ val csd = ChangeSaveDirectory(); csd.setLocationRelativeTo(this) }
         jmiSettings = JMenuItem("Go back to main menu"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ switchPanels(States.MENUSTATE) }
         jmiDebug = JMenuItem("Open debug window"); jmSettings.add(jmiDebug); jmiDebug.addActionListener{ openDebug() }
-        jmiSize = JMenuItem("Get current size of window"); jmSettings.add(jmiSize); jmiSize.addActionListener { dw.add("Current size: " + this.size) }
+        jmiSize = JMenuItem("Get current size of window"); jmSettings.add(jmiSize); jmiSize.addActionListener { info("Current size: " + this.size) }
         jmiDark = JCheckBoxMenuItem("Dark mode"); jmSettings.add(jmiDark); jmiDark.addActionListener { WriteSettingsFile(path, jmiDark.isSelected); switchPanels(currentState) }; if(isDark) jmiDark.doClick()
             // Recipes
         jmiNewRec = JMenuItem("Create new recipe"); jmRecipes.add(jmiNewRec); jmiNewRec.addActionListener{ switchPanels(States.NEWRECIPESTATE) }
