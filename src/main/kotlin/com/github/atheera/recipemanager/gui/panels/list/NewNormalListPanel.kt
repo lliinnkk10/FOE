@@ -47,7 +47,7 @@ class NewNormalListPanel : JPanel(MigLayout()) {
         jpListOut.minimumSize = dim
         jspList.minimumSize = dim
         jspList.verticalScrollBar.unitIncrement = 16
-        jspList.verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
+        jspList.verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED
             // Misc
         htfItem.addActionListener { addToList() }
         jbList.addActionListener { addToList() }
@@ -59,6 +59,7 @@ class NewNormalListPanel : JPanel(MigLayout()) {
                 info(listPath)
                 JOptionPane.showMessageDialog(this, "Successfully saved list to: $listPath/${listCategories[2]}")
                 clearInfo()
+
             }
         }
 

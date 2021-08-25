@@ -33,7 +33,7 @@ class NewTodoListPanel : JPanel(MigLayout("align center")) {
 
     private val fontB = Font("Tahoma", Font.PLAIN, 20)
     var fontS: Font
-    private val dim = Dimension(350, 500)
+    private val dim = Dimension(500, 500)
 
     init {
         map[TextAttribute.STRIKETHROUGH] = TextAttribute.STRIKETHROUGH_ON

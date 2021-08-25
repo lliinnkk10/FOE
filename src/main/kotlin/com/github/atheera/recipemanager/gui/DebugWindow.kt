@@ -21,7 +21,7 @@ private val jmb = JMenuBar()
 private val jm = JMenu("Save")
 private val jmi = JMenuItem("Save error log")
 
-var isOpened = false;
+var isOpened = false
 
 class DebugWindow : JFrame() {
 
