@@ -6,6 +6,7 @@ import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.extras.TextLineNumber
 import com.github.atheera.recipemanager.extras.ToolTipLabel
 import com.github.atheera.recipemanager.gui.exc
+import com.github.atheera.recipemanager.gui.info
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteRecipeFavorite
 import com.github.atheera.recipemanager.save.write.WriteRecipeSaves
@@ -14,11 +15,9 @@ import java.awt.CardLayout
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
-import java.awt.event.ItemEvent
-import java.awt.event.ItemListener
+import java.awt.event.*
 import javax.swing.*
+import javax.swing.border.EmptyBorder
 
 class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionListener {
 
@@ -276,8 +275,10 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
                 }
             }
         }
+        val ttlDC = ToolTipLabel("You can double-click the added measures to write your own measurement!")
 
-        jpIngOut.add(jbIngAdd, "align center, split 2")
+        jpIngOut.add(jbIngAdd, "align center, split 3")
+        jpIngOut.add(ttlDC)
         jpIngOut.add(ttlIng, "wrap")
         jpIngOut.add(htfIngAmount, "align center, split 3")
         jpIngOut.add(jcbIngMeasure)
@@ -391,11 +392,54 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         val jbDelete = DeleteButton()
         val jlAmount = JLabel("$amount")
         val jlMeasure = JLabel(measure)
-        val jlItem = JLabel(item)
+        val jlItem = JLabel(upperCaseFirstWords(item))
 
         jlAmount.font = fontC
         jlMeasure.font = fontC
         jlItem.font = fontC
+
+        jlMeasure.addMouseListener(object: MouseListener {
+            var entered = false
+
+            override fun mouseClicked(e: MouseEvent) {
+                if(e.button == MouseEvent.BUTTON1 && entered) {
+
+                    if(e.clickCount != 2)
+                        return
+
+                    val editPopup = JPopupMenu()
+                    val tfEdit = JTextField()
+                    tfEdit.font = fontC
+                    tfEdit.addActionListener {
+                        val txt = tfEdit.text
+                        jlMeasure.text = txt.uppercase()
+                        editPopup.isVisible = false
+                        updateUI()
+                    }
+                    editPopup.border = EmptyBorder(0, 0, 0, 0)
+                    editPopup.add(tfEdit)
+
+                    tfEdit.text = measure
+                    editPopup.preferredSize = tfEdit.preferredSize
+                    editPopup.show(jlMeasure, 0, 0)
+
+                    tfEdit.selectAll()
+                    tfEdit.requestFocusInWindow()
+
+                }
+            }
+
+            override fun mousePressed(e: MouseEvent?) { }
+            override fun mouseReleased(e: MouseEvent?) { }
+
+            override fun mouseEntered(e: MouseEvent?) {
+                entered = true
+            }
+
+            override fun mouseExited(e: MouseEvent?) {
+                entered = false
+            }
+        })
 
         val combinedIngredient = ("$amount $measure $item")
 

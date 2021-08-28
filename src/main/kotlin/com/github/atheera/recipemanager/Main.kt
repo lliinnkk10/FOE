@@ -21,7 +21,7 @@ val subCatDesserts = listOf("Cake", "Chocolate", "Confection", "Cookie", "Custar
 val subCatExtras = listOf("Bread", "Greenthing", "Sauce", "Savory Pie", "Soup")
 val subCatMeats = listOf("Beef", "Fish", "Other", "Plant Meat", "Poultry", "Pork")
 val listCategories = listOf("Pros and Cons", "To Do", "Plain List")
-val measures = listOf("L", "DL", "CL", "ML", "KG", "HG", "G", "MG", "TBSP", "TSP", "SPM", "PCS", "PINCH", "CUP")
+val measures = listOf("L", "DL", "CL", "ML", "KG", "HG", "G", "MG", "TBSP", "TSP", "SPM", "PIECE(S)", "PINCH", "CUP", "WHOLE", "CLOVE", "CAN")
 
 // List types items
     // Pros/Cons

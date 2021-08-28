@@ -105,6 +105,11 @@ fun info(info: String) {
     jtaInfo.updateUI()
 }
 
+fun info(info: Boolean) { info(info.toString()) }
+fun info(info: Int) { info(info.toString()) }
+fun info(info: Double) { info(info.toString()) }
+
+
 fun exc(e: Exception) {
     val sw = StringWriter()
     val pw = PrintWriter(sw)

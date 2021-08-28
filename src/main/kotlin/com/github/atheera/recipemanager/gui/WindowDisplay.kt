@@ -2,10 +2,7 @@ package com.github.atheera.recipemanager.gui
 
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.gui.panels.MenuPanel
-import com.github.atheera.recipemanager.gui.panels.list.NewNormalListPanel
-import com.github.atheera.recipemanager.gui.panels.list.NewPCListPanel
-import com.github.atheera.recipemanager.gui.panels.list.NewTodoListPanel
-import com.github.atheera.recipemanager.gui.panels.list.SavedListsPanel
+import com.github.atheera.recipemanager.gui.panels.list.*
 import com.github.atheera.recipemanager.gui.panels.other.CalculatorPanel
 import com.github.atheera.recipemanager.gui.panels.recipe.*
 import com.github.atheera.recipemanager.save.write.WriteSettingsFile
@@ -24,6 +21,7 @@ private lateinit var SavDesRecPan: SavedDessertRecipePanel
 private lateinit var SavExtRecPan: SavedExtraRecipePanel
 private lateinit var SavMeaRecPan: SavedMeatRecipePanel
 private lateinit var FavRecPane: FavoriteRecipePanel
+private lateinit var RanRecPan: RandomRecipePanel
     // Lists
 private lateinit var NewPosNegListPane: NewPCListPanel
 private lateinit var NewToDoListPane: NewTodoListPanel
@@ -59,6 +57,7 @@ private lateinit var jmiMeatRec: JMenuItem
 private lateinit var jmiSavRec: JMenu
 private lateinit var jmiNewRec: JMenuItem
 private lateinit var jmiFavRec: JMenuItem
+private lateinit var jmiRanRec: JMenuItem
         // Extras
 private lateinit var jmiCalc: JMenuItem
 
@@ -76,6 +75,7 @@ object States {
     const val SAVEDMEATRECIPESTATE = 9
     const val NEWNORMALLISTSTATE = 10
     const val CALCULATORSTATE = 11
+    const val RANDOMRECIPESTATE = 12
 }
 var currentState: Int = States.MENUSTATE
 private val panels = listOf(
@@ -90,7 +90,8 @@ private val panels = listOf(
     "Saved Extras",
     "Saved Meats",
     "New Normal List",
-    "Calculator"
+    "Calculator",
+    "Random Recipe"
 )
 
 // Misc
@@ -114,6 +115,7 @@ class WindowDisplay : JFrame() {
         SavMeaRecPan = SavedMeatRecipePanel()
         FavRecPane = FavoriteRecipePanel()
         NewNorListPane = NewNormalListPanel()
+        RanRecPan = RandomRecipePanel()
 
         NewPosNegListPane = NewPCListPanel()
         NewToDoListPane = NewTodoListPanel()
@@ -138,6 +140,7 @@ class WindowDisplay : JFrame() {
         mainPane.add(SavMeaRecPan, panels[9])
         mainPane.add(NewNorListPane, panels[10])
         mainPane.add(CalcPane, panels[11])
+        mainPane.add(RanRecPan, panels[12])
         add(mainPane, BorderLayout.CENTER)
             // Menu buttons to menu panel
         jmb.add(jmSettings)
@@ -169,6 +172,7 @@ class WindowDisplay : JFrame() {
             States.SAVEDMEATRECIPESTATE -> States.SAVEDMEATRECIPESTATE
             States.NEWNORMALLISTSTATE -> States.NEWNORMALLISTSTATE
             States.CALCULATORSTATE -> States.CALCULATORSTATE
+            States.RANDOMRECIPESTATE -> States.RANDOMRECIPESTATE
             else -> States.MENUSTATE
         }
     }
@@ -196,6 +200,7 @@ class WindowDisplay : JFrame() {
             States.SAVEDMEATRECIPESTATE -> { setPanelInfo(SavMeaRecPan, panel); SavMeaRecPan.darkmode() }
             States.NEWNORMALLISTSTATE -> { setPanelInfo(NewNorListPane, panel); NewNorListPane.darkmode() }
             States.CALCULATORSTATE -> { setPanelInfo(CalcPane, panel); CalcPane.darkmode() }
+            States.RANDOMRECIPESTATE -> { setPanelInfo(RanRecPan, panel); RanRecPan.darkmode() }
         }
     }
 
@@ -228,24 +233,26 @@ class WindowDisplay : JFrame() {
         jmiExtraRec = JMenuItem("Extras"); jmiSavRec.add(jmiExtraRec); jmiExtraRec.addActionListener{ switchPanels(States.SAVEDEXTRARECIPESTATE); SavExtRecPan.loadRecipes() }
         jmiMeatRec = JMenuItem("Meats"); jmiSavRec.add(jmiMeatRec); jmiMeatRec.addActionListener{ switchPanels(States.SAVEDMEATRECIPESTATE); SavMeaRecPan.loadRecipes() }
         jmiFavRec = JMenuItem("View all favorite recipes"); jmRecipes.add(jmiFavRec); jmiFavRec.addActionListener{ switchPanels(States.FAVORITERECIPESTATE); FavRecPane.loadRecipes(false) }
+        jmiRanRec = JMenuItem("Get random saved recipe"); jmRecipes.add(jmiRanRec); jmiRanRec.addActionListener { switchPanels(States.RANDOMRECIPESTATE);  }
             // Extras
         jmiCalc = JMenuItem("Calculator"); jmExtras.add(jmiCalc); jmiCalc.addActionListener { switchPanels(States.CALCULATORSTATE) }
     }
 
     private fun changeTitle(panel: Int) : String {
-        return when (panel) {
-            States.MENUSTATE -> "$TITLE - Main Menu"
-            States.NEWRECIPESTATE -> "$TITLE - Create New Recipe"
-            States.SAVEDRECIPESTATE -> "$TITLE - View Saved Recipes"
-            States.FAVORITERECIPESTATE -> "$TITLE - View Favorite Recipes"
-            States.NEWPCLISTSTATE -> "$TITLE - Create New Pros/Cons List"
-            States.SAVEDLISTSTATE -> "$TITLE - View Saved Lists"
-            States.NEWTODOLISTSTATE -> "$TITLE - Create New ToDo List"
-            States.SAVEDDESSERTRECIPESTATE -> "$TITLE - View Saved Dessert Recipes"
-            States.SAVEDEXTRARECIPESTATE -> "$TITLE - View Saved Extra Recipes"
-            States.SAVEDMEATRECIPESTATE -> "$TITLE - View Saved Meat Recipes"
-            States.NEWNORMALLISTSTATE -> "$TITLE - Create New Plain List"
-            States.CALCULATORSTATE -> "$TITLE - Calculator"
+        return "$TITLE - " + when (panel) {
+            States.MENUSTATE -> "Main Menu"
+            States.NEWRECIPESTATE -> "Create New Recipe"
+            States.SAVEDRECIPESTATE -> "View Saved Recipes"
+            States.FAVORITERECIPESTATE -> "View Favorite Recipes"
+            States.NEWPCLISTSTATE -> "Create New Pros/Cons List"
+            States.SAVEDLISTSTATE -> "View Saved Lists"
+            States.NEWTODOLISTSTATE -> "Create New ToDo List"
+            States.SAVEDDESSERTRECIPESTATE -> "View Saved Dessert Recipes"
+            States.SAVEDEXTRARECIPESTATE -> "View Saved Extra Recipes"
+            States.SAVEDMEATRECIPESTATE -> "View Saved Meat Recipes"
+            States.NEWNORMALLISTSTATE -> "Create New Plain List"
+            States.CALCULATORSTATE -> "Calculator"
+            States.RANDOMRECIPESTATE -> "Get Random Recipe"
             else -> TITLE
         }
     }
@@ -264,6 +271,7 @@ class WindowDisplay : JFrame() {
             States.SAVEDMEATRECIPESTATE -> Dimension(600, 700)
             States.NEWNORMALLISTSTATE -> Dimension(507, 835)
             States.CALCULATORSTATE -> Dimension(665, 434)
+            States.RANDOMRECIPESTATE -> Dimension(1030, 430)
             else -> Dimension(backgroundImage.width, backgroundImage.height)
         }
     }
@@ -281,6 +289,7 @@ class WindowDisplay : JFrame() {
         SavMeaRecPan.isVisible = false
         NewNorListPane.isVisible = false
         CalcPane.isVisible = false
+        RanRecPan.isVisible = false
         cl.show(mainPane, panels[name])
         darkMode(panel)
         panel.isVisible = true
