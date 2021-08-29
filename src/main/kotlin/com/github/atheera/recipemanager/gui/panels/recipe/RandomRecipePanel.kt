@@ -1,4 +1,4 @@
-package com.github.atheera.recipemanager.gui.panels.list
+package com.github.atheera.recipemanager.gui.panels.recipe
 
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.ButtonRecipeCard
