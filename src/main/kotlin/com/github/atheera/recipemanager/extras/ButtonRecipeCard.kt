@@ -30,4 +30,8 @@ class ButtonRecipeCard(title: String, cat: String, subCat: String, desc: String)
         g.drawString(descs, 70, 130)
     }
 
+    fun getTitle() : String {
+        return titles
+    }
+
 }

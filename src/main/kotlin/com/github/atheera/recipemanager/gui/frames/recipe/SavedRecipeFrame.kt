@@ -75,8 +75,22 @@ class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: String
             val splitStr = str.split(" ")
             val amount = splitStr[0].toDouble()
             val measure = splitStr[1]
-            val item = splitStr[2]
-            val itemCard = cp.createCard(amount, measure, item)
+            var finalItem = ""
+            var combined = ""
+            if(splitStr.size > 2) {
+                for (it in splitStr.indices) {
+                    if(it > 1) {
+                        val item = splitStr[it]
+                        combined = combined.plus("$item ")
+                        if (it == splitStr.lastIndex) {
+                            finalItem = combined
+                        }
+                    }
+                }
+            } else {
+                finalItem = splitStr[2]
+            }
+            val itemCard = cp.createCard(amount, measure, finalItem, cp.jpIng, false)
             cp.jpIng.add(itemCard, "wrap")
         }
 

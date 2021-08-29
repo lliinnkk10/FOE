@@ -88,6 +88,7 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
 
             // Random button
         jbRandom.addActionListener {
+            addedButton.clear()
             loadRecipes(searchFavorite)
         }
         jbRandomSub.addActionListener {
@@ -153,7 +154,7 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
         updateUI()
     }
 
-    private fun loadRecipes(favorite: Boolean) {
+    private fun loadRecipes(favorite: Boolean = jcbFavorite.isSelected) {
         try {
             jpRecipe.removeAll()
             searchedFiles.clear()
@@ -162,7 +163,7 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
             e.printStackTrace()
         }
 
-        if(favorite) {
+        if(favorite) { // Only loop through the saved favorite recipes
             val recFile = File(recipeFavPath)
             val recFiles = recFile.listFiles()
 
@@ -171,68 +172,60 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
                 val title = removeLast(files, 5)
                 loopRecipes(title, files)
             }
+
         } else {
-            for(i in 0..3) {
-                when(i) {
-                    0 -> {
-                        for (cat in subCatDesserts) {
-                            val file = File(Files().makeRecipeDir(categories[0], cat))
-                            val files = file.listFiles()
-                            for (allFiles in files!!) {
-                                val names = allFiles.name
-                                val title = removeLast(names, 5)
-                                when (cat) { subCatDesserts[i] -> {
-                                    val jb = createButton(title, categories[0], cat, names, favorite)
-                                    if(cat == recipeSubCategory)
-                                        searchedFiles.add(jb)
-                                }
-                                }
-                            }
-                        }
-                    }
-                    1 -> {
-                        for (cat in subCatExtras) {
-                            val file = File(Files().makeRecipeDir(categories[1], cat))
-                            val files = file.listFiles()
-                            for (allFiles in files!!) {
-                                val names = allFiles.name
-                                val title = removeLast(names, 5)
-                                when (cat) { subCatExtras[i] -> {
-                                    val jb = createButton(title, categories[1], cat, names, favorite)
-                                    if(cat == recipeSubCategory)
-                                        searchedFiles.add(jb)
-                                }
-                                }
-                            }
-                        }
-                    }
-                    2 -> {
-                        for (cat in subCatMeats) {
-                            val file = File(Files().makeRecipeDir(categories[2], cat))
-                            val files = file.listFiles()
-                            for (allFiles in files!!) {
-                                val names = allFiles.name
-                                val title = removeLast(names, 5)
-                                when (cat) { subCatMeats[i] -> {
-                                    val jb = createButton(title, categories[2], cat, names, favorite)
-                                    if(cat == recipeSubCategory)
-                                        searchedFiles.add(jb)
-                                }
-                                }
-                            }
-                        }
-                    }
-                    3 -> {
-                        val file = File(recipeFavPath)
-                        val files = file.listFiles()
-                        for (allFiles in files!!) {
-                            val names = allFiles.name
-                            val title = removeLast(names, 5)
-                            loopRecipes(title, names)
+
+            for (i in subCatDesserts.indices) {
+                val subcat = subCatDesserts[i]
+                val file = File(Files().makeRecipeDir(categories[0], subcat))
+                val files = file.listFiles()
+                for (allFiles in files!!) {
+                    val names = allFiles.name
+                    val title = removeLast(names, 5)
+                    when (subcat) { subcat -> {
+                        val jb = createButton(title, categories[0], subcat, names, favorite)
+                        if (subcat == recipeSubCategory) searchedFiles.add(jb)
                         }
                     }
                 }
+            }
 
+            for (i in subCatExtras.indices) {
+                val subcat = subCatExtras[i]
+                val file = File(Files().makeRecipeDir(categories[1], subcat))
+                val files = file.listFiles()
+                for (allFiles in files!!) {
+                    val names = allFiles.name
+                    val title = removeLast(names, 5)
+                    when (subcat) { subcat -> {
+                        val jb = createButton(title, categories[1], subcat, names, favorite)
+                        if (subcat == recipeSubCategory) searchedFiles.add(jb)
+                        }
+                    }
+                }
+            }
+
+            for (i in subCatMeats.indices) {
+                val subcat = subCatMeats[i]
+                val file = File(Files().makeRecipeDir(categories[2], subcat))
+                val files = file.listFiles()
+                for (allFiles in files!!) {
+                    val names = allFiles.name
+                    val title = removeLast(names, 5)
+                    when (subcat) { subcat -> {
+                        val jb = createButton(title, categories[2], subcat, names, favorite)
+                        if (subcat == recipeSubCategory) searchedFiles.add(jb)
+                        }
+                    }
+                }
+            }
+
+            val file = File(recipeFavPath)
+            val files = file.listFiles()
+            for (allFiles in files!!) {
+                val names = allFiles.name
+                val title = removeLast(names, 5)
+                loopRecipes(title, names)
             }
         }
 
@@ -244,19 +237,39 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
         val num = random.nextInt(searchedFiles.size)
         val item = searchedFiles[num]
 
-        if(addedButton.contains(item)) {
-            loadRecipes(favorite)
+        addedButton.add(item)
+        jpRecipe.add(item)
+
+        try {
+            if(addedButton[0].getTitle() == item.getTitle()) {
+                println(item.getTitle())
+                println(addedButton[0].getTitle())
+                loadRecipes()
+            } else {
+                addedButton.clear()
+                updateUI()
+            }
+        } catch (e: Exception) {
+
         }
 
-
-        jpRecipe.add(item)
         updateUI()
     }
 
     private fun loopRecipes(title: String, files: String) {
-        for (cat in subCatDesserts) { for (i in subCatDesserts.indices) { when (cat) { subCatDesserts[i] -> { val jb = createButton(title, categories[0], cat, files, true); if(cat == recipeSubCategory) searchedFiles.add(jb) } } } }
-        for (cat in subCatExtras) { for (i in subCatExtras.indices) { when (cat) { subCatExtras[i] -> { val jb = createButton(title, categories[1], cat, files, true); if(cat == recipeSubCategory) searchedFiles.add(jb) } } } }
-        for (cat in subCatMeats) { for (i in subCatMeats.indices) { when (cat) { subCatMeats[i] -> { val jb = createButton(title, categories[2], cat, files, true); if(cat == recipeSubCategory) searchedFiles.add(jb) } } } }
+        for (i in subCatDesserts.indices) {
+            when (val cat = subCatDesserts[i]) { cat -> {
+            val jb = createButton(title, categories[0], cat, files, true);
+            if(cat == recipeSubCategory) searchedFiles.add(jb)
+        } } }
+        for (i in subCatExtras.indices) { when (val cat = subCatExtras[i]) { cat -> {
+            val jb = createButton(title, categories[1], cat, files, true);
+            if(cat == recipeSubCategory) searchedFiles.add(jb)
+        } } }
+        for (i in subCatMeats.indices) { when (val cat = subCatMeats[i]) { cat -> {
+            val jb = createButton(title, categories[2], cat, files, true);
+            if(cat == recipeSubCategory) searchedFiles.add(jb)
+        } } }
     }
 
     private fun createButton(title: String, cat: String, subCat: String, file: String, favorite: Boolean) : ButtonRecipeCard {

@@ -386,13 +386,14 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         }
     }
 
-    fun createCard(amount: Double = htfIngAmount.text.toDouble(), measure: String = selectedMeasure, item: String = htfIngItem.text, removePane: JPanel = jpIng) : JPanel {
+    fun createCard(amount: Double = htfIngAmount.text.toDouble(), measure: String = selectedMeasure, item: String = htfIngItem.text, removePane: JPanel = jpIng, new: Boolean = true) : JPanel {
 
         val jp = JPanel(MigLayout("","[]10[]","[]20[]20[]20[]"))
         val jbDelete = DeleteButton()
         val jlAmount = JLabel("$amount")
         val jlMeasure = JLabel(measure)
-        val jlItem = JLabel(upperCaseFirstWords(item))
+        val finalItem = if(new) upperCaseFirstWords(item) else item
+        val jlItem = JLabel(finalItem)
 
         jlAmount.font = fontC
         jlMeasure.font = fontC
@@ -441,7 +442,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
             }
         })
 
-        val combinedIngredient = ("$amount $measure $item")
+        val combinedIngredient = ("$amount $measure $finalItem")
 
         jp.border = BorderFactory.createLineBorder(Color.BLACK)
         jp.minimumSize = Dimension(408, 38)
@@ -492,10 +493,10 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
             return false
         } else { c4 = true }
         if(c1 && c2 && c3 && c4) {
-            recipeTitle = htfTitle.text
+            recipeTitle = upperCaseFirstWords(htfTitle.text)
             recipeIngredients = alIngredients
             recipeInstructions = jtaIns.text
-            recipeDescription = jtaDesc.text
+            recipeDescription = upperCaseFirstWords(jtaDesc.text)
             recipeTemperature = factor
             recipeConvTemperature = result
             recipeEgg = jcbEgg.isSelected
