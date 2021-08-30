@@ -68,7 +68,7 @@ class NewTodoListPanel : JPanel(MigLayout("align center")) {
             if((htfTitle.text.isEmpty() || htfTitle.text == titleText) || list.isEmpty())
                 JOptionPane.showMessageDialog(this, "You need to enter information to save first!")
             else {
-                WriteListTD(listCategories[1], htfTitle.text, list, checkedList)
+                WriteListTD(listCategories[1], upperCaseFirstWords(htfTitle.text), list, checkedList)
                 JOptionPane.showMessageDialog(this, "Successfully saved list to: $listPath/${listCategories[1]}")
                 clearInfo()
             }

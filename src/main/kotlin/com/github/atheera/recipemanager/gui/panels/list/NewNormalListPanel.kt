@@ -55,7 +55,7 @@ class NewNormalListPanel : JPanel(MigLayout()) {
             if((htfTitle.text.isEmpty() || htfTitle.text.equals(TITLEHINT) || itemList.isEmpty()))
                 JOptionPane.showMessageDialog(this, "You need to enter some information to save first!")
             else {
-                WriteNormalList(listCategories[2], htfTitle.text, itemList)
+                WriteNormalList(listCategories[2], upperCaseFirstWords(htfTitle.text), itemList)
                 info(listPath)
                 JOptionPane.showMessageDialog(this, "Successfully saved list to: $listPath/${listCategories[2]}")
                 clearInfo()
@@ -103,7 +103,7 @@ class NewNormalListPanel : JPanel(MigLayout()) {
     }
 
     fun createCard(item: String, removePane: JPanel, saved: Boolean) : JPanel {
-        val finalItem = if(saved) upperCaseFirstWords(item) else item
+        val finalItem = if(!saved) upperCaseFirstWords(item) else item
         val jlItem = JLabel(finalItem)
 
         val jp = JPanel(MigLayout())

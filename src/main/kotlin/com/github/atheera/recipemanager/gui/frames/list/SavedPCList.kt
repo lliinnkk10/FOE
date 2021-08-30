@@ -22,14 +22,14 @@ class SavedPCList(title: String, posList: MutableList<String>, negList: MutableL
 
         for(pos in posList.indices) {
             println(posList[pos])
-            val argCard = contentPane.createCard(posList[pos], contentPane.posPane, true)
+            val argCard = contentPane.createCard(posList[pos], contentPane.posPane, false)
             contentPane.posPane.add(argCard, "wrap")
             posCount++
 
         }
         for(neg in negList.indices) {
             println(negList[neg])
-            val argCard = contentPane.createCard(negList[neg], contentPane.negPane, true)
+            val argCard = contentPane.createCard(negList[neg], contentPane.negPane, false)
             contentPane.negPane.add(argCard, "wrap")
             negCount++
         }

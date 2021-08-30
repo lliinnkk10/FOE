@@ -80,7 +80,7 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
             if((htfTitle.text.isEmpty() || htfTitle.text == titleText) || posList.isEmpty() || negList.isEmpty())
                 JOptionPane.showMessageDialog(this, "You need to enter information to save first!")
             else {
-                WriteListPC(listCategories[0], htfTitle.text, posList, negList)
+                WriteListPC(listCategories[0], upperCaseFirstWords(htfTitle.text), posList, negList)
                 JOptionPane.showMessageDialog(this, "Successfully saved list to: $listPath/${listCategories[0]}")
                 clearInfo()
             }
@@ -145,10 +145,10 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
             return
         }
         if(isPos) {
-            val argCard = createCard(htfArg.text, posPane, false)
+            val argCard = createCard(htfArg.text, posPane, true)
             posPane.add(argCard, "wrap")
         } else {
-            val argCard = createCard(htfArg.text, negPane, false)
+            val argCard = createCard(htfArg.text, negPane, true)
             negPane.add(argCard, "wrap")
         }
         htfArg.text = ""
@@ -157,8 +157,8 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
 
 
 
-    fun createCard(argument: String, removePane: JPanel, saved: Boolean) : JPanel {
-        val arg = if(saved) upperCaseFirstWords(argument) else argument
+    fun createCard(argument: String, removePane: JPanel, new: Boolean = false) : JPanel {
+        val arg = if(new) upperCaseFirstWords(argument) else argument
         val jp = JPanel(MigLayout("", "[]10[]", ""))
         val jlArg = JLabel(arg)
         val jbDelete = DeleteButton()

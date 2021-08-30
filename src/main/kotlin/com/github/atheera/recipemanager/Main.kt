@@ -169,15 +169,19 @@ fun upperCaseFirstWords(inString: String) : String {
     val splitItem = inString.split(" ")
     var combinedItem = ""
     var finalItem = ""
-    for(i in splitItem.indices) {
-        var uppercaseFirst = splitItem[i].substring(0, 1)
-        val remRest = splitItem[i].substring(1)
-        uppercaseFirst = uppercaseFirst.uppercase()
-        val combinedString = "$uppercaseFirst$remRest"
-        combinedItem = combinedItem.plus("$combinedString ")
-        if (i == splitItem.lastIndex) {
-            finalItem = combinedItem
+    try {
+        for (i in splitItem.indices) {
+            var uppercaseFirst = splitItem[i].substring(0, 1)
+            val remRest = splitItem[i].substring(1)
+            uppercaseFirst = uppercaseFirst.uppercase()
+            val combinedString = "$uppercaseFirst$remRest"
+            combinedItem = combinedItem.plus("$combinedString ")
+            if (i == splitItem.lastIndex) {
+                finalItem = combinedItem
+            }
         }
+    } catch (e: Exception) {
+        finalItem = inString
     }
     return finalItem
 }
