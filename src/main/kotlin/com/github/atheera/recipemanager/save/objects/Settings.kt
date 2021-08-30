@@ -6,5 +6,6 @@ class Settings : Serializable {
 
     lateinit var saveLocation: String
     var isDark: Boolean = false
+    lateinit var addedMeasures: MutableList<String>
 
 }

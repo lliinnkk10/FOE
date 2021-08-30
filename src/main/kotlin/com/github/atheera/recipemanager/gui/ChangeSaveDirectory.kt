@@ -1,5 +1,6 @@
 package com.github.atheera.recipemanager.gui
 
+import com.github.atheera.recipemanager.addedMeasures
 import com.github.atheera.recipemanager.defaultPath
 import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.isDark
@@ -28,7 +29,7 @@ class ChangeSaveDirectory : JFrame() {
         // Adding functionality
         jbSetDefault.addActionListener {
             Files().setPath("C://FOE/")
-            WriteSettingsFile(defaultPath, isDark)
+            WriteSettingsFile(defaultPath, isDark, addedMeasures)
             JOptionPane.showMessageDialog(this, "Successfully set save location to: c://FOE/")
             onStartUp()
             dispose()
@@ -39,7 +40,7 @@ class ChangeSaveDirectory : JFrame() {
                 JOptionPane.showMessageDialog(this, "You need to set a location first! ex: c://Users/(user)/Desktop")
             } else {
                 Files().setPath(jtaCD.text + "/FOE/")
-                WriteSettingsFile(jtaCD.text + "/FOE/", isDark)
+                WriteSettingsFile(jtaCD.text + "/FOE/", isDark, addedMeasures)
                 JOptionPane.showMessageDialog(this, "Successfully set save location to: ${jtaCD.text+"/FOE/"}")
                 onStartUp()
                 dispose()

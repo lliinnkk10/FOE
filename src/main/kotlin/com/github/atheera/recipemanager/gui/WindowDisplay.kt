@@ -4,6 +4,7 @@ import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.gui.panels.MenuPanel
 import com.github.atheera.recipemanager.gui.panels.list.*
 import com.github.atheera.recipemanager.gui.panels.other.CalculatorPanel
+import com.github.atheera.recipemanager.gui.panels.other.NewMeasurePanel
 import com.github.atheera.recipemanager.gui.panels.recipe.*
 import com.github.atheera.recipemanager.save.write.WriteSettingsFile
 import java.awt.BorderLayout
@@ -29,6 +30,7 @@ private lateinit var SavListPane: SavedListsPanel
 private lateinit var NewNorListPane: NewNormalListPanel
     // Extras
 private lateinit var CalcPane: CalculatorPanel
+private lateinit var MeasPane: NewMeasurePanel
     // Layout
 private lateinit var cl: CardLayout
 
@@ -60,6 +62,7 @@ private lateinit var jmiFavRec: JMenuItem
 private lateinit var jmiRanRec: JMenuItem
         // Extras
 private lateinit var jmiCalc: JMenuItem
+private lateinit var jmiMeasure: JMenuItem
 
 // States of panels and names
 object States {
@@ -76,6 +79,7 @@ object States {
     const val NEWNORMALLISTSTATE = 10
     const val CALCULATORSTATE = 11
     const val RANDOMRECIPESTATE = 12
+    const val ADDMEASURESTATE = 13
 }
 var currentState: Int = States.MENUSTATE
 private val panels = listOf(
@@ -91,7 +95,8 @@ private val panels = listOf(
     "Saved Meats",
     "New Normal List",
     "Calculator",
-    "Random Recipe"
+    "Random Recipe",
+    "Add Measurement"
 )
 
 // Misc
@@ -122,6 +127,7 @@ class WindowDisplay : JFrame() {
         SavListPane = SavedListsPanel()
 
         CalcPane = CalculatorPanel()
+        MeasPane = NewMeasurePanel()
 
         // Set data
         buildMenu()
@@ -141,6 +147,7 @@ class WindowDisplay : JFrame() {
         mainPane.add(NewNorListPane, panels[10])
         mainPane.add(CalcPane, panels[11])
         mainPane.add(RanRecPan, panels[12])
+        mainPane.add(MeasPane, panels[13])
         add(mainPane, BorderLayout.CENTER)
             // Menu buttons to menu panel
         jmb.add(jmSettings)
@@ -159,7 +166,7 @@ class WindowDisplay : JFrame() {
     }
 
     private fun setCurrentState(panel: Int) {
-        currentState = when(panel) {
+        currentState = when (panel) {
             States.MENUSTATE -> States.MENUSTATE
             States.NEWRECIPESTATE -> States.NEWRECIPESTATE
             States.SAVEDRECIPESTATE -> States.SAVEDRECIPESTATE
@@ -173,6 +180,7 @@ class WindowDisplay : JFrame() {
             States.NEWNORMALLISTSTATE -> States.NEWNORMALLISTSTATE
             States.CALCULATORSTATE -> States.CALCULATORSTATE
             States.RANDOMRECIPESTATE -> States.RANDOMRECIPESTATE
+            States.ADDMEASURESTATE -> States.ADDMEASURESTATE
             else -> States.MENUSTATE
         }
     }
@@ -201,6 +209,7 @@ class WindowDisplay : JFrame() {
             States.NEWNORMALLISTSTATE -> { setPanelInfo(NewNorListPane, panel); NewNorListPane.darkmode() }
             States.CALCULATORSTATE -> { setPanelInfo(CalcPane, panel); CalcPane.darkmode() }
             States.RANDOMRECIPESTATE -> { setPanelInfo(RanRecPan, panel); RanRecPan.darkmode() }
+            States.ADDMEASURESTATE -> { setPanelInfo(MeasPane, panel); MeasPane.darkmode() }
         }
     }
 
@@ -225,7 +234,7 @@ class WindowDisplay : JFrame() {
         jmiSettings = JMenuItem("Go back to main menu"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ switchPanels(States.MENUSTATE) }
         jmiDebug = JMenuItem("Open debug window"); jmSettings.add(jmiDebug); jmiDebug.addActionListener{ openDebug() }
         jmiSize = JMenuItem("Get current size of window"); jmSettings.add(jmiSize); jmiSize.addActionListener { info("Current size: " + this.size) }
-        jmiDark = JCheckBoxMenuItem("Dark mode"); jmSettings.add(jmiDark); jmiDark.addActionListener { WriteSettingsFile(path, jmiDark.isSelected); switchPanels(currentState) }; if(isDark) jmiDark.doClick()
+        jmiDark = JCheckBoxMenuItem("Dark mode"); jmSettings.add(jmiDark); jmiDark.addActionListener { WriteSettingsFile(path, jmiDark.isSelected, addedMeasures); switchPanels(currentState) }; if(isDark) jmiDark.doClick()
             // Recipes
         jmiNewRec = JMenuItem("Create new recipe"); jmRecipes.add(jmiNewRec); jmiNewRec.addActionListener{ switchPanels(States.NEWRECIPESTATE) }
         jmiSavRec = JMenu("View all saved recipes"); jmRecipes.add(jmiSavRec)
@@ -236,6 +245,7 @@ class WindowDisplay : JFrame() {
         jmiRanRec = JMenuItem("Get random saved recipe"); jmRecipes.add(jmiRanRec); jmiRanRec.addActionListener { switchPanels(States.RANDOMRECIPESTATE);  }
             // Extras
         jmiCalc = JMenuItem("Calculator"); jmExtras.add(jmiCalc); jmiCalc.addActionListener { switchPanels(States.CALCULATORSTATE) }
+        jmiMeasure = JMenuItem("Add another measurement"); jmExtras.add(jmiMeasure); jmiMeasure.addActionListener { switchPanels(States.ADDMEASURESTATE) }
     }
 
     private fun changeTitle(panel: Int) : String {
@@ -253,6 +263,7 @@ class WindowDisplay : JFrame() {
             States.NEWNORMALLISTSTATE -> "Create New Plain List"
             States.CALCULATORSTATE -> "Calculator"
             States.RANDOMRECIPESTATE -> "Get Random Recipe"
+            States.ADDMEASURESTATE -> "Add New Recipe Measurement"
             else -> TITLE
         }
     }
@@ -272,6 +283,7 @@ class WindowDisplay : JFrame() {
             States.NEWNORMALLISTSTATE -> Dimension(507, 835)
             States.CALCULATORSTATE -> Dimension(665, 434)
             States.RANDOMRECIPESTATE -> Dimension(1030, 430)
+            States.ADDMEASURESTATE -> Dimension(500, 500)
             else -> Dimension(backgroundImage.width, backgroundImage.height)
         }
     }
@@ -290,6 +302,7 @@ class WindowDisplay : JFrame() {
         NewNorListPane.isVisible = false
         CalcPane.isVisible = false
         RanRecPan.isVisible = false
+        MeasPane.isVisible = false
         cl.show(mainPane, panels[name])
         darkMode(panel)
         panel.isVisible = true

@@ -21,7 +21,7 @@ val subCatDesserts = listOf("Cake", "Chocolate", "Confection", "Cookie", "Custar
 val subCatExtras = listOf("Bread", "Greenthing", "Sauce", "Savory Pie", "Soup")
 val subCatMeats = listOf("Beef", "Fish", "Other", "Plant Meat", "Poultry", "Pork")
 val listCategories = listOf("Pros and Cons", "To Do", "Plain List")
-val measures = listOf("L", "DL", "CL", "ML", "KG", "HG", "G", "MG", "TBSP", "TSP", "SPM", "PIECE(S)", "PINCH", "CUP", "WHOLE", "CLOVE", "CAN")
+val measures = mutableListOf("L", "DL", "CL", "ML", "KG", "HG", "G", "MG", "TBSP", "TSP", "SPM", "PIECE(S)", "PINCH", "CUP", "WHOLE", "CLOVE", "CAN")
 
 // List types items
     // Pros/Cons
@@ -61,6 +61,7 @@ lateinit var recipeFavPath: String
 
 // Settings
 var isDark: Boolean = false
+lateinit var addedMeasures: MutableList<String>
 
 // Loading all images for use across the code
 val backgroundImage = LoadImage().loadImage("notepadBG.png")!!
@@ -90,7 +91,8 @@ fun main(args: Array<String>) {
 fun onStartUp() {
     // Checks if Settings.json has been made, if not make it else gets information from it
     if(!File(settingsPath).exists()) {
-        WriteSettingsFile(defaultPath, isDark)
+        addedMeasures = mutableListOf()
+        WriteSettingsFile(defaultPath, isDark, addedMeasures)
         path = defaultPath
     } else {
         ReadSettings(settingsPath)

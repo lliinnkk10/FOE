@@ -9,13 +9,14 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-class WriteSettingsFile(saveLocation: String, darkMode: Boolean) {
+class WriteSettingsFile(saveLocation: String, darkMode: Boolean, addedMeasures: MutableList<String>) {
 
-    private fun createSettingsObject(saveLocation: String, darkMode: Boolean) : Settings {
+    private fun createSettingsObject(saveLocation: String, darkMode: Boolean, addedMeasures: MutableList<String>) : Settings {
         val s = Settings()
 
         s.saveLocation = saveLocation
         s.isDark = darkMode
+        s.addedMeasures = addedMeasures
 
         return s
     }
@@ -24,7 +25,7 @@ class WriteSettingsFile(saveLocation: String, darkMode: Boolean) {
         ReadSettings(settingsPath)
         val gson = GsonBuilder().setPrettyPrinting().create()
         val file = File(settingsPath)
-        val sett = createSettingsObject(saveLocation, darkMode)
+        val sett = createSettingsObject(saveLocation, darkMode, addedMeasures)
         try {
             FileWriter(file.absoluteFile).use { writer -> gson.toJson(sett, writer) }
         } catch (e: IOException) {
