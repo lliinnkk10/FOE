@@ -65,7 +65,8 @@ lateinit var addedMeasures: MutableList<String>
 
 // Loading all images for use across the code
 val backgroundImage = LoadImage().loadImage("notepadBG.png")!!
-val imageIcon = LoadImage().loadImage(("icon.png"))!!
+val backgroundDarkImage = LoadImage().loadImage("notepadDMBG.png")!!
+val imageIcon = LoadImage().loadImage("icon.png")!!
 val toolTip = LoadImage().loadImage("hoverTooltip.png")!!
 val buttonCard = LoadImage().loadImage("ButtonCard.png")!!
 val deleteButton = LoadImage().loadIcon("deleteButton.png")!!

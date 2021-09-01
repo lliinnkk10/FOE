@@ -22,14 +22,11 @@ class NewMeasurePanel : JPanel() {
     private val alAdded = mutableListOf<String>()
 
     private val alLoadedMeasures = mutableListOf<String>()
-    private val alLoadedAddedMeasures = addedMeasures
 
     init {
         darkmode()
         ReadSettings()
         alLoadedMeasures.addAll(measures)
-
-        println("JCB Measures:\n${jcbMeasure}\nMeasures:$measures\nJCB Added:\n$jcbAdded\nAdded:\n$addedMeasures\nList:\n$alAdded\nLoaded:\n$alLoadedMeasures")
 
         jtfAdd.minimumSize = Dimension(200, 25)
         jtfAdd.addActionListener { addToList() }
@@ -57,8 +54,6 @@ class NewMeasurePanel : JPanel() {
                 addedMeasures.remove(jcbAdded.getItemAt(jcbAdded.selectedIndex))
                 alAdded.remove(jcbAdded.getItemAt(jcbAdded.selectedIndex))
                 jcbAdded.removeItem(jcbAdded.getItemAt(jcbAdded.selectedIndex))
-                updateUI()
-                println("JCB Measures:\n${jcbMeasure}\nMeasures:$measures\nJCB Added:\n$jcbAdded\nAdded:\n$addedMeasures\nList:\n$alAdded\nLoaded:\n$alLoadedMeasures")
             }
         }
 
@@ -112,7 +107,6 @@ class NewMeasurePanel : JPanel() {
         alAdded.add(jtfAdd.text.uppercase())
         jtfAdd.text = ""
         updateUI()
-        println("JCB Measures:\n${jcbMeasure}\nMeasures:$measures\nJCB Added:\n$jcbAdded\nAdded:\n$addedMeasures\nList:\n$alAdded\nLoaded:\n$alLoadedMeasures")
     }
 
 }

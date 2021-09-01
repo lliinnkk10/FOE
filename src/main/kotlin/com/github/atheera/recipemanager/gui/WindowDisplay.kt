@@ -4,6 +4,7 @@ import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.gui.panels.MenuPanel
 import com.github.atheera.recipemanager.gui.panels.list.*
 import com.github.atheera.recipemanager.gui.panels.other.CalculatorPanel
+import com.github.atheera.recipemanager.gui.panels.other.ConversionTablePanel
 import com.github.atheera.recipemanager.gui.panels.other.NewMeasurePanel
 import com.github.atheera.recipemanager.gui.panels.recipe.*
 import com.github.atheera.recipemanager.save.write.WriteSettingsFile
@@ -31,6 +32,7 @@ private lateinit var NewNorListPane: NewNormalListPanel
     // Extras
 private lateinit var CalcPane: CalculatorPanel
 private lateinit var MeasPane: NewMeasurePanel
+private lateinit var ConvPane: ConversionTablePanel
     // Layout
 private lateinit var cl: CardLayout
 
@@ -63,6 +65,7 @@ private lateinit var jmiRanRec: JMenuItem
         // Extras
 private lateinit var jmiCalc: JMenuItem
 private lateinit var jmiMeasure: JMenuItem
+private lateinit var jmiConvers: JMenuItem
 
 // States of panels and names
 object States {
@@ -80,6 +83,7 @@ object States {
     const val CALCULATORSTATE = 11
     const val RANDOMRECIPESTATE = 12
     const val ADDMEASURESTATE = 13
+    const val CONVERSIONSTATE = 14
 }
 var currentState: Int = States.MENUSTATE
 private val panels = listOf(
@@ -96,7 +100,8 @@ private val panels = listOf(
     "New Normal List",
     "Calculator",
     "Random Recipe",
-    "Add Measurement"
+    "Add Measurement",
+    "Conversion Table"
 )
 
 // Misc
@@ -128,6 +133,7 @@ class WindowDisplay : JFrame() {
 
         CalcPane = CalculatorPanel()
         MeasPane = NewMeasurePanel()
+        ConvPane = ConversionTablePanel()
 
         // Set data
         buildMenu()
@@ -148,6 +154,7 @@ class WindowDisplay : JFrame() {
         mainPane.add(CalcPane, panels[11])
         mainPane.add(RanRecPan, panels[12])
         mainPane.add(MeasPane, panels[13])
+        mainPane.add(ConvPane, panels[14])
         add(mainPane, BorderLayout.CENTER)
             // Menu buttons to menu panel
         jmb.add(jmSettings)
@@ -181,6 +188,7 @@ class WindowDisplay : JFrame() {
             States.CALCULATORSTATE -> States.CALCULATORSTATE
             States.RANDOMRECIPESTATE -> States.RANDOMRECIPESTATE
             States.ADDMEASURESTATE -> States.ADDMEASURESTATE
+            States.CONVERSIONSTATE -> States.CONVERSIONSTATE
             else -> States.MENUSTATE
         }
     }
@@ -210,6 +218,7 @@ class WindowDisplay : JFrame() {
             States.CALCULATORSTATE -> { setPanelInfo(CalcPane, panel); CalcPane.darkmode() }
             States.RANDOMRECIPESTATE -> { setPanelInfo(RanRecPan, panel); RanRecPan.darkmode() }
             States.ADDMEASURESTATE -> { setPanelInfo(MeasPane, panel); MeasPane.darkmode() }
+            States.CONVERSIONSTATE -> { setPanelInfo(ConvPane, panel); ConvPane.darkmode() }
         }
     }
 
@@ -246,6 +255,7 @@ class WindowDisplay : JFrame() {
             // Extras
         jmiCalc = JMenuItem("Calculator"); jmExtras.add(jmiCalc); jmiCalc.addActionListener { switchPanels(States.CALCULATORSTATE) }
         jmiMeasure = JMenuItem("Add another measurement"); jmExtras.add(jmiMeasure); jmiMeasure.addActionListener { switchPanels(States.ADDMEASURESTATE) }
+        jmiConvers = JMenuItem("Measurement conversion table"); jmExtras.add(jmiConvers); jmiConvers.addActionListener { switchPanels(States.CONVERSIONSTATE) }
     }
 
     private fun changeTitle(panel: Int) : String {
@@ -264,13 +274,14 @@ class WindowDisplay : JFrame() {
             States.CALCULATORSTATE -> "Calculator"
             States.RANDOMRECIPESTATE -> "Get Random Recipe"
             States.ADDMEASURESTATE -> "Add New Recipe Measurement"
+            States.CONVERSIONSTATE -> "Measurement Conversion Table"
             else -> TITLE
         }
     }
 
     private fun changeSize(panel: Int) : Dimension {
         return when (panel) {
-            States.MENUSTATE -> Dimension(backgroundImage.width, backgroundImage.height)
+            States.MENUSTATE -> Dimension(693, 645)
             States.NEWRECIPESTATE -> Dimension(1075, 975)
             States.SAVEDRECIPESTATE -> Dimension(1020, 600)
             States.FAVORITERECIPESTATE -> Dimension(600, 700)
@@ -284,6 +295,7 @@ class WindowDisplay : JFrame() {
             States.CALCULATORSTATE -> Dimension(665, 434)
             States.RANDOMRECIPESTATE -> Dimension(1030, 430)
             States.ADDMEASURESTATE -> Dimension(500, 500)
+            States.CONVERSIONSTATE -> Dimension(500, 500)
             else -> Dimension(backgroundImage.width, backgroundImage.height)
         }
     }
@@ -303,6 +315,7 @@ class WindowDisplay : JFrame() {
         CalcPane.isVisible = false
         RanRecPan.isVisible = false
         MeasPane.isVisible = false
+        ConvPane.isVisible = false
         cl.show(mainPane, panels[name])
         darkMode(panel)
         panel.isVisible = true

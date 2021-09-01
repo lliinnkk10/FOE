@@ -1,6 +1,8 @@
 package com.github.atheera.recipemanager.gui.panels
 
+import com.github.atheera.recipemanager.backgroundDarkImage
 import com.github.atheera.recipemanager.backgroundImage
+import com.github.atheera.recipemanager.isDark
 import java.awt.Graphics
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -14,7 +16,7 @@ class MenuPanel : JPanel() {
 
     override fun paintComponent(g: Graphics?) {
         super.paintComponent(g)
-        g?.drawImage(backgroundImage, 0, 0, this)
+        g?.drawImage(if(isDark) backgroundDarkImage else backgroundImage, 0, 0, this)
     }
 
 }
