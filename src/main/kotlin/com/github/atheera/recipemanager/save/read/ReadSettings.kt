@@ -51,7 +51,6 @@ class ReadSettings(saveLocation: String = settingsPath) {
         for(i in 0 until measure.size()) {
             addedMeasures.add(removeFirstAndLast(measure[i].toString()))
             settings.addedMeasures.add(removeFirstAndLast(measure[i].toString()))
-            measures.add(removeFirstAndLast(measure[i].toString()))
         }
 
     }

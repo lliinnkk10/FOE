@@ -97,6 +97,11 @@ fun onStartUp() {
     } else {
         ReadSettings(settingsPath)
     }
+    // Add the custom measurements to existing
+    for(i in addedMeasures) {
+        measures.add(i)
+    }
+
     // Sets the save paths according to the Settings.json
     recipePath = "$path/Recipes/"
     listPath = "$path/Files/"
