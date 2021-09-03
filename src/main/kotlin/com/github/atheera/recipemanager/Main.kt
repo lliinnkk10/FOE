@@ -10,6 +10,8 @@ import com.github.atheera.recipemanager.save.write.WriteSettingsFile
 import java.awt.Color
 import java.io.File
 import java.time.LocalTime
+import javax.swing.BorderFactory
+import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.border.Border
 import javax.swing.border.EtchedBorder
@@ -76,6 +78,9 @@ lateinit var dw: DebugWindow
 
 // Misc
 val GRAY = Color(43, 43, 43)
+val LIGHT_GRAY = Color(180, 180, 180)
+val DARK_WHITE = Color(200, 200, 200)
+val LIGHT_WHITE = Color(239, 239, 239)
 val WHITE = Color(238, 238, 238)
 
 fun main(args: Array<String>) {
@@ -185,44 +190,64 @@ fun upperCaseFirstWords(inString: String) : String {
             val combinedString = "$uppercaseFirst$remRest"
             combinedItem = combinedItem.plus("$combinedString ")
             if (i == splitItem.lastIndex) {
-                finalItem = combinedItem
+                finalItem = removeLast(combinedItem, 1)
             }
         }
     } catch (e: Exception) {
         finalItem = inString
     }
+    println(finalItem)
     return finalItem
 }
 
-fun darkMode(jp: JPanel) {
-    ReadSettings(settingsPath)
+fun darkMode(jp: JComponent) {
+    ReadSettings()
     if(isDark) {
-        jp.foreground = WHITE
+        jp.foreground = Color.WHITE
         jp.background = GRAY
+        jp.border = BorderFactory.createLineBorder(Color.BLACK)
     } else {
         jp.foreground = Color.BLACK
-        jp.background = WHITE
+        jp.background = LIGHT_GRAY
+        jp.border = BorderFactory.createLineBorder(Color.WHITE)
     }
 }
 
-fun darkModeOut(jp: JPanel) {
-    ReadSettings(settingsPath)
+fun darkModeOut(jp: JComponent) {
+    ReadSettings()
     if(isDark) {
-        jp.foreground = WHITE
+        jp.foreground = Color.WHITE
         jp.background = Color.DARK_GRAY
+        jp.border = BorderFactory.createLineBorder(Color.BLACK)
     } else {
         jp.foreground = Color.BLACK
-        jp.background = WHITE
+        jp.background = DARK_WHITE
+        jp.border = BorderFactory.createLineBorder(Color.WHITE)
     }
 }
 
-fun darkModeIn(jp: JPanel) {
-    ReadSettings(settingsPath)
+fun darkModeIn(jp: JComponent) {
+    ReadSettings()
     if(isDark) {
-        jp.foreground = WHITE
+        jp.foreground = Color.WHITE
         jp.background = Color.GRAY
+        jp.border = BorderFactory.createLineBorder(Color.BLACK)
+    } else {
+        jp.foreground = Color.BLACK
+        jp.background = LIGHT_WHITE
+        jp.border = BorderFactory.createLineBorder(Color.WHITE)
+    }
+}
+
+fun darkModeDetail(jp: JComponent) {
+    ReadSettings()
+    if(isDark) {
+        jp.foreground = Color.BLACK
+        jp.background = LIGHT_GRAY
+        jp.border = BorderFactory.createLineBorder(Color.BLACK)
     } else {
         jp.foreground = Color.BLACK
         jp.background = WHITE
+        jp.border = BorderFactory.createLineBorder(Color.WHITE)
     }
 }

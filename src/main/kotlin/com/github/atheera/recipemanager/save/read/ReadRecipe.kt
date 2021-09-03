@@ -21,6 +21,7 @@ class ReadRecipe(cat: String, subCat: String, fileName: String) {
             val reader = FileReader(file)
             val obj: JsonObject = parser.parse(reader) as JsonObject
             parseRecipeObject(obj)
+            reader.close()
         } catch(e: ParseException) {
             exc(e)
             e.printStackTrace()

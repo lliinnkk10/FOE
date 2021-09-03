@@ -21,6 +21,7 @@ class ReadNormalList(fileName: String) {
             val reader = FileReader(file)
             val obj: JsonObject = parser.parse(reader) as JsonObject
             parseListObject(obj)
+            reader.close()
         } catch(e: ParseException) {
             exc(e)
             e.printStackTrace()

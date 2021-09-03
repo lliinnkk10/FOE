@@ -102,6 +102,10 @@ class NewMeasurePanel : JPanel() {
         if(jtfAdd.text.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Measurement text to add is empty!")
             return
+        } else if(measures.contains(jtfAdd.text.uppercase())) {
+            jtfAdd.text = ""
+            JOptionPane.showMessageDialog(this, "Measurement already added!")
+            return
         }
         jcbAdded.addItem(jtfAdd.text.uppercase())
         alAdded.add(jtfAdd.text.uppercase())

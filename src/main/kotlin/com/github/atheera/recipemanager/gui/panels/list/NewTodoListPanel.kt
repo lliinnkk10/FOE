@@ -2,9 +2,9 @@ package com.github.atheera.recipemanager.gui.panels.list
 
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.HintTextField
-import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteListTD
 import net.miginfocom.swing.MigLayout
+import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.event.ItemEvent
@@ -16,7 +16,7 @@ class NewTodoListPanel : JPanel(MigLayout("align center")) {
 
     var jpList = JPanel(MigLayout())
     private var jspList = JScrollPane(jpList)
-    private var jpOuter = JPanel(MigLayout())
+    private var jpOuter = JPanel(MigLayout("align center"))
 
     private var jbAdd = JButton("Add to list")
     private var jbRemove = JButton("Remove all checked items")
@@ -30,6 +30,8 @@ class NewTodoListPanel : JPanel(MigLayout("align center")) {
     private var checkedList = mutableListOf<String>()
     private var checkList = mutableListOf<JCheckBox>()
     private val map = Hashtable<TextAttribute, Any?>()
+
+    private var itemCard = JCheckBox()
 
     private val fontB = Font("Tahoma", Font.PLAIN, 20)
     var fontS: Font
@@ -73,34 +75,35 @@ class NewTodoListPanel : JPanel(MigLayout("align center")) {
                 clearInfo()
             }
         }
-
-        add(htfTitle, "align center, wrap")
-        add(htfItem, "align center, wrap")
-        add(jbAdd, "align center, split 2")
-        add(jbRemove, "align center, wrap")
-        add(jpOuter, "align center, wrap")
+        jpOuter.add(htfTitle, "align center, wrap")
+        jpOuter.add(htfItem, "align center, wrap")
+        jpOuter.add(jbAdd, "align center, split 2")
+        jpOuter.add(jbRemove, "align center, wrap")
         jpOuter.add(jspList, "align center, wrap")
-        add(jbSave, "align center")
+        jpOuter.add(jbSave, "align center")
+        add(jpOuter, "align center")
     }
 
-    fun darkmode() : Boolean {
-        ReadSettings(settingsPath)
+    fun darkmode(){
         border = createBorder("Here you can make a list of things to do")
 
         darkMode(this)
         darkModeOut(jpOuter)
         darkModeIn(jpList)
 
-        return isDark
+        darkModeDetail(itemCard)
+
     }
 
     private fun addToList() {
         if(htfItem.text.isEmpty() || htfItem.text == itemText) {
             JOptionPane.showMessageDialog(this, "You need to enter an item first!")
         } else {
-            val itemCard = createCard(htfItem.text, false)
+            itemCard = createCard(htfItem.text, false)
             jpList.add(itemCard, "wrap")
             htfItem.text = ""
+            darkmode()
+            updateUI()
         }
     }
 
@@ -134,11 +137,10 @@ class NewTodoListPanel : JPanel(MigLayout("align center")) {
         htfItem.text = itemText
         htfTitle.text = titleText
 
-        jspList.removeAll()
+        jpList.removeAll()
 
         list.clear()
         checkList.clear()
         updateUI()
     }
-
 }

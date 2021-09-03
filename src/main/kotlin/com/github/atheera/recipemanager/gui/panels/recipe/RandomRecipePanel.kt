@@ -10,13 +10,11 @@ import com.github.atheera.recipemanager.save.read.ReadSettings
 import net.miginfocom.swing.MigLayout
 import java.awt.CardLayout
 import java.awt.Dimension
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
-import java.awt.event.ItemEvent
 import com.github.atheera.recipemanager.save.Files
-import java.awt.event.ItemListener
+import java.awt.event.*
 import java.io.File
 import javax.swing.*
+import javax.swing.border.EmptyBorder
 import kotlin.random.Random
 
 class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
@@ -269,6 +267,44 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
             val srf = SavedRecipeFrame(rTitle, category, subCategory, instructions, ingredients, desc, temperature, convTemperature, egg, gluten, lactose, vegan, vegetarian)
             srf.setLocationRelativeTo(this)
         }
+
+        jb.addMouseListener(object: MouseListener {
+            val pm = JPopupMenu()
+            val b = JButton("Delete saved file")
+            val files = File(recipePath.plus("$cat/$subCat/$file"))
+            override fun mouseClicked(e: MouseEvent) {
+                if(e.button == MouseEvent.BUTTON3) {
+                    b.addActionListener {
+                        val jop = JOptionPane.showConfirmDialog(jb, "Are you sure you want to delete file: ${files.name}?", "Delete selected file", JOptionPane.YES_NO_OPTION)
+                        if(jop == 0) {
+                            try {
+                                if(files.delete()) JOptionPane.showMessageDialog(jb, "Deleted file: ${files.name}")
+                                else JOptionPane.showMessageDialog(jb, "Failed to delete file: ${files.name}")
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }
+                        e.consume()
+                        pm.isVisible = false
+                        updateUI()
+                    }
+                }
+                pm.border = EmptyBorder(0, 0, 0 ,0)
+                pm.add(b)
+                pm.preferredSize = b.preferredSize
+                pm.show(jb, e.x, e.y)
+            }
+            override fun mouseExited(e: MouseEvent) {
+                if(e.component == b && e.component == jb) {
+                    pm.isVisible = false
+                    updateUI()
+                }
+            }
+            override fun mousePressed(e: MouseEvent?) { }
+            override fun mouseReleased(e: MouseEvent?) { }
+            override fun mouseEntered(e: MouseEvent?) { }
+        })
+
         return jb
     }
 

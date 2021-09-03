@@ -127,8 +127,8 @@ class CalculatorPanel : JPanel() {
 
     private fun createHistory(inputA: Double, operator: Char, inputB: Double, output: Double) : JPanel {
         val jp = JPanel(MigLayout())
-        jp.minimumSize = Dimension(250, 50)
-        jp.maximumSize = Dimension(250, 50)
+        jp.minimumSize = Dimension(248, 50)
+        jp.maximumSize = Dimension(248, 50)
         jp.border = BorderFactory.createLineBorder(Color.BLACK)
         jp.background = Color.WHITE
 
