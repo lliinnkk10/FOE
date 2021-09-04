@@ -11,6 +11,8 @@ class ButtonListCard(tit: String, typ: String) : JButton() {
 
     var title = tit
     var type = typ
+    private var titleSize = tit.length*10
+    private var typeSize = typ.length*10
 
     init {
         icon = ImageIcon(buttonCard)
@@ -21,8 +23,8 @@ class ButtonListCard(tit: String, typ: String) : JButton() {
     override fun paintComponent(g: Graphics) {
         super.paintComponent(g)
         g.font = Font("Tahoma", Font.BOLD, 20)
-        g.drawString(title, ((500-title.length)/2-(title.length*4)), (icon.iconHeight/2)-50)
-        g.drawString(type, ((500-type.length)/2-(type.length*4)), (icon.iconHeight/2)+50)
+        g.drawString(title, (250-(titleSize/2)), (icon.iconHeight/2)-50)
+        g.drawString(type, (250-(typeSize/2)), (icon.iconHeight/2)+50)
     }
 
 }

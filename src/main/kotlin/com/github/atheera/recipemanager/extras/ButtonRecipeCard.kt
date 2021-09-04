@@ -13,7 +13,7 @@ class ButtonRecipeCard(title: String, cat: String, subCat: String, desc: String)
     private var cats = cat
     private var subCats = subCat
     private var descs = desc
-    private var titleSize = title.length
+    private var titleSize = title.length*10
 
     init {
         icon = ImageIcon(buttonCard)
@@ -24,7 +24,7 @@ class ButtonRecipeCard(title: String, cat: String, subCat: String, desc: String)
     override fun paintComponent(g: Graphics) {
         super.paintComponent(g)
         g.font = Font("Tahoma", Font.BOLD, 20)
-        g.drawString(titles, ((500-titleSize)/2-(titleSize*4)), 55)
+        g.drawString(titles, (250-(titleSize/2)), 55)
         g.drawString(cats, 160, 90)
         g.drawString(subCats, 290, 90)
         g.drawString(descs, 70, 130)
