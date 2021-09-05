@@ -3,7 +3,8 @@ package com.github.atheera.recipemanager
 import com.github.atheera.recipemanager.extras.LoadImage
 import com.github.atheera.recipemanager.gui.DebugWindow
 import com.github.atheera.recipemanager.gui.WindowDisplay
-import com.github.atheera.recipemanager.gui.*
+import com.github.atheera.recipemanager.gui.isOpened
+import com.github.atheera.recipemanager.gui.jtaInfo
 import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteSettingsFile
@@ -12,7 +13,6 @@ import java.io.File
 import java.time.LocalTime
 import javax.swing.BorderFactory
 import javax.swing.JComponent
-import javax.swing.JPanel
 import javax.swing.border.Border
 import javax.swing.border.EtchedBorder
 import javax.swing.border.TitledBorder
@@ -64,8 +64,9 @@ lateinit var recipeFavPath: String
 // Settings
 var isDark: Boolean = false
 lateinit var addedMeasures: MutableList<String>
+var isDebug: Boolean = false
 
-// Loading all images for use across the code
+// Loading all images for use across the program
 val backgroundImage = LoadImage().loadImage("notepadBG.png")!!
 val backgroundDarkImage = LoadImage().loadImage("notepadDMBG.png")!!
 val imageIcon = LoadImage().loadImage("icon.png")!!
@@ -80,14 +81,14 @@ lateinit var dw: DebugWindow
 val GRAY = Color(43, 43, 43)
 val LIGHT_GRAY = Color(180, 180, 180)
 val DARK_WHITE = Color(200, 200, 200)
-val LIGHT_WHITE = Color(239, 239, 239)
+val LIGHT_WHITE = Color(225, 225, 225)
 val WHITE = Color(238, 238, 238)
 
 fun main(args: Array<String>) {
-    // This should only run first if debug edition!
-    openDebug()
-    // This should always run first, exc ^!
+    // This should always run first!
     onStartUp()
+    // Runs on startup if debug is enabled
+    if(isDebug) openDebug()
 
     // Opens the main programs window
     WindowDisplay()
@@ -98,7 +99,7 @@ fun onStartUp() {
     // Checks if Settings.json has been made, if not make it else gets information from it
     if(!File(settingsPath).exists()) {
         addedMeasures = mutableListOf()
-        WriteSettingsFile(defaultPath, isDark, addedMeasures)
+        WriteSettingsFile(defaultPath, isDark, addedMeasures, isDebug)
         path = defaultPath
     } else {
         ReadSettings(settingsPath)

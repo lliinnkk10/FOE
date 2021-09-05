@@ -38,7 +38,7 @@ class NewMeasurePanel : JPanel() {
                     measures.add(i)
                     addedMeasures.add(i)
                 }
-                WriteSettingsFile(path, isDark, addedMeasures)
+                WriteSettingsFile(path, isDark, addedMeasures, isDebug)
                 addedMeasures.clear()
                 JOptionPane.showMessageDialog(this, "Successfully saved recipe measurements!")
             }

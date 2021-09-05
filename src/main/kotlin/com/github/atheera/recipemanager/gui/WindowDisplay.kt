@@ -41,6 +41,7 @@ private lateinit var jmSettings: JMenu
 private lateinit var jmRecipes: JMenu
 private lateinit var jmLists: JMenu
 private lateinit var jmExtras: JMenu
+private lateinit var jmDebug: JMenu
 private lateinit var jmb: JMenuBar
     // Items
         // Lists
@@ -51,9 +52,8 @@ private lateinit var jmiNorList: JMenuItem
 private lateinit var jmiSavList: JMenuItem
         // Settings
 private lateinit var jmiSettings: JMenuItem
-private lateinit var jmiDebug: JMenuItem
-private lateinit var jmiSize: JMenuItem
 private lateinit var jmiDark: JCheckBoxMenuItem
+private var jmiDebugMode = JCheckBoxMenuItem("Debug mode")
         // Recipes
 private lateinit var jmiDesRec: JMenuItem
 private lateinit var jmiExtraRec: JMenuItem
@@ -66,6 +66,9 @@ private lateinit var jmiRanRec: JMenuItem
 private lateinit var jmiCalc: JMenuItem
 private lateinit var jmiMeasure: JMenuItem
 private lateinit var jmiConvers: JMenuItem
+        // Debug
+private lateinit var jmiSize: JMenuItem
+private lateinit var jmiDebug: JMenuItem
 
 // States of panels and names
 object States {
@@ -85,7 +88,7 @@ object States {
     const val ADDMEASURESTATE = 13
     const val CONVERSIONSTATE = 14
 }
-var currentState: Int = States.MENUSTATE
+var currentState = States.MENUSTATE
 private val panels = listOf(
     "Menu",
     "New Recipe",
@@ -230,6 +233,7 @@ class WindowDisplay : JFrame() {
         jmRecipes = JMenu("Recipes")
         jmLists = JMenu("Lists")
         jmExtras = JMenu("Extras")
+        jmDebug = JMenu("Debug")
 
         // Menu items
             // Lists
@@ -241,9 +245,8 @@ class WindowDisplay : JFrame() {
             // Settings
         jmiSettings = JMenuItem("Change save location"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ val csd = ChangeSaveDirectory(); csd.setLocationRelativeTo(this) }
         jmiSettings = JMenuItem("Go back to main menu"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ switchPanels(States.MENUSTATE) }
-        jmiDebug = JMenuItem("Open debug window"); jmSettings.add(jmiDebug); jmiDebug.addActionListener{ openDebug() }
-        jmiSize = JMenuItem("Get current size of window"); jmSettings.add(jmiSize); jmiSize.addActionListener { info("Current size: " + this.size) }
-        jmiDark = JCheckBoxMenuItem("Dark mode"); jmSettings.add(jmiDark); jmiDark.addActionListener { WriteSettingsFile(path, jmiDark.isSelected, addedMeasures); switchPanels(currentState) }; if(isDark) jmiDark.doClick()
+        jmiDark = JCheckBoxMenuItem("Dark mode"); jmSettings.add(jmiDark); jmiDark.addActionListener { WriteSettingsFile(path, jmiDark.isSelected, addedMeasures, isDebug); switchPanels(currentState) }; if(isDark) jmiDark.doClick()
+        jmSettings.add(jmiDebugMode); jmiDebugMode.addActionListener { WriteSettingsFile(path, jmiDark.isSelected, addedMeasures, jmiDebugMode.isSelected); if(jmiDebugMode.isSelected) jmb.add(jmDebug) else jmb.remove(jmDebug); switchPanels(currentState) }; if(isDebug) jmiDebugMode.doClick()
             // Recipes
         jmiNewRec = JMenuItem("Create new recipe"); jmRecipes.add(jmiNewRec); jmiNewRec.addActionListener{ switchPanels(States.NEWRECIPESTATE) }
         jmiSavRec = JMenu("View all saved recipes"); jmRecipes.add(jmiSavRec)
@@ -256,6 +259,9 @@ class WindowDisplay : JFrame() {
         jmiCalc = JMenuItem("Calculator"); jmExtras.add(jmiCalc); jmiCalc.addActionListener { switchPanels(States.CALCULATORSTATE) }
         jmiMeasure = JMenuItem("Add another measurement"); jmExtras.add(jmiMeasure); jmiMeasure.addActionListener { switchPanels(States.ADDMEASURESTATE) }
         jmiConvers = JMenuItem("Measurement conversion table"); jmExtras.add(jmiConvers); jmiConvers.addActionListener { switchPanels(States.CONVERSIONSTATE) }
+            // Debug
+        jmiDebug = JMenuItem("Open debug window"); jmDebug.add(jmiDebug); jmiDebug.addActionListener{ openDebug() }
+        jmiSize = JMenuItem("Get current size of window"); jmDebug.add(jmiSize); jmiSize.addActionListener { info("$currentState's current size: " + this.size) }
     }
 
     private fun changeTitle(panel: Int) : String {

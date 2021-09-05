@@ -53,6 +53,9 @@ class ReadSettings(saveLocation: String = settingsPath) {
             settings.addedMeasures.add(removeFirstAndLast(measure[i].toString()))
         }
 
+        val debug = file.get("isDebug").asBoolean
+        isDebug = debug
+        settings.isDebug = debug
     }
 
 }

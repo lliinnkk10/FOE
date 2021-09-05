@@ -1,13 +1,11 @@
 package com.github.atheera.recipemanager.gui
 
-import com.github.atheera.recipemanager.addedMeasures
-import com.github.atheera.recipemanager.defaultPath
+import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.HintTextField
-import com.github.atheera.recipemanager.isDark
-import com.github.atheera.recipemanager.onStartUp
 import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.write.WriteSettingsFile
 import net.miginfocom.swing.MigLayout
+import java.awt.Color
 import java.util.Timer
 import javax.swing.*
 import kotlin.concurrent.schedule
@@ -22,14 +20,17 @@ class ChangeSaveDirectory : JFrame() {
     private var jpMain = JPanel(MigLayout())
 
     init {
+        darkmode()
+
         title = "Change the location of saved files"
         defaultCloseOperation = DISPOSE_ON_CLOSE
         isResizable = false
 
+
         // Adding functionality
         jbSetDefault.addActionListener {
             Files().setPath("C://FOE/")
-            WriteSettingsFile(defaultPath, isDark, addedMeasures)
+            WriteSettingsFile(defaultPath, isDark, addedMeasures, isDebug)
             JOptionPane.showMessageDialog(this, "Successfully set save location to: c://FOE/")
             onStartUp()
             dispose()
@@ -40,7 +41,7 @@ class ChangeSaveDirectory : JFrame() {
                 JOptionPane.showMessageDialog(this, "You need to set a location first! ex: c://Users/(user)/Desktop")
             } else {
                 Files().setPath(jtaCD.text + "/FOE/")
-                WriteSettingsFile(jtaCD.text + "/FOE/", isDark, addedMeasures)
+                WriteSettingsFile(jtaCD.text + "/FOE/", isDark, addedMeasures, isDebug)
                 JOptionPane.showMessageDialog(this, "Successfully set save location to: ${jtaCD.text+"/FOE/"}")
                 onStartUp()
                 dispose()
@@ -57,6 +58,12 @@ class ChangeSaveDirectory : JFrame() {
 
         pack()
         isVisible = true
+    }
+
+    fun darkmode() {
+        darkModeOut(jpMain)
+        jlDesc.foreground = if(isDark) Color.WHITE else Color.BLACK
+        jlDesc2.foreground = if(isDark) Color.WHITE else Color.BLACK
     }
 
 }
