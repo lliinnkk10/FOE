@@ -32,6 +32,7 @@ class NewNormalListPanel : JPanel(MigLayout()) {
     private var jpListOut = JPanel(MigLayout())
     private var jspList = JScrollPane(jpList)
     private var itemList = mutableListOf<String>()
+    private var alItem = mutableListOf<JPanel>()
     private var itemCounter: Int = 0
     private val fontA = Font("Tahoma", Font.BOLD, 16)
     private val dim = Dimension(450, 600)
@@ -80,6 +81,9 @@ class NewNormalListPanel : JPanel(MigLayout()) {
         darkMode(this)
         darkModeOut(jpListOut)
         darkModeIn(jpList)
+
+        for (item in alItem) darkModeDetail(item)
+
     }
 
     private fun clearInfo() {
@@ -98,7 +102,10 @@ class NewNormalListPanel : JPanel(MigLayout()) {
         } else {
             val itemCard = createCard(htfItem.text, jpList, false)
             jpList.add(itemCard, "wrap")
+            alItem.add(itemCard)
+            darkmode()
             htfItem.text = ""
+            updateUI()
         }
     }
 
@@ -114,8 +121,8 @@ class NewNormalListPanel : JPanel(MigLayout()) {
 
         jlItem.font = fontA
         jp.border = BorderFactory.createLineBorder(Color.BLACK)
-        jp.minimumSize = Dimension(417, 40)
-        jp.maximumSize = Dimension(417, 40)
+        jp.minimumSize = Dimension(415, 40)
+        jp.maximumSize = Dimension(415, 40)
 
         jbDelete.addActionListener {
             removePane.remove(jp)

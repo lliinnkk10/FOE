@@ -48,6 +48,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
     var jlCat = JLabel()
     var jlSubCat = JLabel()
     var new = false
+    var alSubCat = mutableListOf<JRadioButton>()
 
     // Intolerance checkboxes
     val jcbEgg = JCheckBox("Egg Free")
@@ -136,11 +137,14 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         darkModeIn(jpCats)
         darkModeIn(jpIntol)
         darkModeOut(jpInsIng)
-        darkModeOut(jpButtons)
+        darkModeIn(jpButtons)
         darkModeIn(jpDegrees)
         darkModeIn(jpDesc)
         darkModeIn(jpInsOut)
         darkModeIn(jpIngOut)
+        darkModeDetail(jpIng)
+        darkModeDetail(jpIns)
+        darkModeDetail(jtaIns)
 
         this.border = createBorder("Here you can create a new recipe!")
         jpInsOut.border = createBorder("Here you can enter instructions for the recipe")
@@ -155,6 +159,16 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         jlCat.foreground = if(isDark) Color.WHITE else Color.BLACK
         jlSubCat.foreground = if(isDark) Color.WHITE else Color.BLACK
         jlCF.foreground = if(isDark) Color.WHITE else Color.BLACK
+
+        for(item in alSubCat) {
+            darkModeDetail(item)
+        }
+        darkModeDetail(jcbEgg)
+        darkModeDetail(jcbGluten)
+        darkModeDetail(jcbLactose)
+        darkModeDetail(jcbVegan)
+        darkModeDetail(jcbVeget)
+        darkModeDetail(jpConv)
     }
 
     private fun addDescriptionList() {
@@ -352,6 +366,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
             bgJRBGroup.add(jrb)
             jrb.actionCommand = i.toString()
             jrb.addActionListener(this)
+            alSubCat.add(jrb)
             if (i == 0)
                 jrb.doClick()
         }
@@ -361,6 +376,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
             bgJRBGroup.add(jrb)
             jrb.actionCommand = i.toString()
             jrb.addActionListener(this)
+            alSubCat.add(jrb)
         }
         for (i in subCatMeats.indices) {
             val jrb = JRadioButton(subCatMeats[i])
@@ -368,6 +384,7 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
             bgJRBGroup.add(jrb)
             jrb.actionCommand = i.toString()
             jrb.addActionListener(this)
+            alSubCat.add(jrb)
         }
         if(new) {
             bmCat = bgJRBGroup.selection
@@ -394,6 +411,8 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         val jlMeasure = JLabel(measure)
         val finalItem = if(new) upperCaseFirstWords(item) else item
         val jlItem = JLabel(finalItem)
+
+        jp.background = if(isDark) DARK_WHITE else WHITE
 
         jlAmount.font = fontC
         jlMeasure.font = fontC
@@ -445,8 +464,8 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         val combinedIngredient = ("$amount $measure $finalItem")
 
         jp.border = BorderFactory.createLineBorder(Color.BLACK)
-        jp.minimumSize = Dimension(408, 38)
-        jp.maximumSize = Dimension(408, 38)
+        jp.minimumSize = Dimension(405, 38)
+        jp.maximumSize = Dimension(405, 38)
         jp.background = Color.WHITE
 
         jbDelete.addActionListener {

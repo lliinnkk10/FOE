@@ -38,6 +38,8 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
 
     private var posList = mutableListOf<String>()
     private var negList = mutableListOf<String>()
+    private var alPos = mutableListOf<JPanel>()
+    private var alNeg = mutableListOf<JPanel>()
     private var posCounter: Int = 0
     private var negCounter: Int = 0
     private var holdingShift: Boolean = false
@@ -118,6 +120,8 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
         darkModeOut(posOutPane)
         darkModeIn(negPane)
 
+        for (item in alNeg) darkModeDetail(item)
+        for (item in alPos) darkModeDetail(item)
 
         jlNeg.foreground = if(isDark) Color.WHITE else Color.BLACK
         jlPos.foreground = if(isDark) Color.WHITE else Color.BLACK
@@ -147,15 +151,17 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
         if(isPos) {
             val argCard = createCard(htfArg.text, posPane, true)
             posPane.add(argCard, "wrap")
+            alPos.add(argCard)
         } else {
             val argCard = createCard(htfArg.text, negPane, true)
             negPane.add(argCard, "wrap")
+            alNeg.add(argCard)
         }
+        darkmode()
+        updateUI()
         htfArg.text = ""
 
     }
-
-
 
     fun createCard(argument: String, removePane: JPanel, new: Boolean = false) : JPanel {
         val arg = if(new) upperCaseFirstWords(argument) else argument
@@ -176,8 +182,8 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
 
         jlArg.font = fontA
         jp.border = BorderFactory.createLineBorder(Color.BLACK)
-        jp.minimumSize = Dimension(340, 40)
-        jp.maximumSize = Dimension( 340, 40)
+        jp.minimumSize = Dimension(316, 40)
+        jp.maximumSize = Dimension( 316, 40)
 
         jbDelete.addActionListener {
             removePane.remove(jp)

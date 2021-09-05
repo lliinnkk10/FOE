@@ -2,7 +2,10 @@ package com.github.atheera.recipemanager.gui
 
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.gui.panels.MenuPanel
-import com.github.atheera.recipemanager.gui.panels.list.*
+import com.github.atheera.recipemanager.gui.panels.list.NewNormalListPanel
+import com.github.atheera.recipemanager.gui.panels.list.NewPCListPanel
+import com.github.atheera.recipemanager.gui.panels.list.NewTodoListPanel
+import com.github.atheera.recipemanager.gui.panels.list.SavedListsPanel
 import com.github.atheera.recipemanager.gui.panels.other.CalculatorPanel
 import com.github.atheera.recipemanager.gui.panels.other.ConversionTablePanel
 import com.github.atheera.recipemanager.gui.panels.other.NewMeasurePanel
@@ -279,7 +282,7 @@ class WindowDisplay : JFrame() {
             States.NEWNORMALLISTSTATE -> "Create New Plain List"
             States.CALCULATORSTATE -> "Calculator"
             States.RANDOMRECIPESTATE -> "Get Random Recipe"
-            States.ADDMEASURESTATE -> "Add New Recipe Measurement"
+            States.ADDMEASURESTATE -> "Add Measurement"
             States.CONVERSIONSTATE -> "Measurement Conversion Table"
             else -> TITLE
         }
@@ -288,19 +291,19 @@ class WindowDisplay : JFrame() {
     private fun changeSize(panel: Int) : Dimension {
         return when (panel) {
             States.MENUSTATE -> Dimension(693, 645)
-            States.NEWRECIPESTATE -> Dimension(1077, 975)
+            States.NEWRECIPESTATE -> Dimension(1079, 975)
             States.SAVEDRECIPESTATE -> Dimension(1020, 600)
             States.FAVORITERECIPESTATE -> Dimension(600, 684)
             States.NEWPCLISTSTATE -> Dimension(792, 780)
-            States.SAVEDLISTSTATE -> Dimension(600, 700)
+            States.SAVEDLISTSTATE -> Dimension(600, 678)
             States.NEWTODOLISTSTATE -> Dimension(574, 750)
-            States.SAVEDDESSERTRECIPESTATE -> Dimension(600, 700)
-            States.SAVEDEXTRARECIPESTATE -> Dimension(600, 700)
-            States.SAVEDMEATRECIPESTATE -> Dimension(600, 700)
+            States.SAVEDDESSERTRECIPESTATE -> Dimension(600, 680)
+            States.SAVEDEXTRARECIPESTATE -> Dimension(600, 680)
+            States.SAVEDMEATRECIPESTATE -> Dimension(600, 680)
             States.NEWNORMALLISTSTATE -> Dimension(507, 824)
             States.CALCULATORSTATE -> Dimension(665, 434)
             States.RANDOMRECIPESTATE -> Dimension(1030, 430)
-            States.ADDMEASURESTATE -> Dimension(500, 500)
+            States.ADDMEASURESTATE -> Dimension(435, 267)
             States.CONVERSIONSTATE -> Dimension(500, 500)
             else -> Dimension(backgroundImage.width, backgroundImage.height)
         }

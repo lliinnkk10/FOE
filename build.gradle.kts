@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.5.21"
+
 }
 
 group = "atheera"
@@ -12,8 +13,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test-junit"))
-    implementation("com.google.code.gson:gson:2.8.5")
+    implementation("org.jetbrains.kotlin:kotlin-test-junit:1.5.21")
+    implementation("com.google.code.gson:gson:2.8.8")
     implementation("com.miglayout:miglayout:3.7.4")
     api("com.google.api.client:google-api-client-json:1.2.3-alpha")
 }

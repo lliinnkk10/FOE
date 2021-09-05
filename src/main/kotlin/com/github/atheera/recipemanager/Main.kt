@@ -197,7 +197,6 @@ fun upperCaseFirstWords(inString: String) : String {
     } catch (e: Exception) {
         finalItem = inString
     }
-    println(finalItem)
     return finalItem
 }
 
