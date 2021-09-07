@@ -261,7 +261,7 @@ class WindowDisplay : JFrame() {
             // Extras
         jmiCalc = JMenuItem("Calculator"); jmExtras.add(jmiCalc); jmiCalc.addActionListener { switchPanels(States.CALCULATORSTATE) }
         jmiMeasure = JMenuItem("Add another measurement"); jmExtras.add(jmiMeasure); jmiMeasure.addActionListener { switchPanels(States.ADDMEASURESTATE) }
-        jmiConvers = JMenuItem("Measurement conversion table"); jmExtras.add(jmiConvers); jmiConvers.addActionListener { switchPanels(States.CONVERSIONSTATE) }
+        //jmiConvers = JMenuItem("Measurement conversion table"); jmExtras.add(jmiConvers); jmiConvers.addActionListener { switchPanels(States.CONVERSIONSTATE) }
             // Debug
         jmiDebug = JMenuItem("Open debug window"); jmDebug.add(jmiDebug); jmiDebug.addActionListener{ openDebug() }
         jmiSize = JMenuItem("Get current size of window"); jmDebug.add(jmiSize); jmiSize.addActionListener { info("$currentState's current size: " + this.size) }
@@ -302,8 +302,8 @@ class WindowDisplay : JFrame() {
             States.SAVEDMEATRECIPESTATE -> Dimension(600, 680)
             States.NEWNORMALLISTSTATE -> Dimension(507, 824)
             States.CALCULATORSTATE -> Dimension(665, 434)
-            States.RANDOMRECIPESTATE -> Dimension(1030, 430)
-            States.ADDMEASURESTATE -> Dimension(435, 267)
+            States.RANDOMRECIPESTATE -> Dimension(1030, 410)
+            States.ADDMEASURESTATE -> Dimension(435, 260)
             States.CONVERSIONSTATE -> Dimension(500, 500)
             else -> Dimension(backgroundImage.width, backgroundImage.height)
         }
