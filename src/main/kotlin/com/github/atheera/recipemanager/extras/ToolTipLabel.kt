@@ -39,7 +39,7 @@ class ToolTipLabel(tip: String) : JLabel() {
             }
 
             override fun mouseExited(e: MouseEvent) {
-                if (!e.component.contains(e.x, e.y) || !e.component.contains(pm.location)) {
+                if (!e.component.contains(e.point) && !jl.contains(e.point)) {
                     pm.isVisible = false
                     updateUI()
                 }

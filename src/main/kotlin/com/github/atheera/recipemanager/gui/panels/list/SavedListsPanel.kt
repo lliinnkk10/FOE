@@ -34,7 +34,7 @@ class SavedListsPanel : JPanel() {
     private var jpNCard = JPanel(MigLayout("wrap 1"))
 
     private lateinit var selectedType: String
-    private lateinit var tempButton: JButton
+    private lateinit var tempButton: ButtonListCard
 
     init {
         // Initialize
@@ -77,7 +77,7 @@ class SavedListsPanel : JPanel() {
         darkModeIn(jpTdCard)
         darkModeIn(jpPcCard)
     }
-
+/*
     private fun createButton(title: String, type: String, file: String) : ButtonListCard {
         val jb = ButtonListCard(title, type)
 
@@ -162,7 +162,7 @@ class SavedListsPanel : JPanel() {
         })
 
 
-    }
+    }*/
 
     fun loadLists() {
         try {
@@ -184,15 +184,15 @@ class SavedListsPanel : JPanel() {
 
                 when (type) { // Add buttons and function to each list type
                     listCategories[0] -> { // Pros/Cons
-                        tempButton = createButton(name, listCategories[0], names)
+                        tempButton = ButtonListCard(name, listCategories[0])
                         jpPcCard.add(tempButton)
                     }
                     listCategories[1] -> { // To Do List
-                        tempButton = createButton(name, listCategories[1], names)
+                        tempButton = ButtonListCard(name, listCategories[1])
                         jpTdCard.add(tempButton)
                     }
                     listCategories[2] -> { // Plain Item List
-                        tempButton = createButton(name, listCategories[2], names)
+                        tempButton = ButtonListCard(name, listCategories[2])
                         jpNCard.add(tempButton)
                     }
                 }

@@ -3,7 +3,6 @@ package com.github.atheera.recipemanager.gui.panels.recipe
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.ButtonRecipeCard
 import com.github.atheera.recipemanager.gui.exc
-import com.github.atheera.recipemanager.gui.frames.recipe.SavedRecipeFrame
 import com.github.atheera.recipemanager.save.read.ReadRecipe
 import com.github.atheera.recipemanager.save.read.ReadRecipeFavorite
 import com.github.atheera.recipemanager.save.read.ReadSettings
@@ -14,7 +13,6 @@ import com.github.atheera.recipemanager.save.Files
 import java.awt.event.*
 import java.io.File
 import javax.swing.*
-import javax.swing.border.EmptyBorder
 import kotlin.random.Random
 
 class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
@@ -120,10 +118,9 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
             val files = file.listFiles()
             for (allFiles in files!!) {
                 val names = allFiles.name
-                val title = removeLast(names, 5)
                 when (category) {
                     categories[i] -> {
-                        val jb = createButton(title, categories[i], subCat, names, false)
+                        val jb = createButton(categories[i], subCat, names, false)
                         if (subCat == recipeSubCategory)
                             searchedFiles.add(jb)
                     }
@@ -211,10 +208,9 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
             val files = file.listFiles()
             for (allFiles in files!!) {
                 val names = allFiles.name
-                val title = removeLast(names, 5)
                 when (val subCat = category[i]) {
                     subCat -> {
-                        val jb = createButton(title, categories[j], subCat, names, favorite)
+                        val jb = createButton(categories[j], subCat, names, favorite)
                         if (subCat == recipeSubCategory) searchedFiles.add(jb)
                     }
                 }
@@ -227,27 +223,31 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
         val recFiles = recFile.listFiles()
         for(allFiles in recFiles!!) {
             val files = allFiles.name
-            val title = removeLast(files, 5)
             for (i in subCatDesserts.indices) { when (val cat = subCatDesserts[i]) {cat -> {
-                val jb = createButton(title, categories[0], cat, files, true)
+                val jb = createButton(categories[0], cat, files, true)
                 if (cat == recipeSubCategory) searchedFiles.add(jb)
             } } }
             for (i in subCatExtras.indices) { when (val cat = subCatExtras[i]) {cat -> {
-                val jb = createButton(title, categories[1], cat, files, true)
+                val jb = createButton(categories[1], cat, files, true)
                 if (cat == recipeSubCategory) searchedFiles.add(jb)
             } } }
             for (i in subCatMeats.indices) { when (val cat = subCatMeats[i]) {cat -> {
-                val jb = createButton(title, categories[2], cat, files, true)
+                val jb = createButton(categories[2], cat, files, true)
                 if (cat == recipeSubCategory) searchedFiles.add(jb)
             } } }
         }
     }
 
-    private fun createButton(title: String, cat: String, subCat: String, file: String, favorite: Boolean) : ButtonRecipeCard {
-        if(favorite) ReadRecipeFavorite(file)
+    private fun createButton(
+        cat: String,
+        subCat: String,
+        file: String,
+        favorite: Boolean
+    ): ButtonRecipeCard {
+        if (favorite) ReadRecipeFavorite(file)
         else ReadRecipe(cat, subCat, file)
 
-        val rTitle = recipeTitle
+        val title = recipeTitle
         val category = recipeCategory
         val subCategory = recipeSubCategory
         val instructions = recipeInstructions
@@ -261,51 +261,21 @@ class RandomRecipePanel : JPanel(), ItemListener, ActionListener {
         val vegan = recipeVegan
         val vegetarian = recipeVegetarian
 
-        val jb = ButtonRecipeCard(title, cat, subCat, desc)
-
-        jb.addActionListener {
-            val srf = SavedRecipeFrame(rTitle, category, subCategory, instructions, ingredients, desc, temperature, convTemperature, egg, gluten, lactose, vegan, vegetarian)
-            srf.setLocationRelativeTo(this)
-        }
-
-        jb.addMouseListener(object: MouseListener {
-            val pm = JPopupMenu()
-            val b = JButton("Delete saved file")
-            val files = File(recipePath.plus("$cat/$subCat/$file"))
-            override fun mouseClicked(e: MouseEvent) {
-                if(e.button == MouseEvent.BUTTON3) {
-                    b.addActionListener {
-                        val jop = JOptionPane.showConfirmDialog(jb, "Are you sure you want to delete file: ${files.name}?", "Delete selected file", JOptionPane.YES_NO_OPTION)
-                        if(jop == 0) {
-                            try {
-                                if(files.delete()) JOptionPane.showMessageDialog(jb, "Deleted file: ${files.name}")
-                                else JOptionPane.showMessageDialog(jb, "Failed to delete file: ${files.name}")
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-                        e.consume()
-                        pm.isVisible = false
-                        updateUI()
-                    }
-                }
-                pm.border = EmptyBorder(0, 0, 0 ,0)
-                pm.add(b)
-                pm.preferredSize = b.preferredSize
-                pm.show(jb, e.x, e.y)
-            }
-            override fun mouseExited(e: MouseEvent) {
-                if(e.component == b && e.component == jb) {
-                    pm.isVisible = false
-                    updateUI()
-                }
-            }
-            override fun mousePressed(e: MouseEvent?) { }
-            override fun mouseReleased(e: MouseEvent?) { }
-            override fun mouseEntered(e: MouseEvent?) { }
-        })
-
-        return jb
+        return ButtonRecipeCard(
+            title,
+            category,
+            subCategory,
+            instructions,
+            ingredients,
+            desc,
+            temperature,
+            convTemperature,
+            egg,
+            gluten,
+            lactose,
+            vegan,
+            vegetarian
+        )
     }
 
     fun darkmode() {

@@ -1,6 +1,7 @@
 package com.github.atheera.recipemanager.gui.panels.list
 
 import com.github.atheera.recipemanager.*
+import com.github.atheera.recipemanager.extras.CJPanel
 import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.save.write.WriteListTD
 import net.miginfocom.swing.MigLayout
@@ -12,7 +13,7 @@ import java.awt.font.TextAttribute
 import java.util.*
 import javax.swing.*
 
-class NewTodoListPanel : JPanel(MigLayout("align center")) {
+class NewTodoListPanel : CJPanel(MigLayout("align center")) {
 
     var jpList = JPanel(MigLayout())
     private var jspList = JScrollPane(jpList)
@@ -143,4 +144,9 @@ class NewTodoListPanel : JPanel(MigLayout("align center")) {
         checkList.clear()
         updateUI()
     }
+
+    override fun defaultLoad() {
+
+    }
+
 }

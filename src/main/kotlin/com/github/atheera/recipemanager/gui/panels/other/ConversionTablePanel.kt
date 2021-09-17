@@ -11,6 +11,25 @@ import javax.swing.*
 
 class ConversionTablePanel : JPanel() {
 
+    private enum class EVolume {
+        USGALLON,
+        USQUART,
+        USPINT,
+        USCUP,
+        FLUIDOUNCE,
+        USTBSP,
+        USTSP,
+        CUBICM,
+        LITER,
+        DECILITER,
+        CENTILITER,
+        MILLILITER,
+        IMPGALLON,
+        IMPQUART,
+        IMPPINT,
+        IMPCUP,
+    }
+
     private val jpContent = JPanel(MigLayout())
 
     private val jcbFrom = JComboBox<String>()
@@ -18,9 +37,9 @@ class ConversionTablePanel : JPanel() {
     private val jcbTo = JComboBox<String>()
     private val jlOutput = JLabel()
 
-    private val jrbLiquid = JRadioButton("Liquid")
+    private val jrbVolume = JRadioButton("Volume")
     private val alLiquid = listOf("")
-    private val jrbSolid = JRadioButton("Solid")
+    private val jrbMass = JRadioButton("Mass")
     private val alSolid = listOf("")
     private val bgJRB = ButtonGroup()
 
@@ -29,16 +48,16 @@ class ConversionTablePanel : JPanel() {
     init {
         darkmode()
 
-        bgJRB.add(jrbLiquid)
-        bgJRB.add(jrbSolid)
-        jrbLiquid.doClick()
+        bgJRB.add(jrbVolume)
+        bgJRB.add(jrbMass)
+        jrbVolume.doClick()
         addJCB()
 
         htfInput.font = fontA
         jlOutput.font = fontA
 
-        jpContent.add(jrbLiquid, "align center, split 2")
-        jpContent.add(jrbSolid, "wrap")
+        jpContent.add(jrbVolume, "align center, split 2")
+        jpContent.add(jrbMass, "wrap")
         jpContent.add(jcbFrom, "align center, wrap")
         jpContent.add(htfInput, "align center, wrap")
         jpContent.add(jcbTo, "align center, wrap")
@@ -56,7 +75,7 @@ class ConversionTablePanel : JPanel() {
             e.printStackTrace()
         }
 
-        if (jrbLiquid.isSelected) {
+        if (jrbVolume.isSelected) {
             for (item in alLiquid) {
                 jcbFrom.addItem(item)
                 jcbTo.addItem(item)

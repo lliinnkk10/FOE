@@ -1,12 +1,8 @@
 package com.github.atheera.recipemanager.gui.panels.recipe
 
 import com.github.atheera.recipemanager.*
-import com.github.atheera.recipemanager.extras.DeleteButton
-import com.github.atheera.recipemanager.extras.HintTextField
-import com.github.atheera.recipemanager.extras.TextLineNumber
-import com.github.atheera.recipemanager.extras.ToolTipLabel
+import com.github.atheera.recipemanager.extras.*
 import com.github.atheera.recipemanager.gui.exc
-import com.github.atheera.recipemanager.gui.info
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteRecipeFavorite
 import com.github.atheera.recipemanager.save.write.WriteRecipeSaves
@@ -19,7 +15,7 @@ import java.awt.event.*
 import javax.swing.*
 import javax.swing.border.EmptyBorder
 
-class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionListener {
+class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
 
     // Local
     private val fontA = Font("Tahoma", Font.BOLD, 20)
@@ -127,6 +123,10 @@ class NewRecipePanel(new: Boolean) : JPanel(MigLayout()), ItemListener, ActionLi
         add(jspRecipe)
 
         darkmode()
+    }
+
+    override fun defaultLoad() {
+
     }
 
     fun darkmode() {

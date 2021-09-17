@@ -1,6 +1,8 @@
 package com.github.atheera.recipemanager.gui
 
 import com.github.atheera.recipemanager.*
+import com.github.atheera.recipemanager.extras.CJPanel
+import com.github.atheera.recipemanager.gui.frames.list.SavedNList
 import com.github.atheera.recipemanager.gui.panels.MenuPanel
 import com.github.atheera.recipemanager.gui.panels.list.NewNormalListPanel
 import com.github.atheera.recipemanager.gui.panels.list.NewPCListPanel
@@ -14,6 +16,7 @@ import com.github.atheera.recipemanager.save.write.WriteSettingsFile
 import java.awt.BorderLayout
 import java.awt.CardLayout
 import java.awt.Dimension
+import java.awt.Toolkit
 import javax.swing.*
 
 // Panels
@@ -28,7 +31,7 @@ private lateinit var SavMeaRecPan: SavedMeatRecipePanel
 private lateinit var FavRecPane: FavoriteRecipePanel
 private lateinit var RanRecPan: RandomRecipePanel
     // Lists
-private lateinit var NewPosNegListPane: NewPCListPanel
+private lateinit var NewProConListPane: NewPCListPanel
 private lateinit var NewToDoListPane: NewTodoListPanel
 private lateinit var SavListPane: SavedListsPanel
 private lateinit var NewNorListPane: NewNormalListPanel
@@ -133,7 +136,7 @@ class WindowDisplay : JFrame() {
         NewNorListPane = NewNormalListPanel()
         RanRecPan = RandomRecipePanel()
 
-        NewPosNegListPane = NewPCListPanel()
+        NewProConListPane = NewPCListPanel()
         NewToDoListPane = NewTodoListPanel()
         SavListPane = SavedListsPanel()
 
@@ -150,7 +153,7 @@ class WindowDisplay : JFrame() {
         mainPane.add(NewRecPane, panels[1])
         mainPane.add(SavRecPane, panels[2])
         mainPane.add(FavRecPane, panels[3])
-        mainPane.add(NewPosNegListPane, panels[4])
+        mainPane.add(NewProConListPane, panels[4])
         mainPane.add(NewToDoListPane, panels[5])
         mainPane.add(SavListPane, panels[6])
         mainPane.add(SavDesRecPan, panels[7])
@@ -178,8 +181,17 @@ class WindowDisplay : JFrame() {
         isVisible = true
     }
 
-    private fun setCurrentState(panel: Int) {
-        currentState = when (panel) {
+    fun getCurrentState(state: Int) : CJPanel {
+        return when (state) {
+            States.NEWPCLISTSTATE -> NewProConListPane
+            States.NEWTODOLISTSTATE -> NewToDoListPane
+            States.NEWNORMALLISTSTATE -> NewNorListPane
+            else -> NewProConListPane
+        }
+    }
+
+    private fun setCurrentState(state: Int) {
+        currentState = when (state) {
             States.MENUSTATE -> States.MENUSTATE
             States.NEWRECIPESTATE -> States.NEWRECIPESTATE
             States.SAVEDRECIPESTATE -> States.SAVEDRECIPESTATE
@@ -200,6 +212,9 @@ class WindowDisplay : JFrame() {
     }
 
     private fun setPanelInfo(panel: JPanel, state: Int) {
+        //if(panel != getCurrentState(state)) {
+        //    JOptionPane.showConfirmDialog(this, "", "", JOptionPane.YES_NO_OPTION)
+        //}
         showPanel(panel, state)
         size = changeSize(state)
         title = changeTitle(state)
@@ -208,23 +223,23 @@ class WindowDisplay : JFrame() {
         panel.updateUI()
     }
 
-    private fun switchPanels(panel: Int) {
-        when (panel) {
-            States.MENUSTATE -> { setPanelInfo(MenuPane, panel) }
-            States.NEWRECIPESTATE -> { setPanelInfo(NewRecPane, panel); NewRecPane.darkmode() }
-            States.SAVEDRECIPESTATE -> { setPanelInfo(SavRecPane, panel) }
-            States.FAVORITERECIPESTATE -> { setPanelInfo(FavRecPane, panel); FavRecPane.darkmode() }
-            States.NEWPCLISTSTATE -> { setPanelInfo(NewPosNegListPane, panel); NewPosNegListPane.darkmode() }
-            States.NEWTODOLISTSTATE -> { setPanelInfo(NewToDoListPane, panel); NewToDoListPane.darkmode() }
-            States.SAVEDLISTSTATE -> { setPanelInfo(SavListPane, panel); SavListPane.darkmode() }
-            States.SAVEDDESSERTRECIPESTATE -> { setPanelInfo(SavDesRecPan, panel); SavDesRecPan.darkmode() }
-            States.SAVEDEXTRARECIPESTATE -> { setPanelInfo(SavExtRecPan, panel); SavExtRecPan.darkmode() }
-            States.SAVEDMEATRECIPESTATE -> { setPanelInfo(SavMeaRecPan, panel); SavMeaRecPan.darkmode() }
-            States.NEWNORMALLISTSTATE -> { setPanelInfo(NewNorListPane, panel); NewNorListPane.darkmode() }
-            States.CALCULATORSTATE -> { setPanelInfo(CalcPane, panel); CalcPane.darkmode() }
-            States.RANDOMRECIPESTATE -> { setPanelInfo(RanRecPan, panel); RanRecPan.darkmode() }
-            States.ADDMEASURESTATE -> { setPanelInfo(MeasPane, panel); MeasPane.darkmode() }
-            States.CONVERSIONSTATE -> { setPanelInfo(ConvPane, panel); ConvPane.darkmode() }
+    private fun switchPanels(state: Int) {
+        when (state) {
+            States.MENUSTATE -> { setPanelInfo(MenuPane, state) }
+            States.NEWRECIPESTATE -> { setPanelInfo(NewRecPane, state); NewRecPane.darkmode() }
+            States.SAVEDRECIPESTATE -> { setPanelInfo(SavRecPane, state) }
+            States.FAVORITERECIPESTATE -> { setPanelInfo(FavRecPane, state); FavRecPane.darkmode() }
+            States.NEWPCLISTSTATE -> { setPanelInfo(NewProConListPane, state); NewProConListPane.darkmode() }
+            States.NEWTODOLISTSTATE -> { setPanelInfo(NewToDoListPane, state); NewToDoListPane.darkmode() }
+            States.SAVEDLISTSTATE -> { setPanelInfo(SavListPane, state); SavListPane.darkmode() }
+            States.SAVEDDESSERTRECIPESTATE -> { setPanelInfo(SavDesRecPan, state); SavDesRecPan.darkmode() }
+            States.SAVEDEXTRARECIPESTATE -> { setPanelInfo(SavExtRecPan, state); SavExtRecPan.darkmode() }
+            States.SAVEDMEATRECIPESTATE -> { setPanelInfo(SavMeaRecPan, state); SavMeaRecPan.darkmode() }
+            States.NEWNORMALLISTSTATE -> { setPanelInfo(NewNorListPane, state); NewNorListPane.darkmode() }
+            States.CALCULATORSTATE -> { setPanelInfo(CalcPane, state); CalcPane.darkmode() }
+            States.RANDOMRECIPESTATE -> { setPanelInfo(RanRecPan, state); RanRecPan.darkmode() }
+            States.ADDMEASURESTATE -> { setPanelInfo(MeasPane, state); MeasPane.darkmode() }
+            States.CONVERSIONSTATE -> { setPanelInfo(ConvPane, state); ConvPane.darkmode() }
         }
     }
 
@@ -267,8 +282,8 @@ class WindowDisplay : JFrame() {
         jmiSize = JMenuItem("Get current size of window"); jmDebug.add(jmiSize); jmiSize.addActionListener { info("$currentState's current size: " + this.size) }
     }
 
-    private fun changeTitle(panel: Int) : String {
-        return "$TITLE - " + when (panel) {
+    private fun changeTitle(state: Int) : String {
+        return "$TITLE - " + when (state) {
             States.MENUSTATE -> "Main Menu"
             States.NEWRECIPESTATE -> "Create New Recipe"
             States.SAVEDRECIPESTATE -> "View Saved Recipes"
@@ -288,10 +303,11 @@ class WindowDisplay : JFrame() {
         }
     }
 
-    private fun changeSize(panel: Int) : Dimension {
-        return when (panel) {
+    private fun changeSize(state: Int) : Dimension {
+        val wh = Toolkit.getDefaultToolkit().screenSize.height
+        return when (state) {
             States.MENUSTATE -> Dimension(693, 645)
-            States.NEWRECIPESTATE -> Dimension(1079, 975)
+            States.NEWRECIPESTATE -> Dimension(1079, ((wh/2)+(wh/3)))
             States.SAVEDRECIPESTATE -> Dimension(1020, 600)
             States.FAVORITERECIPESTATE -> Dimension(600, 684)
             States.NEWPCLISTSTATE -> Dimension(792, 780)
@@ -309,12 +325,12 @@ class WindowDisplay : JFrame() {
         }
     }
 
-    private fun showPanel(panel: JPanel, name: Int) {
+    private fun showPanel(panel: JPanel, state: Int) {
         MenuPane.isVisible = false
         NewRecPane.isVisible = false
         SavRecPane.isVisible = false
         FavRecPane.isVisible = false
-        NewPosNegListPane.isVisible = false
+        NewProConListPane.isVisible = false
         SavListPane.isVisible = false
         NewToDoListPane.isVisible = false
         SavDesRecPan.isVisible = false
@@ -325,7 +341,7 @@ class WindowDisplay : JFrame() {
         RanRecPan.isVisible = false
         MeasPane.isVisible = false
         ConvPane.isVisible = false
-        cl.show(mainPane, panels[name])
+        cl.show(mainPane, panels[state])
         darkMode(panel)
         panel.isVisible = true
         pack()

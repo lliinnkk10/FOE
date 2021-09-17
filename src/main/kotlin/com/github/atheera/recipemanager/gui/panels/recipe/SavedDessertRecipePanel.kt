@@ -3,7 +3,6 @@ package com.github.atheera.recipemanager.gui.panels.recipe
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.ButtonRecipeCard
 import com.github.atheera.recipemanager.gui.exc
-import com.github.atheera.recipemanager.gui.frames.recipe.SavedRecipeFrame
 import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.read.ReadRecipe
 import com.github.atheera.recipemanager.save.read.ReadSettings
@@ -11,11 +10,8 @@ import net.miginfocom.swing.MigLayout
 import java.awt.CardLayout
 import java.awt.Dimension
 import java.awt.event.ItemEvent
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import java.io.File
 import javax.swing.*
-import javax.swing.border.EmptyBorder
 
 class SavedDessertRecipePanel : JPanel() {
 
@@ -40,7 +36,7 @@ class SavedDessertRecipePanel : JPanel() {
     private var jpTartCard = JPanel(MigLayout("wrap 1"))
 
     private lateinit var selectedCat: String
-    private lateinit var selectedButton: JButton
+    private lateinit var selectedButton: ButtonRecipeCard
 
     init {
 
@@ -102,7 +98,7 @@ class SavedDessertRecipePanel : JPanel() {
         darkModeIn(jpTartCard)
     }
 
-    private fun createButton(cat: String, subCat: String, name: String, names: String) : ButtonRecipeCard {
+    private fun createButton(cat: String, subCat: String, name: String, names: String): ButtonRecipeCard {
         ReadRecipe(cat, subCat, names)
         val title = recipeTitle
         val category = recipeCategory
@@ -118,52 +114,21 @@ class SavedDessertRecipePanel : JPanel() {
         val vegan = recipeVegan
         val vegetarian = recipeVegetarian
 
-        val jb = ButtonRecipeCard(name, cat, subCat, desc)
-
-        jb.addActionListener {
-            val spf = SavedRecipeFrame(title, category, subCategory, instructions, ingredients, desc, temperature, convTemperature, egg, gluten, lactose, vegan, vegetarian)
-            spf.setLocationRelativeTo(this)
-        }
-
-        jb.addMouseListener(object: MouseListener {
-            val pm = JPopupMenu()
-            val b = JButton("Delete saved file")
-            val file = File(recipePath.plus("$cat/$subCat/$names"))
-            override fun mouseClicked(e: MouseEvent) {
-                if(e.button == MouseEvent.BUTTON3) {
-                    b.addActionListener {
-                        val jop = JOptionPane.showConfirmDialog(jb, "Are you sure you want to delete file: ${file.name}?", "Delete selected file", JOptionPane.YES_NO_OPTION)
-                        if(jop == 0) {
-                            try {
-                                if(file.delete()) JOptionPane.showMessageDialog(jb, "Deleted file at: ${file.name}")
-                                else JOptionPane.showMessageDialog(jb, "Failed to delete file: ${file.name}")
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-                        loadRecipes()
-                        e.consume()
-                        pm.isVisible = false
-                        updateUI()
-                    }
-                }
-                pm.border = EmptyBorder(0, 0, 0 ,0)
-                pm.add(b)
-                pm.preferredSize = b.preferredSize
-                pm.show(jb, e.x, e.y)
-            }
-            override fun mouseExited(e: MouseEvent) {
-                if(e.component == b && e.component == jb) {
-                    pm.isVisible = false
-                    updateUI()
-                }
-            }
-            override fun mousePressed(e: MouseEvent?) { }
-            override fun mouseReleased(e: MouseEvent?) { }
-            override fun mouseEntered(e: MouseEvent?) { }
-        })
-
-        return jb
+        return ButtonRecipeCard(
+            title,
+            category,
+            subCategory,
+            instructions,
+            ingredients,
+            desc,
+            temperature,
+            convTemperature,
+            egg,
+            gluten,
+            lactose,
+            vegan,
+            vegetarian
+        )
     }
 
     fun loadRecipes() {

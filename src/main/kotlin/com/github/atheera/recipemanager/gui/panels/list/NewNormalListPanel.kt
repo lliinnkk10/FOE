@@ -1,6 +1,7 @@
 package com.github.atheera.recipemanager.gui.panels.list
 
 import com.github.atheera.recipemanager.*
+import com.github.atheera.recipemanager.extras.CJPanel
 import com.github.atheera.recipemanager.extras.DeleteButton
 import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.extras.ToolTipLabel
@@ -15,7 +16,7 @@ import java.awt.Dimension
 import java.awt.Font
 import javax.swing.*
 
-class NewNormalListPanel : JPanel(MigLayout()) {
+class NewNormalListPanel : CJPanel(MigLayout()) {
 
     companion object Text {
         const val TITLEHINT = "Enter the list title here"
@@ -135,5 +136,9 @@ class NewNormalListPanel : JPanel(MigLayout()) {
         jp.add(jlItem)
         updateUI()
         return jp
+    }
+
+    override fun defaultLoad() {
+
     }
 }

@@ -1,6 +1,7 @@
 package com.github.atheera.recipemanager.gui.panels.list
 
 import com.github.atheera.recipemanager.*
+import com.github.atheera.recipemanager.extras.CJPanel
 import com.github.atheera.recipemanager.extras.DeleteButton
 import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.extras.ToolTipLabel
@@ -14,7 +15,7 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import javax.swing.*
 
-class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
+class NewPCListPanel : CJPanel(MigLayout("align center")), KeyListener {
 
     var posPane = JPanel(MigLayout())
     private var posOutPane = JPanel(MigLayout())
@@ -226,6 +227,10 @@ class NewPCListPanel : JPanel(MigLayout("align center")), KeyListener {
         if(e!!.keyCode == KeyEvent.VK_SHIFT) {
             holdingShift = false
         }
+    }
+
+    override fun defaultLoad() {
+
     }
 
 }

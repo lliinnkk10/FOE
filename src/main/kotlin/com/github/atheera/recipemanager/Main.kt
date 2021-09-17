@@ -72,6 +72,8 @@ val backgroundDarkImage = LoadImage().loadImage("notepadDMBG.png")!!
 val imageIcon = LoadImage().loadImage("icon.png")!!
 val toolTip = LoadImage().loadImage("hoverTooltip.png")!!
 val buttonCard = LoadImage().loadImage("ButtonCard.png")!!
+val buttonCardPressed = LoadImage().loadImage("ButtonCardPressed.png")!!
+val buttonCardHovered = LoadImage().loadImage("ButtonCardHovered.png")!!
 val deleteButton = LoadImage().loadIcon("deleteButton.png")!!
 val searchButton = LoadImage().loadIcon("searchButton.png")!!
 
