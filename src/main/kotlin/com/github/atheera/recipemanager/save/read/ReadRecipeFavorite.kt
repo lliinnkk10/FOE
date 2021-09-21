@@ -34,9 +34,6 @@ class ReadRecipeFavorite(fileName: String) {
     }
     private fun parseRecipeObject(file: JsonObject) {
 
-        recipeIngredients = mutableListOf()
-        recipe.ingredients = mutableListOf()
-
         val title = file.get("title").asString
         recipe.title = title
         recipeTitle = title
@@ -49,19 +46,37 @@ class ReadRecipeFavorite(fileName: String) {
         recipe.subCategory = subCategory
         recipeSubCategory = subCategory
 
-        val instruction = file.get("instructions").asString
-        recipe.instructions = instruction
-        recipeInstructions = instruction
+        recipeInstructions = mutableListOf()
+        recipe.instructions = mutableListOf()
+        val instruction = file.get("instructions").asJsonArray
+        for (i in 0 until instruction.size()) {
+            recipe.instructions.add(removeFirstAndLast(instruction[i].toString()))
+            recipeInstructions.add(removeFirstAndLast(instruction[i].toString()))
+        }
 
+        recipeIngredients = mutableListOf()
+        recipe.ingredients = mutableListOf()
         val ingredients = file.get("ingredients").asJsonArray
         for(i in 0 until ingredients.size()) {
             recipe.ingredients.add(removeFirstAndLast(ingredients[i].toString()))
             recipeIngredients.add(removeFirstAndLast(ingredients[i].toString()))
         }
 
+        recipeEquipment = mutableListOf()
+        recipe.equipment = mutableListOf()
+        val equipment = file.get("equipment").asJsonArray
+        for(i in 0 until equipment.size()) {
+            recipeEquipment.add(removeFirstAndLast(equipment[i].toString()))
+            recipe.equipment.add(removeFirstAndLast(equipment[i].toString()))
+        }
+
         val description = file.get("description").asString
         recipe.description = description
         recipeDescription = description
+
+        val link = file.get("link").asString
+        recipe.link = link
+        recipeLink = link
 
         val temperature = file.get("temperature").asInt
         recipe.temperature = temperature

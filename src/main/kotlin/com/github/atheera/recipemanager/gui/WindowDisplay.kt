@@ -2,7 +2,6 @@ package com.github.atheera.recipemanager.gui
 
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.CJPanel
-import com.github.atheera.recipemanager.gui.frames.list.SavedNList
 import com.github.atheera.recipemanager.gui.panels.MenuPanel
 import com.github.atheera.recipemanager.gui.panels.list.NewNormalListPanel
 import com.github.atheera.recipemanager.gui.panels.list.NewPCListPanel
@@ -307,7 +306,7 @@ class WindowDisplay : JFrame() {
         val wh = Toolkit.getDefaultToolkit().screenSize.height
         return when (state) {
             States.MENUSTATE -> Dimension(693, 645)
-            States.NEWRECIPESTATE -> Dimension(1079, ((wh/2)+(wh/3)))
+            States.NEWRECIPESTATE -> Dimension(1000, ((wh/2)+(wh/3)))
             States.SAVEDRECIPESTATE -> Dimension(1020, 600)
             States.FAVORITERECIPESTATE -> Dimension(600, 684)
             States.NEWPCLISTSTATE -> Dimension(792, 780)

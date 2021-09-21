@@ -41,8 +41,10 @@ lateinit var listNList: MutableList<String>
 lateinit var recipeTitle: String
 lateinit var recipeCategory: String
 lateinit var recipeSubCategory: String
-lateinit var recipeInstructions: String
+lateinit var recipeInstructions: MutableList<String>
 lateinit var recipeIngredients: MutableList<String>
+lateinit var recipeEquipment: MutableList<String>
+lateinit var recipeLink: String
 lateinit var recipeDescription: String
 var recipeTemperature: Int = 0
 var recipeConvTemperature: Int = 0
@@ -76,6 +78,7 @@ val buttonCardPressed = LoadImage().loadImage("ButtonCardPressed.png")!!
 val buttonCardHovered = LoadImage().loadImage("ButtonCardHovered.png")!!
 val deleteButton = LoadImage().loadIcon("deleteButton.png")!!
 val searchButton = LoadImage().loadIcon("searchButton.png")!!
+val copyButton = LoadImage().loadIcon("copy_link.png")!!
 
 lateinit var dw: DebugWindow
 
@@ -138,6 +141,18 @@ fun createDirs() {
     }
     dir.makeDir(recipeFavPath)
     dir.makeDir(errorPath)
+}
+
+fun removeNextLineAddList(input: String) : MutableList<String> {
+    val list = mutableListOf<String>()
+
+    val splitInput = input.split("\n")
+
+    for (i in splitInput) {
+        list.add(i)
+    }
+
+    return list
 }
 
 fun removeFirstAndLast(string: String) : String {

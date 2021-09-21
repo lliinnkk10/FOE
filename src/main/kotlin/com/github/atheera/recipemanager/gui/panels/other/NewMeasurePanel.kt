@@ -79,10 +79,14 @@ class NewMeasurePanel : JPanel() {
     }
 
     private fun check() : Boolean {
-        return if(alLoadedMeasures == measures) {
+        println(alLoadedMeasures)
+        println(measures)
+        println(alAdded)
+        println(addedMeasures)
+        return if(addedMeasures == alAdded) {
             JOptionPane.showMessageDialog(this, "Nothing new to save!")
             false
-        } else if(alLoadedMeasures == measures && alAdded.isEmpty()) {
+        } else if(alAdded.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Need something to add first!")
             false
         } else {

@@ -6,9 +6,7 @@ import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.write.WriteSettingsFile
 import net.miginfocom.swing.MigLayout
 import java.awt.Color
-import java.util.Timer
 import javax.swing.*
-import kotlin.concurrent.schedule
 
 class ChangeSaveDirectory : JFrame() {
 

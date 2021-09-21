@@ -3,23 +3,17 @@ package com.github.atheera.recipemanager.gui.panels.list
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.ButtonListCard
 import com.github.atheera.recipemanager.gui.exc
-import com.github.atheera.recipemanager.gui.frames.list.SavedNList
-import com.github.atheera.recipemanager.gui.frames.list.SavedPCList
-import com.github.atheera.recipemanager.gui.frames.list.SavedTDList
 import com.github.atheera.recipemanager.save.Files
-import com.github.atheera.recipemanager.save.read.ReadListPC
-import com.github.atheera.recipemanager.save.read.ReadListTD
-import com.github.atheera.recipemanager.save.read.ReadNormalList
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import net.miginfocom.swing.MigLayout
 import java.awt.CardLayout
 import java.awt.Dimension
 import java.awt.event.ItemEvent
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import java.io.File
-import javax.swing.*
-import javax.swing.border.EmptyBorder
+import javax.swing.JComboBox
+import javax.swing.JPanel
+import javax.swing.JScrollPane
+import javax.swing.ScrollPaneConstants
 
 class SavedListsPanel : JPanel() {
 

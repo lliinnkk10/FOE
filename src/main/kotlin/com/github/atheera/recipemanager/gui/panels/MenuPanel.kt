@@ -4,8 +4,6 @@ import com.github.atheera.recipemanager.backgroundDarkImage
 import com.github.atheera.recipemanager.backgroundImage
 import com.github.atheera.recipemanager.isDark
 import java.awt.Graphics
-import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
 import javax.swing.JPanel
 
 class MenuPanel : JPanel() {

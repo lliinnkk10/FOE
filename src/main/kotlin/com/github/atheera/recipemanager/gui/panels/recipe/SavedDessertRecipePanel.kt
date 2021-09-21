@@ -105,7 +105,9 @@ class SavedDessertRecipePanel : JPanel() {
         val subCategory = recipeSubCategory
         val instructions = recipeInstructions
         val ingredients = recipeIngredients
+        val equipment = recipeEquipment
         val desc = recipeDescription
+        val link = recipeLink
         val temperature = recipeTemperature
         val convTemperature = recipeConvTemperature
         val egg = recipeEgg
@@ -120,7 +122,9 @@ class SavedDessertRecipePanel : JPanel() {
             subCategory,
             instructions,
             ingredients,
+            equipment,
             desc,
+            link,
             temperature,
             convTemperature,
             egg,

@@ -7,10 +7,9 @@ import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteRecipeFavorite
 import com.github.atheera.recipemanager.save.write.WriteRecipeSaves
 import net.miginfocom.swing.MigLayout
-import java.awt.CardLayout
-import java.awt.Color
-import java.awt.Dimension
-import java.awt.Font
+import java.awt.*
+import java.awt.datatransfer.Clipboard
+import java.awt.datatransfer.StringSelection
 import java.awt.event.*
 import javax.swing.*
 import javax.swing.border.EmptyBorder
@@ -26,25 +25,25 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
     private val jspRecipe = JScrollPane(jpRecipe)
 
     // Title
-    var htfTitle = HintTextField("Start with naming the recipe here")
+    val htfTitle = HintTextField("Start with naming the recipe here")
 
     // Categories
-    var jpCats = JPanel(MigLayout())
+    private val jpCats = JPanel(MigLayout())
     lateinit var jcbCategories: JComboBox<String>
-    var cl = CardLayout()
+    private var cl = CardLayout()
     private val jpCatCards = JPanel(cl)
     private val jpSubCatD = JPanel()
     private val jpSubCatE = JPanel()
     private val jpSubCatM = JPanel()
-    var bgJRBGroup = ButtonGroup()
+    private val bgJRBGroup = ButtonGroup()
     lateinit var selCategory: String
     lateinit var selSubCat: String
     lateinit var jrbSel: JRadioButton
     lateinit var bmCat: ButtonModel
-    var jlCat = JLabel()
-    var jlSubCat = JLabel()
-    var new = false
-    var alSubCat = mutableListOf<JRadioButton>()
+    val jlCat = JLabel()
+    val jlSubCat = JLabel()
+    private var new = false
+    private val alSubCat = mutableListOf<JRadioButton>()
 
     // Intolerance checkboxes
     val jcbEgg = JCheckBox("Egg Free")
@@ -87,9 +86,20 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
     private val jspIns = JScrollPane(jtaIns)
     private val tlnIns = TextLineNumber(jtaIns)
 
+    // Equipment list
+    private val jpEquip = JPanel(MigLayout())
+    val jtaEquip = JTextArea()
+    private val jspEquip = JScrollPane(jtaEquip)
+    private val tlnEquip = TextLineNumber(jtaEquip)
+
     // Description list
     private val jpDesc = JPanel(MigLayout())
     val jtaDesc = JTextField()
+
+    // Website link
+    private val jpLink = JPanel(MigLayout())
+    private val jlLink = JLabel(copyButton)
+    val jtfLink = JTextField()
 
     // Save buttons
     val jbSave = JButton()
@@ -105,20 +115,24 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
         addDegreeConverter()
         addIngredientList()
         addInstructionList()
+        addEquipmentList()
         addDescriptionList()
+        addWebsiteLink()
         addSaveButtons()
+
         jspRecipe.verticalScrollBar.unitIncrement = 16
         jspRecipe.verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
-        //jspRecipe.minimumSize = Dimension(1025, 975)
-        //jpRecipe.minimumSize = Dimension(1025, 975)
 
         // Add
         jpRecipe.add(htfTitle, "align center, wrap")
         jpRecipe.add(jpCats, "align center, wrap")
         jpRecipe.add(jpIntol, "align center, wrap")
         jpRecipe.add(jpDegrees, "align center, wrap")
-        jpRecipe.add(jpInsIng, "align center, wrap")
+        jpRecipe.add(jpIngOut, "align center, wrap")
+        jpRecipe.add(jpInsOut, "align center, wrap")
+        jpRecipe.add(jpEquip, "align center, wrap")
         jpRecipe.add(jpDesc, "align center, wrap")
+        jpRecipe.add(jpLink, "align center, wrap")
         jpRecipe.add(jpButtons, "align center")
         add(jspRecipe)
 
@@ -134,17 +148,20 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
 
         darkMode(this)
         darkModeOut(jpRecipe)
+        darkModeOut(jpInsIng)
         darkModeIn(jpCats)
         darkModeIn(jpIntol)
-        darkModeOut(jpInsIng)
         darkModeIn(jpButtons)
         darkModeIn(jpDegrees)
         darkModeIn(jpDesc)
         darkModeIn(jpInsOut)
         darkModeIn(jpIngOut)
+        darkModeIn(jpEquip)
+        darkModeIn(jpLink)
         darkModeDetail(jpIng)
         darkModeDetail(jpIns)
         darkModeDetail(jtaIns)
+        darkModeDetail(jtaEquip)
 
         this.border = createBorder("Here you can create a new recipe!")
         jpInsOut.border = createBorder("Here you can enter instructions for the recipe")
@@ -154,6 +171,8 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
         val txt = if(new) "Select the category in the drop box, and what kind of food with the buttons" else "The saved recipe is saved in"
         jpCats.border = createBorder(txt)
         jpDesc.border = createBorder("Enter a short description of the recipe")
+        jpEquip.border = createBorder("Feel free to add any equipment needed here")
+        jpLink.border = createBorder("Recipe from a website? Link it here!")
 
         jlConverted.foreground = if(isDark) Color.WHITE else Color.BLACK
         jlCat.foreground = if(isDark) Color.WHITE else Color.BLACK
@@ -171,6 +190,49 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
         darkModeDetail(jpConv)
     }
 
+    private fun addWebsiteLink() {
+        jtfLink.font = fontB
+        jtfLink.minimumSize = Dimension(300, 25)
+        jtfLink.maximumSize = Dimension(300, 25)
+
+        jlLink.addMouseListener(object: MouseListener {
+            val jpm = JPopupMenu()
+            val jl = JLabel("Successfully copied link to clipboard!")
+
+            override fun mouseClicked(e: MouseEvent) {
+                if (e.button == MouseEvent.BUTTON1) {
+                    jl.font = fontA
+                    jl.background = if(isDark) Color.WHITE else Color.BLACK
+                    jl.foreground = if(isDark) Color.BLACK else Color.WHITE
+
+                    val ss = StringSelection(jtfLink.text)
+                    val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard
+                    clipboard.setContents(ss, null)
+                    jpm.border = EmptyBorder(0, 0, 0, 0)
+                    jpm.add(jl)
+                    jpm.show(e.component, e.x, e.y)
+                    jpm.isVisible = true
+                    updateUI()
+                }
+            }
+
+            override fun mouseExited(e: MouseEvent) {
+                if(!e.component.contains(e.point) && !jl.contains(e.point)) {
+                    jpm.isVisible = false
+                    updateUI()
+                }
+            }
+
+            override fun mousePressed(e: MouseEvent) { }
+            override fun mouseReleased(e: MouseEvent) { }
+            override fun mouseEntered(e: MouseEvent) { }
+
+        })
+
+        jpLink.add(jtfLink, "split 2, align center")
+        jpLink.add(jlLink, "wrap")
+    }
+
     private fun addDescriptionList() {
 
         jtaDesc.minimumSize = Dimension(300, 25)
@@ -178,6 +240,21 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
         jtaDesc.font = fontB
 
         jpDesc.add(jtaDesc)
+    }
+
+    private fun addEquipmentList() {
+        jtaEquip.wrapStyleWord = true
+        jtaEquip.lineWrap = true
+        jtaEquip.minimumSize = Dimension(400, 200)
+        jtaEquip.font = fontB
+
+        jspEquip.minimumSize = Dimension(433, 200)
+        jspEquip.maximumSize = Dimension(433, 200)
+        jspEquip.setRowHeaderView(tlnEquip)
+        jspEquip.verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
+        jspEquip.verticalScrollBar.unitIncrement = 16
+
+        jpEquip.add(jspEquip)
     }
 
     private fun addSaveButtons() {
@@ -191,7 +268,9 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
                     recipeSubCategory,
                     recipeInstructions,
                     recipeIngredients,
+                    recipeEquipment,
                     recipeDescription,
+                    recipeLink,
                     recipeTemperature,
                     recipeConvTemperature,
                     recipeEgg,
@@ -213,6 +292,8 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
                     recipeSubCategory,
                     recipeInstructions,
                     recipeIngredients,
+                    recipeEquipment,
+                    recipeLink,
                     recipeDescription,
                     recipeTemperature,
                     recipeConvTemperature,
@@ -236,18 +317,18 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
 
         jtaIns.wrapStyleWord = true
         jtaIns.lineWrap = true
-        jtaIns.minimumSize = Dimension(442, 508)
+        jtaIns.minimumSize = Dimension(442, 458)
         jtaIns.font = fontB
 
-        jspIns.minimumSize = Dimension(475, 508)
-        jspIns.maximumSize = Dimension(475, 508)
+        jspIns.minimumSize = Dimension(475, 458)
+        jspIns.maximumSize = Dimension(475, 458)
         jspIns.setRowHeaderView(tlnIns)
         jspIns.verticalScrollBarPolicy = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
         jspIns.verticalScrollBar.unitIncrement = 16
 
         jpIns.add(jspIns)
         jpInsOut.add(jpIns)
-        jpInsIng.add(jpInsOut, "wrap")
+        //jpInsIng.add(jpInsOut, "wrap")
     }
 
     private fun addIngredientList() {
@@ -298,7 +379,7 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
         jpIngOut.add(jcbIngMeasure)
         jpIngOut.add(htfIngItem, "wrap")
         jpIngOut.add(jspIng, "align center")
-        jpInsIng.add(jpIngOut, "split 2")
+        //jpInsIng.add(jpIngOut, "split 2")
     }
 
     private fun addDegreeConverter() {
@@ -490,32 +571,28 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
     }
 
     fun getInformation(new: Boolean) : Boolean {
-        val c1: Boolean
-        val c2: Boolean
-        val c3: Boolean
-        val c4: Boolean
-        var c5 = false
         if((htfTitle.text.isEmpty() || htfTitle.text == "Start with naming the recipe here")) {
             JOptionPane.showMessageDialog(this, "The recipe needs a title first!")
             return false
-        } else { c1 = true }
-        if(alIngredients.isEmpty()) {
+        } else if(alIngredients.isEmpty()) {
             JOptionPane.showMessageDialog(this, "The ingredient list is empty!")
             return false
-        } else { c2 = true }
-        if(jtaIns.text.isEmpty()) {
+        } else if(jtaIns.text.isEmpty()) {
             JOptionPane.showMessageDialog(this, "You should add some instructions!")
             return false
-        } else { c3 = true }
-        if(jtaDesc.text.isEmpty()) {
+        } else if(jtaEquip.text.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Some equipment needed?")
+            return false
+        } else if(jtaDesc.text.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a short description first!")
             return false
-        } else { c4 = true }
-        if(c1 && c2 && c3 && c4) {
+        } else {
             recipeTitle = upperCaseFirstWords(htfTitle.text)
             recipeIngredients = alIngredients
-            recipeInstructions = jtaIns.text
+            recipeInstructions = removeNextLineAddList(jtaIns.text)
+            recipeEquipment = removeNextLineAddList(jtaEquip.text)
             recipeDescription = upperCaseFirstWords(jtaDesc.text)
+            recipeLink = jtfLink.text
             recipeTemperature = factor
             recipeConvTemperature = result
             recipeEgg = jcbEgg.isSelected
@@ -523,7 +600,6 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
             recipeLactose = jcbLactose.isSelected
             recipeVegan = jcbVegan.isSelected
             recipeVegetarian = jcbVeget.isSelected
-            c5 = true
             if (!new) {
                 recipeCategory = jlCat.text
                 recipeSubCategory = jlSubCat.text
@@ -531,8 +607,8 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
                 recipeCategory = selCategory
                 recipeSubCategory = selSubCat
             }
+            return true
         }
-        return c5
     }
 
     private fun clearInformation() {
@@ -541,6 +617,8 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
         jcbCategories.selectedIndex = 0
         selSubCat = subCatDesserts[0]
         alIngredients.clear()
+        jtaEquip.text = ""
+        jtfLink.text = ""
         jpIng.removeAll()
         counterIng = 0
         jtaIns.text = ""

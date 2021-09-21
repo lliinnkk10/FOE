@@ -2,7 +2,9 @@ package com.github.atheera.recipemanager.gui
 
 import net.miginfocom.swing.MigLayout
 import java.awt.Font
-import javax.swing.*
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.JPanel
 import javax.swing.border.EtchedBorder
 import javax.swing.border.TitledBorder
 

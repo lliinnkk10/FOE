@@ -1,6 +1,5 @@
 package com.github.atheera.recipemanager.extras
 
-import com.github.atheera.recipemanager.dw
 import com.github.atheera.recipemanager.gui.exc
 import java.awt.image.BufferedImage
 import java.io.IOException

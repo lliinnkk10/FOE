@@ -4,16 +4,12 @@ import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.ButtonRecipeCard
 import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.gui.exc
-import com.github.atheera.recipemanager.gui.frames.recipe.SavedRecipeFrame
 import com.github.atheera.recipemanager.save.read.ReadRecipeFavorite
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import net.miginfocom.swing.MigLayout
 import java.awt.Dimension
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import java.io.File
 import javax.swing.*
-import javax.swing.border.EmptyBorder
 
 class FavoriteRecipePanel : JPanel() {
 
@@ -86,7 +82,9 @@ class FavoriteRecipePanel : JPanel() {
         val subCategory = recipeSubCategory
         val instructions = recipeInstructions
         val ingredients = recipeIngredients
+        val equipment = recipeEquipment
         val desc = recipeDescription
+        val link = recipeLink
         val temperature = recipeTemperature
         val convTemperature = recipeConvTemperature
         val egg = recipeEgg
@@ -101,7 +99,9 @@ class FavoriteRecipePanel : JPanel() {
             subCategory,
             instructions,
             ingredients,
+            equipment,
             desc,
+            link,
             temperature,
             convTemperature,
             egg,

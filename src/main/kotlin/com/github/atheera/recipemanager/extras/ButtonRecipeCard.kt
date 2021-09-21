@@ -11,7 +11,6 @@ import java.awt.Font
 import java.awt.Graphics
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
-import java.awt.event.MouseMotionListener
 import java.io.File
 import javax.swing.*
 import javax.swing.border.EmptyBorder
@@ -20,9 +19,11 @@ class ButtonRecipeCard(
    private var title: String,
    private var cat: String,
    private var subCat: String,
-   private var instructions: String,
+   private var instructions: MutableList<String>,
    private var ingredients: MutableList<String>,
+   private var equipment: MutableList<String>,
    private var desc: String,
+   private var link: String,
    private var temperature: Int,
    private var convTemperature: Int,
    private var egg: Boolean,
@@ -33,6 +34,7 @@ class ButtonRecipeCard(
    : JLabel() {
 
     private var titleSize = title.length*10
+    private var descSize = desc.length*10
 
     init {
         icon = ImageIcon(buttonCard)
@@ -85,7 +87,7 @@ class ButtonRecipeCard(
         g.drawString(title, (250-(titleSize/2)), 55)
         g.drawString(cat, 160, 90)
         g.drawString(subCat, 290, 90)
-        g.drawString(desc, 70, 130)
+        g.drawString(desc, (250-(descSize/2)), 130)
     }
 
     fun getTitle() : String {
@@ -98,7 +100,7 @@ class ButtonRecipeCard(
         when(e.button) {
             MouseEvent.BUTTON1 -> { // Left click to open selected file
                 if(pressed) return
-                val srf = SavedRecipeFrame(title, cat, subCat, instructions, ingredients, desc, temperature, convTemperature, egg, gluten, lactose, vegan, vegetarian)
+                val srf = SavedRecipeFrame(title, cat, subCat, instructions, ingredients, equipment, desc, link, temperature, convTemperature, egg, gluten, lactose, vegan, vegetarian)
                 srf.setLocationRelativeTo(null)
                 e.consume()
             }

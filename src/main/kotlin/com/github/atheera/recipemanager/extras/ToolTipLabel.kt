@@ -1,6 +1,5 @@
 package com.github.atheera.recipemanager.extras
 
-import com.github.atheera.recipemanager.DARK_WHITE
 import com.github.atheera.recipemanager.LIGHT_WHITE
 import com.github.atheera.recipemanager.toolTip
 import java.awt.Color
@@ -12,7 +11,6 @@ import javax.swing.BorderFactory
 import javax.swing.ImageIcon
 import javax.swing.JLabel
 import javax.swing.JPopupMenu
-import javax.swing.border.EmptyBorder
 
 class ToolTipLabel(tip: String) : JLabel() {
 

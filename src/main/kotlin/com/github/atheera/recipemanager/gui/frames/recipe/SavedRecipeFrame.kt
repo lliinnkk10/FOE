@@ -7,7 +7,7 @@ import com.github.atheera.recipemanager.save.write.WriteRecipeSaves
 import java.awt.Dimension
 import javax.swing.JFrame
 
-class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: String, ingr: MutableList<String>, desc: String, temp: Int, cTemp: Int, egg: Boolean, gluten: Boolean, lactose: Boolean, vegan: Boolean, veget: Boolean) : JFrame(){
+class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: MutableList<String>, ingr: MutableList<String>, equipment: MutableList<String>, desc: String, link: String, temp: Int, cTemp: Int, egg: Boolean, gluten: Boolean, lactose: Boolean, vegan: Boolean, veget: Boolean) : JFrame(){
 
     private val cp = NewRecipePanel(false)
 
@@ -16,7 +16,7 @@ class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: String
         this.title = title
         cp.htfTitle.text = title
         defaultCloseOperation = DISPOSE_ON_CLOSE
-        size = Dimension(1075, 975)
+        size = Dimension(682, 975)
         isVisible = true
 
         recipeCategory = cat
@@ -33,7 +33,9 @@ class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: String
                     recipeSubCategory,
                     recipeInstructions,
                     recipeIngredients,
+                    recipeEquipment,
                     recipeDescription,
+                    recipeLink,
                     recipeTemperature,
                     recipeConvTemperature,
                     recipeEgg,
@@ -54,7 +56,9 @@ class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: String
                     recipeSubCategory,
                     recipeInstructions,
                     recipeIngredients,
+                    recipeEquipment,
                     recipeDescription,
+                    recipeLink,
                     recipeTemperature,
                     recipeConvTemperature,
                     recipeEgg,
@@ -68,6 +72,8 @@ class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: String
         }
 
         cp.jtaDesc.text = desc
+
+        cp.jtfLink.text = link
 
         for(i in ingr.indices) {
             println(ingr[i])
@@ -94,7 +100,15 @@ class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: String
             cp.jpIng.add(itemCard, "wrap")
         }
 
-        cp.jtaIns.text = instr
+        for (i in instr.indices) {
+            if(i == instr.size) break
+            cp.jtaIns.text += if(i < instr.size-1) "${instr[i]}\n" else instr[i]
+        }
+
+        for (i in equipment.indices) {
+            if (i == equipment.size) break
+            cp.jtaEquip.text += if(i < equipment.size-1) "${equipment[i]}\n" else equipment[i]
+        }
 
         cp.factor = temp
         cp.htfDegrees.text = temp.toString()

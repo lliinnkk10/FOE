@@ -3,7 +3,6 @@ package com.github.atheera.recipemanager.gui.panels.recipe
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.ButtonRecipeCard
 import com.github.atheera.recipemanager.gui.exc
-import com.github.atheera.recipemanager.gui.frames.recipe.SavedRecipeFrame
 import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.read.ReadRecipe
 import com.github.atheera.recipemanager.save.read.ReadSettings
@@ -11,12 +10,12 @@ import net.miginfocom.swing.MigLayout
 import java.awt.CardLayout
 import java.awt.Dimension
 import java.awt.event.ItemEvent
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import java.io.File
 import java.io.IOException
-import javax.swing.*
-import javax.swing.border.EmptyBorder
+import javax.swing.JComboBox
+import javax.swing.JPanel
+import javax.swing.JScrollPane
+import javax.swing.ScrollPaneConstants
 
 class SavedExtraRecipePanel: JPanel() {
 
@@ -86,7 +85,9 @@ class SavedExtraRecipePanel: JPanel() {
         val subCategory = recipeSubCategory
         val instructions = recipeInstructions
         val ingredients = recipeIngredients
+        val equipment = recipeEquipment
         val desc = recipeDescription
+        val link = recipeLink
         val temperature = recipeTemperature
         val convTemperature = recipeConvTemperature
         val egg = recipeEgg
@@ -101,7 +102,9 @@ class SavedExtraRecipePanel: JPanel() {
             subCategory,
             instructions,
             ingredients,
+            equipment,
             desc,
+            link,
             temperature,
             convTemperature,
             egg,

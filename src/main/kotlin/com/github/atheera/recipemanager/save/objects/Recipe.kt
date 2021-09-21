@@ -8,8 +8,10 @@ class Recipe : Serializable {
     lateinit var title: String
     lateinit var category: String
     lateinit var subCategory: String
-    lateinit var instructions: String
+    lateinit var instructions: MutableList<String>
     lateinit var ingredients: MutableList<String>
+    lateinit var equipment: MutableList<String>
+    lateinit var link: String
     lateinit var description: String
 
     // Ints
@@ -30,7 +32,9 @@ class Recipe : Serializable {
             "Sub Category:\n $subCategory \n" +
             "Instructions:\n $instructions \n" +
             "Ingredients:\n $ingredients \n" +
+            "Equipment:\n $equipment \n" +
             "Description:\n $description \n" +
+            "Link:\n $link \n" +
             "Temperature:\n $temperature \n" +
             "Converted Temperature:\n $convTemperature \n" +
             "Egg Free?:\n $egg \n" +

@@ -5,7 +5,6 @@ import com.github.atheera.recipemanager.extras.CJPanel
 import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.save.write.WriteListTD
 import net.miginfocom.swing.MigLayout
-import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.event.ItemEvent
