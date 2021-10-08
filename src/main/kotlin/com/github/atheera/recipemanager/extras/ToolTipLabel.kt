@@ -1,22 +1,17 @@
 package com.github.atheera.recipemanager.extras
 
-import com.github.atheera.recipemanager.LIGHT_WHITE
-import com.github.atheera.recipemanager.toolTip
+import com.github.atheera.recipemanager.*
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
-import javax.swing.BorderFactory
-import javax.swing.ImageIcon
-import javax.swing.JLabel
-import javax.swing.JPopupMenu
+import javax.swing.*
 
 class ToolTipLabel(tip: String) : JLabel() {
 
     init {
-        val ttIcon = ImageIcon(toolTip)
-        this.icon = ttIcon
+        this.icon = loadIcon(Images.tooltip)
         this.size = Dimension(16, 16)
         this.minimumSize = Dimension(16, 16)
         this.maximumSize = Dimension(16, 16)

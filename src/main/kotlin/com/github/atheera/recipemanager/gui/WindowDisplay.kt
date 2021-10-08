@@ -2,6 +2,21 @@ package com.github.atheera.recipemanager.gui
 
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.CJPanel
+import com.github.atheera.recipemanager.gui.States.ADDMEASURESTATE
+import com.github.atheera.recipemanager.gui.States.CALCULATORSTATE
+import com.github.atheera.recipemanager.gui.States.CONVERSIONSTATE
+import com.github.atheera.recipemanager.gui.States.FAVORITERECIPESTATE
+import com.github.atheera.recipemanager.gui.States.MENUSTATE
+import com.github.atheera.recipemanager.gui.States.NEWNORMALLISTSTATE
+import com.github.atheera.recipemanager.gui.States.NEWPCLISTSTATE
+import com.github.atheera.recipemanager.gui.States.NEWRECIPESTATE
+import com.github.atheera.recipemanager.gui.States.NEWTODOLISTSTATE
+import com.github.atheera.recipemanager.gui.States.RANDOMRECIPESTATE
+import com.github.atheera.recipemanager.gui.States.SAVEDDESSERTRECIPESTATE
+import com.github.atheera.recipemanager.gui.States.SAVEDEXTRARECIPESTATE
+import com.github.atheera.recipemanager.gui.States.SAVEDLISTSTATE
+import com.github.atheera.recipemanager.gui.States.SAVEDMEATRECIPESTATE
+import com.github.atheera.recipemanager.gui.States.SAVEDRECIPESTATE
 import com.github.atheera.recipemanager.gui.panels.MenuPanel
 import com.github.atheera.recipemanager.gui.panels.list.NewNormalListPanel
 import com.github.atheera.recipemanager.gui.panels.list.NewPCListPanel
@@ -118,7 +133,7 @@ private const val TITLE = "FOE: Files Organized Easily"
 class WindowDisplay : JFrame() {
 
     init {
-        iconImage = imageIcon
+        iconImage = loadImage(Images.icon)
 
         // Initialize
             // Panels
@@ -173,7 +188,7 @@ class WindowDisplay : JFrame() {
         // Add menu buttons to main panel
         add(jmb, BorderLayout.NORTH)
 
-        switchPanels(States.MENUSTATE)
+        switchPanels(MENUSTATE)
 
         defaultCloseOperation = EXIT_ON_CLOSE
         setLocationRelativeTo(null)
@@ -182,31 +197,31 @@ class WindowDisplay : JFrame() {
 
     fun getCurrentState(state: Int) : CJPanel {
         return when (state) {
-            States.NEWPCLISTSTATE -> NewProConListPane
-            States.NEWTODOLISTSTATE -> NewToDoListPane
-            States.NEWNORMALLISTSTATE -> NewNorListPane
+            NEWPCLISTSTATE -> NewProConListPane
+            NEWTODOLISTSTATE -> NewToDoListPane
+            NEWNORMALLISTSTATE -> NewNorListPane
             else -> NewProConListPane
         }
     }
 
     private fun setCurrentState(state: Int) {
         currentState = when (state) {
-            States.MENUSTATE -> States.MENUSTATE
-            States.NEWRECIPESTATE -> States.NEWRECIPESTATE
-            States.SAVEDRECIPESTATE -> States.SAVEDRECIPESTATE
-            States.FAVORITERECIPESTATE -> States.FAVORITERECIPESTATE
-            States.NEWPCLISTSTATE -> States.NEWPCLISTSTATE
-            States.NEWTODOLISTSTATE -> States.NEWTODOLISTSTATE
-            States.SAVEDLISTSTATE -> States.SAVEDLISTSTATE
-            States.SAVEDDESSERTRECIPESTATE -> States.SAVEDDESSERTRECIPESTATE
-            States.SAVEDEXTRARECIPESTATE -> States.SAVEDEXTRARECIPESTATE
-            States.SAVEDMEATRECIPESTATE -> States.SAVEDMEATRECIPESTATE
-            States.NEWNORMALLISTSTATE -> States.NEWNORMALLISTSTATE
-            States.CALCULATORSTATE -> States.CALCULATORSTATE
-            States.RANDOMRECIPESTATE -> States.RANDOMRECIPESTATE
-            States.ADDMEASURESTATE -> States.ADDMEASURESTATE
-            States.CONVERSIONSTATE -> States.CONVERSIONSTATE
-            else -> States.MENUSTATE
+            MENUSTATE -> MENUSTATE
+            NEWRECIPESTATE -> NEWRECIPESTATE
+            SAVEDRECIPESTATE -> SAVEDRECIPESTATE
+            FAVORITERECIPESTATE -> FAVORITERECIPESTATE
+            NEWPCLISTSTATE -> NEWPCLISTSTATE
+            NEWTODOLISTSTATE -> NEWTODOLISTSTATE
+            SAVEDLISTSTATE -> SAVEDLISTSTATE
+            SAVEDDESSERTRECIPESTATE -> SAVEDDESSERTRECIPESTATE
+            SAVEDEXTRARECIPESTATE -> SAVEDEXTRARECIPESTATE
+            SAVEDMEATRECIPESTATE -> SAVEDMEATRECIPESTATE
+            NEWNORMALLISTSTATE -> NEWNORMALLISTSTATE
+            CALCULATORSTATE -> CALCULATORSTATE
+            RANDOMRECIPESTATE -> RANDOMRECIPESTATE
+            ADDMEASURESTATE -> ADDMEASURESTATE
+            CONVERSIONSTATE -> CONVERSIONSTATE
+            else -> MENUSTATE
         }
     }
 
@@ -224,21 +239,21 @@ class WindowDisplay : JFrame() {
 
     private fun switchPanels(state: Int) {
         when (state) {
-            States.MENUSTATE -> { setPanelInfo(MenuPane, state) }
-            States.NEWRECIPESTATE -> { setPanelInfo(NewRecPane, state); NewRecPane.darkmode() }
-            States.SAVEDRECIPESTATE -> { setPanelInfo(SavRecPane, state) }
-            States.FAVORITERECIPESTATE -> { setPanelInfo(FavRecPane, state); FavRecPane.darkmode() }
-            States.NEWPCLISTSTATE -> { setPanelInfo(NewProConListPane, state); NewProConListPane.darkmode() }
-            States.NEWTODOLISTSTATE -> { setPanelInfo(NewToDoListPane, state); NewToDoListPane.darkmode() }
-            States.SAVEDLISTSTATE -> { setPanelInfo(SavListPane, state); SavListPane.darkmode() }
-            States.SAVEDDESSERTRECIPESTATE -> { setPanelInfo(SavDesRecPan, state); SavDesRecPan.darkmode() }
-            States.SAVEDEXTRARECIPESTATE -> { setPanelInfo(SavExtRecPan, state); SavExtRecPan.darkmode() }
-            States.SAVEDMEATRECIPESTATE -> { setPanelInfo(SavMeaRecPan, state); SavMeaRecPan.darkmode() }
-            States.NEWNORMALLISTSTATE -> { setPanelInfo(NewNorListPane, state); NewNorListPane.darkmode() }
-            States.CALCULATORSTATE -> { setPanelInfo(CalcPane, state); CalcPane.darkmode() }
-            States.RANDOMRECIPESTATE -> { setPanelInfo(RanRecPan, state); RanRecPan.darkmode() }
-            States.ADDMEASURESTATE -> { setPanelInfo(MeasPane, state); MeasPane.darkmode() }
-            States.CONVERSIONSTATE -> { setPanelInfo(ConvPane, state); ConvPane.darkmode() }
+            MENUSTATE -> { setPanelInfo(MenuPane, state) }
+            NEWRECIPESTATE -> { setPanelInfo(NewRecPane, state); NewRecPane.darkmode() }
+            SAVEDRECIPESTATE -> { setPanelInfo(SavRecPane, state) }
+            FAVORITERECIPESTATE -> { setPanelInfo(FavRecPane, state); FavRecPane.darkmode() }
+            NEWPCLISTSTATE -> { setPanelInfo(NewProConListPane, state); NewProConListPane.darkmode() }
+            NEWTODOLISTSTATE -> { setPanelInfo(NewToDoListPane, state); NewToDoListPane.darkmode() }
+            SAVEDLISTSTATE -> { setPanelInfo(SavListPane, state); SavListPane.darkmode() }
+            SAVEDDESSERTRECIPESTATE -> { setPanelInfo(SavDesRecPan, state); SavDesRecPan.darkmode() }
+            SAVEDEXTRARECIPESTATE -> { setPanelInfo(SavExtRecPan, state); SavExtRecPan.darkmode() }
+            SAVEDMEATRECIPESTATE -> { setPanelInfo(SavMeaRecPan, state); SavMeaRecPan.darkmode() }
+            NEWNORMALLISTSTATE -> { setPanelInfo(NewNorListPane, state); NewNorListPane.darkmode() }
+            CALCULATORSTATE -> { setPanelInfo(CalcPane, state); CalcPane.darkmode() }
+            RANDOMRECIPESTATE -> { setPanelInfo(RanRecPan, state); RanRecPan.darkmode() }
+            ADDMEASURESTATE -> { setPanelInfo(MeasPane, state); MeasPane.darkmode() }
+            CONVERSIONSTATE -> { setPanelInfo(ConvPane, state); ConvPane.darkmode() }
         }
     }
 
@@ -255,27 +270,27 @@ class WindowDisplay : JFrame() {
         // Menu items
             // Lists
         jmSubList = JMenu("Create new list"); jmLists.add(jmSubList)
-        jmiToDoList = JMenuItem("Todo"); jmSubList.add(jmiToDoList); jmiToDoList.addActionListener{ switchPanels(States.NEWTODOLISTSTATE) }
-        jmiPosNegList = JMenuItem("Pros/cons"); jmSubList.add(jmiPosNegList); jmiPosNegList.addActionListener { switchPanels(States.NEWPCLISTSTATE) }
-        jmiNorList = JMenuItem("New plain list"); jmSubList.add(jmiNorList); jmiNorList.addActionListener{ switchPanels(States.NEWNORMALLISTSTATE) }
-        jmiSavList = JMenuItem("View all lists"); jmLists.add(jmiSavList); jmiSavList.addActionListener{ switchPanels(States.SAVEDLISTSTATE); SavListPane.loadLists() }
+        jmiToDoList = JMenuItem("Todo"); jmSubList.add(jmiToDoList); jmiToDoList.addActionListener{ switchPanels(NEWTODOLISTSTATE) }
+        jmiPosNegList = JMenuItem("Pros/cons"); jmSubList.add(jmiPosNegList); jmiPosNegList.addActionListener { switchPanels(NEWPCLISTSTATE) }
+        jmiNorList = JMenuItem("New plain list"); jmSubList.add(jmiNorList); jmiNorList.addActionListener{ switchPanels(NEWNORMALLISTSTATE) }
+        jmiSavList = JMenuItem("View all lists"); jmLists.add(jmiSavList); jmiSavList.addActionListener{ switchPanels(SAVEDLISTSTATE); SavListPane.loadLists() }
             // Settings
         jmiSettings = JMenuItem("Change save location"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ val csd = ChangeSaveDirectory(); csd.setLocationRelativeTo(this) }
-        jmiSettings = JMenuItem("Go back to main menu"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ switchPanels(States.MENUSTATE) }
+        jmiSettings = JMenuItem("Go back to main menu"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ switchPanels(MENUSTATE) }
         jmiDark = JCheckBoxMenuItem("Dark mode"); jmSettings.add(jmiDark); jmiDark.addActionListener { WriteSettingsFile(path, jmiDark.isSelected, addedMeasures, isDebug); switchPanels(currentState) }; if(isDark) jmiDark.doClick()
         jmSettings.add(jmiDebugMode); jmiDebugMode.addActionListener { WriteSettingsFile(path, jmiDark.isSelected, addedMeasures, jmiDebugMode.isSelected); if(jmiDebugMode.isSelected) jmb.add(jmDebug) else jmb.remove(jmDebug); switchPanels(currentState) }; if(isDebug) jmiDebugMode.doClick()
             // Recipes
-        jmiNewRec = JMenuItem("Create new recipe"); jmRecipes.add(jmiNewRec); jmiNewRec.addActionListener{ switchPanels(States.NEWRECIPESTATE) }
+        jmiNewRec = JMenuItem("Create new recipe"); jmRecipes.add(jmiNewRec); jmiNewRec.addActionListener{ switchPanels(NEWRECIPESTATE) }
         jmiSavRec = JMenu("View all saved recipes"); jmRecipes.add(jmiSavRec)
-        jmiDesRec = JMenuItem("Desserts"); jmiSavRec.add(jmiDesRec); jmiDesRec.addActionListener{ switchPanels(States.SAVEDDESSERTRECIPESTATE); SavDesRecPan.loadRecipes() }
-        jmiExtraRec = JMenuItem("Extras"); jmiSavRec.add(jmiExtraRec); jmiExtraRec.addActionListener{ switchPanels(States.SAVEDEXTRARECIPESTATE); SavExtRecPan.loadRecipes() }
-        jmiMeatRec = JMenuItem("Meats"); jmiSavRec.add(jmiMeatRec); jmiMeatRec.addActionListener{ switchPanels(States.SAVEDMEATRECIPESTATE); SavMeaRecPan.loadRecipes() }
-        jmiFavRec = JMenuItem("View all favorite recipes"); jmRecipes.add(jmiFavRec); jmiFavRec.addActionListener{ switchPanels(States.FAVORITERECIPESTATE); FavRecPane.loadRecipes(false) }
-        jmiRanRec = JMenuItem("Get random saved recipe"); jmRecipes.add(jmiRanRec); jmiRanRec.addActionListener { switchPanels(States.RANDOMRECIPESTATE);  }
+        jmiDesRec = JMenuItem("Desserts"); jmiSavRec.add(jmiDesRec); jmiDesRec.addActionListener{ switchPanels(SAVEDDESSERTRECIPESTATE); SavDesRecPan.loadRecipes() }
+        jmiExtraRec = JMenuItem("Extras"); jmiSavRec.add(jmiExtraRec); jmiExtraRec.addActionListener{ switchPanels(SAVEDEXTRARECIPESTATE); SavExtRecPan.loadRecipes() }
+        jmiMeatRec = JMenuItem("Meats"); jmiSavRec.add(jmiMeatRec); jmiMeatRec.addActionListener{ switchPanels(SAVEDMEATRECIPESTATE); SavMeaRecPan.loadRecipes() }
+        jmiFavRec = JMenuItem("View all favorite recipes"); jmRecipes.add(jmiFavRec); jmiFavRec.addActionListener{ switchPanels(FAVORITERECIPESTATE); FavRecPane.loadRecipes(false) }
+        jmiRanRec = JMenuItem("Get random saved recipe"); jmRecipes.add(jmiRanRec); jmiRanRec.addActionListener { switchPanels(RANDOMRECIPESTATE);  }
             // Extras
-        jmiCalc = JMenuItem("Calculator"); jmExtras.add(jmiCalc); jmiCalc.addActionListener { switchPanels(States.CALCULATORSTATE) }
-        jmiMeasure = JMenuItem("Add another measurement"); jmExtras.add(jmiMeasure); jmiMeasure.addActionListener { switchPanels(States.ADDMEASURESTATE) }
-        //jmiConvers = JMenuItem("Measurement conversion table"); jmExtras.add(jmiConvers); jmiConvers.addActionListener { switchPanels(States.CONVERSIONSTATE) }
+        jmiCalc = JMenuItem("Calculator"); jmExtras.add(jmiCalc); jmiCalc.addActionListener { switchPanels(CALCULATORSTATE) }
+        jmiMeasure = JMenuItem("Add another measurement"); jmExtras.add(jmiMeasure); jmiMeasure.addActionListener { switchPanels(ADDMEASURESTATE) }
+        //jmiConvers = JMenuItem("Measurement conversion table"); jmExtras.add(jmiConvers); jmiConvers.addActionListener { switchPanels(CONVERSIONSTATE) }
             // Debug
         jmiDebug = JMenuItem("Open debug window"); jmDebug.add(jmiDebug); jmiDebug.addActionListener{ openDebug() }
         jmiSize = JMenuItem("Get current size of window"); jmDebug.add(jmiSize); jmiSize.addActionListener { info("$currentState's current size: " + this.size) }
@@ -283,21 +298,21 @@ class WindowDisplay : JFrame() {
 
     private fun changeTitle(state: Int) : String {
         return "$TITLE - " + when (state) {
-            States.MENUSTATE -> "Main Menu"
-            States.NEWRECIPESTATE -> "Create New Recipe"
-            States.SAVEDRECIPESTATE -> "View Saved Recipes"
-            States.FAVORITERECIPESTATE -> "View Favorite Recipes"
-            States.NEWPCLISTSTATE -> "Create New Pros/Cons List"
-            States.SAVEDLISTSTATE -> "View Saved Lists"
-            States.NEWTODOLISTSTATE -> "Create New ToDo List"
-            States.SAVEDDESSERTRECIPESTATE -> "View Saved Dessert Recipes"
-            States.SAVEDEXTRARECIPESTATE -> "View Saved Extra Recipes"
-            States.SAVEDMEATRECIPESTATE -> "View Saved Meat Recipes"
-            States.NEWNORMALLISTSTATE -> "Create New Plain List"
-            States.CALCULATORSTATE -> "Calculator"
-            States.RANDOMRECIPESTATE -> "Get Random Recipe"
-            States.ADDMEASURESTATE -> "Add Measurement"
-            States.CONVERSIONSTATE -> "Measurement Conversion Table"
+            MENUSTATE -> "Main Menu"
+            NEWRECIPESTATE -> "Create New Recipe"
+            SAVEDRECIPESTATE -> "View Saved Recipes"
+            FAVORITERECIPESTATE -> "View Favorite Recipes"
+            NEWPCLISTSTATE -> "Create New Pros/Cons List"
+            SAVEDLISTSTATE -> "View Saved Lists"
+            NEWTODOLISTSTATE -> "Create New ToDo List"
+            SAVEDDESSERTRECIPESTATE -> "View Saved Dessert Recipes"
+            SAVEDEXTRARECIPESTATE -> "View Saved Extra Recipes"
+            SAVEDMEATRECIPESTATE -> "View Saved Meat Recipes"
+            NEWNORMALLISTSTATE -> "Create New Plain List"
+            CALCULATORSTATE -> "Calculator"
+            RANDOMRECIPESTATE -> "Get Random Recipe"
+            ADDMEASURESTATE -> "Add Measurement"
+            CONVERSIONSTATE -> "Measurement Conversion Table"
             else -> TITLE
         }
     }
@@ -305,22 +320,22 @@ class WindowDisplay : JFrame() {
     private fun changeSize(state: Int) : Dimension {
         val wh = Toolkit.getDefaultToolkit().screenSize.height
         return when (state) {
-            States.MENUSTATE -> Dimension(693, 645)
-            States.NEWRECIPESTATE -> Dimension(1000, ((wh/2)+(wh/3)))
-            States.SAVEDRECIPESTATE -> Dimension(1020, 600)
-            States.FAVORITERECIPESTATE -> Dimension(600, 684)
-            States.NEWPCLISTSTATE -> Dimension(792, 780)
-            States.SAVEDLISTSTATE -> Dimension(600, 678)
-            States.NEWTODOLISTSTATE -> Dimension(574, 750)
-            States.SAVEDDESSERTRECIPESTATE -> Dimension(600, 680)
-            States.SAVEDEXTRARECIPESTATE -> Dimension(600, 680)
-            States.SAVEDMEATRECIPESTATE -> Dimension(600, 680)
-            States.NEWNORMALLISTSTATE -> Dimension(507, 824)
-            States.CALCULATORSTATE -> Dimension(665, 434)
-            States.RANDOMRECIPESTATE -> Dimension(1030, 410)
-            States.ADDMEASURESTATE -> Dimension(435, 260)
-            States.CONVERSIONSTATE -> Dimension(500, 500)
-            else -> Dimension(backgroundImage.width, backgroundImage.height)
+            MENUSTATE -> Dimension(693, 645)
+            NEWRECIPESTATE -> Dimension(1000, ((wh/2)+(wh/3)))
+            SAVEDRECIPESTATE -> Dimension(1020, 600)
+            FAVORITERECIPESTATE -> Dimension(600, 684)
+            NEWPCLISTSTATE -> Dimension(792, 780)
+            SAVEDLISTSTATE -> Dimension(600, 678)
+            NEWTODOLISTSTATE -> Dimension(574, 750)
+            SAVEDDESSERTRECIPESTATE -> Dimension(600, 680)
+            SAVEDEXTRARECIPESTATE -> Dimension(600, 680)
+            SAVEDMEATRECIPESTATE -> Dimension(600, 680)
+            NEWNORMALLISTSTATE -> Dimension(507, 824)
+            CALCULATORSTATE -> Dimension(665, 434)
+            RANDOMRECIPESTATE -> Dimension(1030, 410)
+            ADDMEASURESTATE -> Dimension(435, 260)
+            CONVERSIONSTATE -> Dimension(500, 500)
+            else -> Dimension(693, 645)
         }
     }
 

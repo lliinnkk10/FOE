@@ -1,7 +1,8 @@
 package com.github.atheera.recipemanager.gui.frames.list
 
+import com.github.atheera.recipemanager.Images
 import com.github.atheera.recipemanager.gui.panels.list.NewPCListPanel
-import com.github.atheera.recipemanager.imageIcon
+import com.github.atheera.recipemanager.loadImage
 import java.awt.Dimension
 import javax.swing.*
 
@@ -13,7 +14,7 @@ class SavedPCList(title: String, posList: MutableList<String>, negList: MutableL
     private var negCount = 0
 
     init {
-        iconImage = imageIcon
+        iconImage = loadImage(Images.icon)
         this.title = title
         contentPane.htfTitle.text = title
         defaultCloseOperation = DISPOSE_ON_CLOSE

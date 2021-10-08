@@ -12,7 +12,7 @@ class SavedRecipeFrame(title: String, cat: String, subCat: String, instr: Mutabl
     private val cp = NewRecipePanel(false)
 
     init {
-        iconImage = imageIcon
+        iconImage = loadImage(Images.icon)
         this.title = title
         cp.htfTitle.text = title
         defaultCloseOperation = DISPOSE_ON_CLOSE

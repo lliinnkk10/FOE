@@ -1,7 +1,8 @@
 package com.github.atheera.recipemanager.gui.frames.list
 
+import com.github.atheera.recipemanager.Images
 import com.github.atheera.recipemanager.gui.panels.list.NewTodoListPanel
-import com.github.atheera.recipemanager.imageIcon
+import com.github.atheera.recipemanager.loadImage
 import javax.swing.JFrame
 
 class SavedTDList(title: String, list: MutableList<String>, checkList: MutableList<String>) : JFrame() {
@@ -9,7 +10,7 @@ class SavedTDList(title: String, list: MutableList<String>, checkList: MutableLi
     private var cp = NewTodoListPanel()
 
     init {
-        iconImage = imageIcon
+        iconImage = loadImage(Images.icon)
         this.title = title
         cp.htfTitle.text = title
         defaultCloseOperation = DISPOSE_ON_CLOSE

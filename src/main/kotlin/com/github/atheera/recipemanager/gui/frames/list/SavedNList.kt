@@ -1,7 +1,8 @@
 package com.github.atheera.recipemanager.gui.frames.list
 
+import com.github.atheera.recipemanager.Images
 import com.github.atheera.recipemanager.gui.panels.list.NewNormalListPanel
-import com.github.atheera.recipemanager.imageIcon
+import com.github.atheera.recipemanager.loadImage
 import java.awt.Dimension
 import javax.swing.JFrame
 
@@ -10,7 +11,7 @@ class SavedNList(title: String, list: MutableList<String>) : JFrame() {
     private val cp = NewNormalListPanel()
 
     init {
-        iconImage = imageIcon
+        iconImage = loadImage(Images.icon)
         this.title = title
         cp.htfTitle.text = title
         defaultCloseOperation = DISPOSE_ON_CLOSE

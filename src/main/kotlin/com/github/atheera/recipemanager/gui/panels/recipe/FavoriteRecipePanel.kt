@@ -1,6 +1,8 @@
 package com.github.atheera.recipemanager.gui.panels.recipe
 
 import com.github.atheera.recipemanager.*
+import com.github.atheera.recipemanager.Icon.delete
+import com.github.atheera.recipemanager.Images.buttonPress
 import com.github.atheera.recipemanager.extras.ButtonRecipeCard
 import com.github.atheera.recipemanager.extras.HintTextField
 import com.github.atheera.recipemanager.gui.exc
@@ -19,8 +21,8 @@ class FavoriteRecipePanel : JPanel() {
 
     private val searchtext = "Search the titles of favorite recipes"
     private var htfSearch = HintTextField(searchtext)
-    private var jbSearch = JButton(searchButton)
-    private var jbClear = JButton(deleteButton)
+    private var jbSearch = JButton(loadIcon(buttonPress))
+    private var jbClear = JButton(loadIcon(delete))
     private var alLoaded = mutableListOf<String>()
 
     private lateinit var jbTemp: ButtonRecipeCard

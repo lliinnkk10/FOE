@@ -1,6 +1,7 @@
 package com.github.atheera.recipemanager.gui.panels.recipe
 
 import com.github.atheera.recipemanager.*
+import com.github.atheera.recipemanager.Icon.copy
 import com.github.atheera.recipemanager.extras.*
 import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.save.read.ReadSettings
@@ -98,7 +99,7 @@ class NewRecipePanel(new: Boolean) : CJPanel(), ItemListener, ActionListener {
 
     // Website link
     private val jpLink = JPanel(MigLayout())
-    private val jlLink = JLabel(copyButton)
+    private val jlLink = JLabel(loadIcon(copy))
     val jtfLink = JTextField()
 
     // Save buttons

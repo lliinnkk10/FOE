@@ -9,15 +9,19 @@ import com.github.atheera.recipemanager.save.Files
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteSettingsFile
 import java.awt.Color
+import java.awt.Component
+import java.awt.Image
 import java.io.File
 import java.time.LocalTime
 import javax.swing.BorderFactory
+import javax.swing.Icon
 import javax.swing.JComponent
 import javax.swing.border.Border
 import javax.swing.border.EtchedBorder
 import javax.swing.border.TitledBorder
-
-// Names of all the list types available
+/******************************************************************************************************************************************************************************/
+/*                                   Names of all the list types available                                                                                                    */
+/******************************************************************************************************************************************************************************/
 val categories = listOf("Desserts", "Extras", "Meats")
 val subCatDesserts = listOf("Cake", "Chocolate", "Confection", "Cookie", "Custard", "Deep Fried", "Frozen", "Gelatin", "Pastry", "Pie", "Pudding", "Sweet Bread", "Tart")
 val subCatExtras = listOf("Bread", "Greenthing", "Sauce", "Savory Pie", "Soup")
@@ -25,19 +29,11 @@ val subCatMeats = listOf("Beef", "Fish", "Other", "Plant Meat", "Poultry", "Pork
 val listCategories = listOf("Pros and Cons", "To Do", "Plain List")
 val measures = mutableListOf("L", "DL", "CL", "ML", "KG", "HG", "G", "MG", "TBSP", "TSP", "SPM", "PIECE(S)", "PINCH", "CUP", "WHOLE", "CLOVE", "CAN")
 
-// List types items
-    // Pros/Cons
-lateinit var listPCTitle: String
-lateinit var listPCPos: MutableList<String>
-lateinit var listPCNeg: MutableList<String>
-    // To Do
-lateinit var listTDTitle: String
-lateinit var listTD: MutableList<String>
-lateinit var listTDChecked: MutableList<String>
-    // Normal list
-lateinit var listNTitle: String
-lateinit var listNList: MutableList<String>
-    // Recipes
+/******************************************************************************************************************************************************************************/
+/*                                  Components of the program                                                                                                                 */
+/******************************************************************************************************************************************************************************/
+/*                                  Recipe items                                                                                                                              */
+/******************************************************************************************************************************************************************************/
 lateinit var recipeTitle: String
 lateinit var recipeCategory: String
 lateinit var recipeSubCategory: String
@@ -53,8 +49,29 @@ var recipeGluten: Boolean = false
 var recipeLactose: Boolean = false
 var recipeVegan: Boolean = false
 var recipeVegetarian: Boolean = false
-
-// Paths for saving location
+/******************************************************************************************************************************************************************************/
+/*                                  List items                                                                                                                                */
+/******************************************************************************************************************************************************************************/
+  /***********/
+ /*  Pro-Con  */
+/***************/
+lateinit var listPCTitle: String
+lateinit var listPCPos: MutableList<String>
+lateinit var listPCNeg: MutableList<String>
+  /*********/
+ /*  To Do  */
+/*************/
+lateinit var listTDTitle: String
+lateinit var listTD: MutableList<String>
+lateinit var listTDChecked: MutableList<String>
+  /*********/
+ /*  Plain  */
+/*************/
+lateinit var listNTitle: String
+lateinit var listNList: MutableList<String>
+  /*********/
+ /*  Paths  */
+/*************/
 const val defaultPath: String = "C://FOE/"
 const val errorPath: String = "${defaultPath}error-reports/"
 const val settingsPath: String = "${defaultPath}Settings.json"
@@ -62,25 +79,47 @@ lateinit var path: String
 lateinit var recipePath: String
 lateinit var listPath: String
 lateinit var recipeFavPath: String
-
-// Settings
+  /************/
+ /*  Settings  */
+/****************/
 var isDark: Boolean = false
 lateinit var addedMeasures: MutableList<String>
 var isDebug: Boolean = false
 
-// Loading all images for use across the program
-val backgroundImage = LoadImage().loadImage("notepadBG.png")!!
-val backgroundDarkImage = LoadImage().loadImage("notepadDMBG.png")!!
-val imageIcon = LoadImage().loadImage("icon.png")!!
-val toolTip = LoadImage().loadImage("hoverTooltip.png")!!
-val buttonCard = LoadImage().loadImage("ButtonCard.png")!!
-val buttonCardPressed = LoadImage().loadImage("ButtonCardPressed.png")!!
-val buttonCardHovered = LoadImage().loadImage("ButtonCardHovered.png")!!
-val deleteButton = LoadImage().loadIcon("deleteButton.png")!!
-val searchButton = LoadImage().loadIcon("searchButton.png")!!
-val copyButton = LoadImage().loadIcon("copy_link.png")!!
-
 lateinit var dw: DebugWindow
+
+object Images {
+    // Images
+    const val notepad = "notepad.png"
+    const val notepadDM = "notepad_dm.png"
+    const val icon = "icon.png"
+    const val tooltip = "tooltip.png"
+    const val buttonHover = "button_hover.png"
+    const val buttonPress = "button_press.png"
+    const val button = "button.png"
+}
+
+object Icon {
+    // Icons
+    const val delete = "button_delete.png"
+    const val search = "button_search.png"
+    const val copy = "copy_link.png"
+    const val plus = "plus.png"
+    const val minus = "minus.png"
+}
+
+
+fun loadImages() {
+
+}
+/*
+fun getHeight(image: Image, icon: Icon) : Any {
+    val des = if(image == null) icon else image
+    return des.
+}
+*/
+fun loadImage(name: String) : Image { return LoadImage().loadImage(name)!! }
+fun loadIcon(name: String) : Icon { return LoadImage().loadIcon(name)!! }
 
 // Misc
 val GRAY = Color(43, 43, 43)
@@ -90,14 +129,15 @@ val LIGHT_WHITE = Color(225, 225, 225)
 val WHITE = Color(238, 238, 238)
 
 fun main(args: Array<String>) {
+
     // This should always run first!
     onStartUp()
+
     // Runs on startup if debug is enabled
     if(isDebug) openDebug()
 
     // Opens the main programs window
     WindowDisplay()
-
 }
 
 fun onStartUp() {
@@ -113,6 +153,8 @@ fun onStartUp() {
     for(i in addedMeasures) {
         measures.add(i)
     }
+
+    loadImages()
 
     // Sets the save paths according to the Settings.json
     recipePath = "$path/Recipes/"

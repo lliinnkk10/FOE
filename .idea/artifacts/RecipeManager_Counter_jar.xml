@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RecipeManager.Counter:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RecipeManager_Counter_jar</output-path>
+    <root id="archive" name="RecipeManager.Counter.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/Counter/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

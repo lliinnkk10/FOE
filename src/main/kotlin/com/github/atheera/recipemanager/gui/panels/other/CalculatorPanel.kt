@@ -1,6 +1,7 @@
 package com.github.atheera.recipemanager.gui.panels.other
 
 import com.github.atheera.recipemanager.*
+import com.github.atheera.recipemanager.Icon.delete
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import net.miginfocom.swing.MigLayout
 import java.awt.Color
@@ -53,7 +54,7 @@ class CalculatorPanel : JPanel() {
     private var jpHistory = JPanel(MigLayout())
     private var jpHistoryOut = JPanel(MigLayout())
     private var jspHistory = JScrollPane(jpHistory)
-    private var jbClearHistory = JButton(deleteButton)
+    private var jbClearHistory = JButton(loadIcon(delete))
 
     init {
 

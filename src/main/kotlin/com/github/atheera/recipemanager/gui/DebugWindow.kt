@@ -1,10 +1,12 @@
 package com.github.atheera.recipemanager.gui
 
+import com.github.atheera.recipemanager.Images
 import com.github.atheera.recipemanager.errorPath
 import com.github.atheera.recipemanager.extras.TextLineNumber
 import com.github.atheera.recipemanager.getCurrentTime
 import com.github.atheera.recipemanager.gui.DebugWindow.Constants.DISPOSE_AND_FALSE
-import com.github.atheera.recipemanager.imageIcon
+import com.github.atheera.recipemanager.loadImage
+
 import net.miginfocom.swing.MigLayout
 import java.awt.*
 import java.awt.event.WindowEvent
@@ -56,7 +58,7 @@ class DebugWindow : JFrame() {
         maximumSize = Dimension(500, 500)
         defaultCloseOperation = DISPOSE_AND_FALSE
         isVisible = true
-        iconImage = imageIcon
+        iconImage = loadImage(Images.icon)
         //isResizable = false
         jpInfo.minimumSize = Dimension(500, 500)
         jpInfo.maximumSize = Dimension(500, 500)

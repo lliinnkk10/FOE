@@ -1,8 +1,6 @@
 package com.github.atheera.recipemanager.extras
 
-import com.github.atheera.recipemanager.buttonCard
-import com.github.atheera.recipemanager.buttonCardHovered
-import com.github.atheera.recipemanager.buttonCardPressed
+
 import com.github.atheera.recipemanager.gui.frames.recipe.SavedRecipeFrame
 import com.github.atheera.recipemanager.recipePath
 import java.awt.Color
@@ -37,7 +35,7 @@ class ButtonRecipeCard(
     private var descSize = desc.length*10
 
     init {
-        icon = ImageIcon(buttonCard)
+        icon = ImageIcon("button")
         minimumSize = Dimension(icon.iconWidth, icon.iconHeight)
         maximumSize = Dimension(icon.iconWidth, icon.iconHeight)
 
@@ -48,29 +46,29 @@ class ButtonRecipeCard(
             var pressed = false
 
             override fun mouseClicked(e: MouseEvent) {
-                icon = ImageIcon(buttonCardPressed)
+                icon = ImageIcon("button_press")
                 addFunction(e, jpm, jb, file, pressed)
-                icon = ImageIcon(buttonCard)
+                icon = ImageIcon("button")
                 e.consume()
             }
 
             override fun mousePressed(e: MouseEvent) {
-                icon = ImageIcon(buttonCardPressed)
+                icon = ImageIcon("button_pressed")
             }
 
             override fun mouseReleased(e: MouseEvent) {
                 addFunction(e, jpm, jb, file, false)
-                icon = ImageIcon(buttonCard)
+                icon = ImageIcon("button")
                 e.consume()
                 pressed = true
             }
 
             override fun mouseEntered(e: MouseEvent) {
-                icon = ImageIcon(buttonCardHovered)
+                icon = ImageIcon("button_hovered")
             }
 
             override fun mouseExited(e: MouseEvent) {
-                icon = ImageIcon(buttonCard)
+                icon = ImageIcon("button")
                 if (!e.component.contains(e.point) && !jb.contains(e.point)) {
                     jpm.isVisible = false
                     updateUI()
@@ -83,7 +81,7 @@ class ButtonRecipeCard(
 
     override fun paintComponent(g: Graphics) {
         super.paintComponent(g)
-        g.font = Font("Tahoma", Font.BOLD, 20)
+        g.font = Font("Tahoma", Font.BOLD, 18)
         g.drawString(title, (250-(titleSize/2)), 55)
         g.drawString(cat, 160, 90)
         g.drawString(subCat, 290, 90)

@@ -24,7 +24,7 @@ class ButtonListCard(private val title: String, private val type: String) : JLab
     private val typeSize = type.length*10
 
     init {
-        icon = ImageIcon(buttonCard)
+        icon = ImageIcon("button")
         minimumSize = Dimension(icon.iconWidth, icon.iconHeight)
         maximumSize = Dimension(icon.iconWidth, icon.iconHeight)
 
@@ -35,29 +35,29 @@ class ButtonListCard(private val title: String, private val type: String) : JLab
             var pressed = false
 
             override fun mouseClicked(e: MouseEvent) {
-                icon = ImageIcon(buttonCardPressed)
+                icon = ImageIcon("button_press")
                 addFunction(e, jpm, jb, file, type, pressed)
-                icon = ImageIcon(buttonCard)
+                icon = ImageIcon("button")
                 e.consume()
             }
 
             override fun mousePressed(e: MouseEvent) {
-                icon = ImageIcon(buttonCardPressed)
+                icon = ImageIcon("button_press")
             }
 
             override fun mouseReleased(e: MouseEvent) {
                 addFunction(e, jpm, jb, file, type, false)
-                icon = ImageIcon(buttonCard)
+                icon = ImageIcon("button")
                 e.consume()
                 pressed = true
             }
 
             override fun mouseEntered(e: MouseEvent) {
-                icon = ImageIcon(buttonCardHovered)
+                icon = ImageIcon("button_hovered")
             }
 
             override fun mouseExited(e: MouseEvent) {
-                icon = ImageIcon(buttonCard)
+                icon = ImageIcon("button")
                 if(!e.component.contains(e.point) && !jb.contains(e.point)) {
                     jpm.isVisible = false
                     updateUI()
