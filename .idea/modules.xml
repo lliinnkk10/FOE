@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FOE/FOE.iml" filepath="$PROJECT_DIR$/FOE/FOE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Counter/RecipeManager.Counter.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Counter/RecipeManager.Counter.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Counter/RecipeManager.Counter.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Counter/RecipeManager.Counter.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RecipeManager.main.iml" filepath="$PROJECT_DIR$/.idea/modules/RecipeManager.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RecipeManager.test.iml" filepath="$PROJECT_DIR$/.idea/modules/RecipeManager.test.iml" />
     </modules>
   </component>
 </project>

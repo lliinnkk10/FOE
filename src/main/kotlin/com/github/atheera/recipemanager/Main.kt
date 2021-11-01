@@ -26,7 +26,7 @@ val categories = listOf("Desserts", "Extras", "Meats")
 val subCatDesserts = listOf("Cake", "Chocolate", "Confection", "Cookie", "Custard", "Deep Fried", "Frozen", "Gelatin", "Pastry", "Pie", "Pudding", "Sweet Bread", "Tart")
 val subCatExtras = listOf("Bread", "Greenthing", "Sauce", "Savory Pie", "Soup")
 val subCatMeats = listOf("Beef", "Fish", "Other", "Plant Meat", "Poultry", "Pork")
-val listCategories = listOf("Pros and Cons", "To Do", "Plain List")
+val listCategories = listOf("Pros and Cons", "To Do", "Plain List", "Category List")
 val measures = mutableListOf("L", "DL", "CL", "ML", "KG", "HG", "G", "MG", "TBSP", "TSP", "SPM", "PIECE(S)", "PINCH", "CUP", "WHOLE", "CLOVE", "CAN")
 
 /******************************************************************************************************************************************************************************/
@@ -70,6 +70,11 @@ lateinit var listTDChecked: MutableList<String>
 lateinit var listNTitle: String
 lateinit var listNList: MutableList<String>
   /*********/
+ /*  Plain  */
+/*************/
+lateinit var listCatTitle: String
+lateinit var listCatList: MutableList<List<String>>
+  /*********/
  /*  Paths  */
 /*************/
 const val defaultPath: String = "C://FOE/"
@@ -99,7 +104,7 @@ object Images {
     const val button = "button.png"
 }
 
-object Icon {
+object Icons {
     // Icons
     const val delete = "button_delete.png"
     const val search = "button_search.png"
@@ -179,6 +184,7 @@ fun createDirs() {
             listCategories[0] -> dir.makeListDir(lists)
             listCategories[1] -> dir.makeListDir(lists)
             listCategories[2] -> dir.makeListDir(lists)
+            listCategories[3] -> dir.makeListDir(lists)
         }
     }
     dir.makeDir(recipeFavPath)

@@ -1,7 +1,7 @@
 package com.github.atheera.recipemanager.gui.panels.other
 
 import com.github.atheera.recipemanager.*
-import com.github.atheera.recipemanager.Icon.delete
+import com.github.atheera.recipemanager.Icons.delete
 import com.github.atheera.recipemanager.save.read.ReadSettings
 import net.miginfocom.swing.MigLayout
 import java.awt.Color

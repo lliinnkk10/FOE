@@ -112,7 +112,7 @@ class NewPCListPanel : CJPanel(MigLayout("align center")), KeyListener {
     fun darkmode() {
         ReadSettings(settingsPath)
 
-        border = createBorder("Here you can make a positive and negative arguments for a subject")
+        this.border = createBorder("Here you can make a positive and negative arguments for a subject")
 
         darkMode(this)
         darkModeOut(htaPane)

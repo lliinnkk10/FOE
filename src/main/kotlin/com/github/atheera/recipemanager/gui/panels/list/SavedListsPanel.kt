@@ -62,7 +62,7 @@ class SavedListsPanel : JPanel() {
 
     fun darkmode() {
         ReadSettings(settingsPath)
-        border = createBorder("Select which list type to load buttons for")
+        this.border = createBorder("Select which list type to load buttons for")
 
         darkMode(this)
         darkModeOut(jpContent)

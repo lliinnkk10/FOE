@@ -7,6 +7,7 @@ import com.github.atheera.recipemanager.gui.States.CALCULATORSTATE
 import com.github.atheera.recipemanager.gui.States.CONVERSIONSTATE
 import com.github.atheera.recipemanager.gui.States.FAVORITERECIPESTATE
 import com.github.atheera.recipemanager.gui.States.MENUSTATE
+import com.github.atheera.recipemanager.gui.States.NEWCATEGORYLISTSTATE
 import com.github.atheera.recipemanager.gui.States.NEWNORMALLISTSTATE
 import com.github.atheera.recipemanager.gui.States.NEWPCLISTSTATE
 import com.github.atheera.recipemanager.gui.States.NEWRECIPESTATE
@@ -18,10 +19,7 @@ import com.github.atheera.recipemanager.gui.States.SAVEDLISTSTATE
 import com.github.atheera.recipemanager.gui.States.SAVEDMEATRECIPESTATE
 import com.github.atheera.recipemanager.gui.States.SAVEDRECIPESTATE
 import com.github.atheera.recipemanager.gui.panels.MenuPanel
-import com.github.atheera.recipemanager.gui.panels.list.NewNormalListPanel
-import com.github.atheera.recipemanager.gui.panels.list.NewPCListPanel
-import com.github.atheera.recipemanager.gui.panels.list.NewTodoListPanel
-import com.github.atheera.recipemanager.gui.panels.list.SavedListsPanel
+import com.github.atheera.recipemanager.gui.panels.list.*
 import com.github.atheera.recipemanager.gui.panels.other.CalculatorPanel
 import com.github.atheera.recipemanager.gui.panels.other.ConversionTablePanel
 import com.github.atheera.recipemanager.gui.panels.other.NewMeasurePanel
@@ -37,24 +35,25 @@ import javax.swing.*
 private lateinit var mainPane: JPanel
 private lateinit var MenuPane: MenuPanel
     // Recipes
-private lateinit var NewRecPane: NewRecipePanel
-private lateinit var SavRecPane: SavedRecipePanel
-private lateinit var SavDesRecPan: SavedDessertRecipePanel
-private lateinit var SavExtRecPan: SavedExtraRecipePanel
-private lateinit var SavMeaRecPan: SavedMeatRecipePanel
-private lateinit var FavRecPane: FavoriteRecipePanel
-private lateinit var RanRecPan: RandomRecipePanel
+private lateinit var jpNewRecipe: NewRecipePanel
+private lateinit var jpSavedRecipe: SavedRecipePanel
+private lateinit var jpSavedDessert: SavedDessertRecipePanel
+private lateinit var jpSavedExtra: SavedExtraRecipePanel
+private lateinit var jpSavedMeat: SavedMeatRecipePanel
+private lateinit var jpFavoriteRecipe: FavoriteRecipePanel
+private lateinit var jpRandomRecipe: RandomRecipePanel
     // Lists
-private lateinit var NewProConListPane: NewPCListPanel
-private lateinit var NewToDoListPane: NewTodoListPanel
-private lateinit var SavListPane: SavedListsPanel
-private lateinit var NewNorListPane: NewNormalListPanel
+private lateinit var jpProConList: NewPCListPanel
+private lateinit var jpTodoList: NewTodoListPanel
+private lateinit var jpPlainList: NewNormalListPanel
+private lateinit var jpCategoryList: NewCategoryListPanel
+private lateinit var jpSavedLists: SavedListsPanel
     // Extras
-private lateinit var CalcPane: CalculatorPanel
-private lateinit var MeasPane: NewMeasurePanel
-private lateinit var ConvPane: ConversionTablePanel
+private lateinit var jpCalculator: CalculatorPanel
+private lateinit var jpMeasurement: NewMeasurePanel
+private lateinit var jpConversion: ConversionTablePanel
     // Layout
-private lateinit var cl: CardLayout
+private lateinit var clMain: CardLayout
 
 // Menu
 private lateinit var jmSettings: JMenu
@@ -70,6 +69,7 @@ private lateinit var jmiPosNegList: JMenuItem
 private lateinit var jmiToDoList: JMenuItem
 private lateinit var jmiNorList: JMenuItem
 private lateinit var jmiSavList: JMenuItem
+private lateinit var jmiCatList: JMenuItem
         // Settings
 private lateinit var jmiSettings: JMenuItem
 private lateinit var jmiDark: JCheckBoxMenuItem
@@ -107,6 +107,7 @@ object States {
     const val RANDOMRECIPESTATE = 12
     const val ADDMEASURESTATE = 13
     const val CONVERSIONSTATE = 14
+    const val NEWCATEGORYLISTSTATE = 15
 }
 var currentState = States.MENUSTATE
 private val panels = listOf(
@@ -124,7 +125,8 @@ private val panels = listOf(
     "Calculator",
     "Random Recipe",
     "Add Measurement",
-    "Conversion Table"
+    "Conversion Table",
+    "Category List"
 )
 
 // Misc
@@ -137,26 +139,27 @@ class WindowDisplay : JFrame() {
 
         // Initialize
             // Panels
-        cl = CardLayout()
-        mainPane = JPanel(cl)
+        clMain = CardLayout()
+        mainPane = JPanel(clMain)
         MenuPane = MenuPanel()
 
-        NewRecPane = NewRecipePanel(true)
-        SavRecPane = SavedRecipePanel()
-        SavDesRecPan = SavedDessertRecipePanel()
-        SavExtRecPan = SavedExtraRecipePanel()
-        SavMeaRecPan = SavedMeatRecipePanel()
-        FavRecPane = FavoriteRecipePanel()
-        NewNorListPane = NewNormalListPanel()
-        RanRecPan = RandomRecipePanel()
+        jpNewRecipe = NewRecipePanel(true)
+        jpSavedRecipe = SavedRecipePanel()
+        jpSavedDessert = SavedDessertRecipePanel()
+        jpSavedExtra = SavedExtraRecipePanel()
+        jpSavedMeat = SavedMeatRecipePanel()
+        jpFavoriteRecipe = FavoriteRecipePanel()
+        jpRandomRecipe = RandomRecipePanel()
 
-        NewProConListPane = NewPCListPanel()
-        NewToDoListPane = NewTodoListPanel()
-        SavListPane = SavedListsPanel()
+        jpPlainList = NewNormalListPanel()
+        jpProConList = NewPCListPanel()
+        jpTodoList = NewTodoListPanel()
+        jpSavedLists = SavedListsPanel()
+        jpCategoryList = NewCategoryListPanel()
 
-        CalcPane = CalculatorPanel()
-        MeasPane = NewMeasurePanel()
-        ConvPane = ConversionTablePanel()
+        jpCalculator = CalculatorPanel()
+        jpMeasurement = NewMeasurePanel()
+        jpConversion = ConversionTablePanel()
 
         // Set data
         buildMenu()
@@ -164,20 +167,21 @@ class WindowDisplay : JFrame() {
         // Add to screen
             // Panels to main panel
         mainPane.add(MenuPane, panels[0])
-        mainPane.add(NewRecPane, panels[1])
-        mainPane.add(SavRecPane, panels[2])
-        mainPane.add(FavRecPane, panels[3])
-        mainPane.add(NewProConListPane, panels[4])
-        mainPane.add(NewToDoListPane, panels[5])
-        mainPane.add(SavListPane, panels[6])
-        mainPane.add(SavDesRecPan, panels[7])
-        mainPane.add(SavExtRecPan, panels[8])
-        mainPane.add(SavMeaRecPan, panels[9])
-        mainPane.add(NewNorListPane, panels[10])
-        mainPane.add(CalcPane, panels[11])
-        mainPane.add(RanRecPan, panels[12])
-        mainPane.add(MeasPane, panels[13])
-        mainPane.add(ConvPane, panels[14])
+        mainPane.add(jpNewRecipe, panels[1])
+        mainPane.add(jpSavedRecipe, panels[2])
+        mainPane.add(jpFavoriteRecipe, panels[3])
+        mainPane.add(jpProConList, panels[4])
+        mainPane.add(jpTodoList, panels[5])
+        mainPane.add(jpSavedLists, panels[6])
+        mainPane.add(jpSavedDessert, panels[7])
+        mainPane.add(jpSavedExtra, panels[8])
+        mainPane.add(jpSavedMeat, panels[9])
+        mainPane.add(jpPlainList, panels[10])
+        mainPane.add(jpCalculator, panels[11])
+        mainPane.add(jpRandomRecipe, panels[12])
+        mainPane.add(jpMeasurement, panels[13])
+        mainPane.add(jpConversion, panels[14])
+        mainPane.add(jpCategoryList, panels[15])
         add(mainPane, BorderLayout.CENTER)
             // Menu buttons to menu panel
         jmb.add(jmSettings)
@@ -197,10 +201,10 @@ class WindowDisplay : JFrame() {
 
     fun getCurrentState(state: Int) : CJPanel {
         return when (state) {
-            NEWPCLISTSTATE -> NewProConListPane
-            NEWTODOLISTSTATE -> NewToDoListPane
-            NEWNORMALLISTSTATE -> NewNorListPane
-            else -> NewProConListPane
+            NEWPCLISTSTATE -> jpProConList
+            NEWTODOLISTSTATE -> jpTodoList
+            NEWNORMALLISTSTATE -> jpPlainList
+            else -> jpProConList
         }
     }
 
@@ -221,6 +225,7 @@ class WindowDisplay : JFrame() {
             RANDOMRECIPESTATE -> RANDOMRECIPESTATE
             ADDMEASURESTATE -> ADDMEASURESTATE
             CONVERSIONSTATE -> CONVERSIONSTATE
+            NEWCATEGORYLISTSTATE -> NEWCATEGORYLISTSTATE
             else -> MENUSTATE
         }
     }
@@ -240,20 +245,21 @@ class WindowDisplay : JFrame() {
     private fun switchPanels(state: Int) {
         when (state) {
             MENUSTATE -> { setPanelInfo(MenuPane, state) }
-            NEWRECIPESTATE -> { setPanelInfo(NewRecPane, state); NewRecPane.darkmode() }
-            SAVEDRECIPESTATE -> { setPanelInfo(SavRecPane, state) }
-            FAVORITERECIPESTATE -> { setPanelInfo(FavRecPane, state); FavRecPane.darkmode() }
-            NEWPCLISTSTATE -> { setPanelInfo(NewProConListPane, state); NewProConListPane.darkmode() }
-            NEWTODOLISTSTATE -> { setPanelInfo(NewToDoListPane, state); NewToDoListPane.darkmode() }
-            SAVEDLISTSTATE -> { setPanelInfo(SavListPane, state); SavListPane.darkmode() }
-            SAVEDDESSERTRECIPESTATE -> { setPanelInfo(SavDesRecPan, state); SavDesRecPan.darkmode() }
-            SAVEDEXTRARECIPESTATE -> { setPanelInfo(SavExtRecPan, state); SavExtRecPan.darkmode() }
-            SAVEDMEATRECIPESTATE -> { setPanelInfo(SavMeaRecPan, state); SavMeaRecPan.darkmode() }
-            NEWNORMALLISTSTATE -> { setPanelInfo(NewNorListPane, state); NewNorListPane.darkmode() }
-            CALCULATORSTATE -> { setPanelInfo(CalcPane, state); CalcPane.darkmode() }
-            RANDOMRECIPESTATE -> { setPanelInfo(RanRecPan, state); RanRecPan.darkmode() }
-            ADDMEASURESTATE -> { setPanelInfo(MeasPane, state); MeasPane.darkmode() }
-            CONVERSIONSTATE -> { setPanelInfo(ConvPane, state); ConvPane.darkmode() }
+            NEWRECIPESTATE -> { setPanelInfo(jpNewRecipe, state); jpNewRecipe.darkmode() }
+            SAVEDRECIPESTATE -> { setPanelInfo(jpSavedRecipe, state) }
+            FAVORITERECIPESTATE -> { setPanelInfo(jpFavoriteRecipe, state); jpFavoriteRecipe.darkmode() }
+            NEWPCLISTSTATE -> { setPanelInfo(jpProConList, state); jpProConList.darkmode() }
+            NEWTODOLISTSTATE -> { setPanelInfo(jpTodoList, state); jpTodoList.darkmode() }
+            SAVEDLISTSTATE -> { setPanelInfo(jpSavedLists, state); jpSavedLists.darkmode() }
+            SAVEDDESSERTRECIPESTATE -> { setPanelInfo(jpSavedDessert, state); jpSavedDessert.darkmode() }
+            SAVEDEXTRARECIPESTATE -> { setPanelInfo(jpSavedExtra, state); jpSavedExtra.darkmode() }
+            SAVEDMEATRECIPESTATE -> { setPanelInfo(jpSavedMeat, state); jpSavedMeat.darkmode() }
+            NEWNORMALLISTSTATE -> { setPanelInfo(jpPlainList, state); jpPlainList.darkmode() }
+            CALCULATORSTATE -> { setPanelInfo(jpCalculator, state); jpCalculator.darkmode() }
+            RANDOMRECIPESTATE -> { setPanelInfo(jpRandomRecipe, state); jpRandomRecipe.darkmode() }
+            ADDMEASURESTATE -> { setPanelInfo(jpMeasurement, state); jpMeasurement.darkmode() }
+            CONVERSIONSTATE -> { setPanelInfo(jpConversion, state); jpConversion.darkmode() }
+            NEWCATEGORYLISTSTATE -> { setPanelInfo(jpCategoryList, state); jpCategoryList.darkmode() }
         }
     }
 
@@ -270,10 +276,11 @@ class WindowDisplay : JFrame() {
         // Menu items
             // Lists
         jmSubList = JMenu("Create new list"); jmLists.add(jmSubList)
-        jmiToDoList = JMenuItem("Todo"); jmSubList.add(jmiToDoList); jmiToDoList.addActionListener{ switchPanels(NEWTODOLISTSTATE) }
-        jmiPosNegList = JMenuItem("Pros/cons"); jmSubList.add(jmiPosNegList); jmiPosNegList.addActionListener { switchPanels(NEWPCLISTSTATE) }
+        jmiToDoList = JMenuItem("Todo list"); jmSubList.add(jmiToDoList); jmiToDoList.addActionListener{ switchPanels(NEWTODOLISTSTATE) }
+        jmiPosNegList = JMenuItem("Pros/cons list"); jmSubList.add(jmiPosNegList); jmiPosNegList.addActionListener { switchPanels(NEWPCLISTSTATE) }
         jmiNorList = JMenuItem("New plain list"); jmSubList.add(jmiNorList); jmiNorList.addActionListener{ switchPanels(NEWNORMALLISTSTATE) }
-        jmiSavList = JMenuItem("View all lists"); jmLists.add(jmiSavList); jmiSavList.addActionListener{ switchPanels(SAVEDLISTSTATE); SavListPane.loadLists() }
+        jmiCatList = JMenuItem("Category list"); jmSubList.add(jmiCatList); jmiCatList.addActionListener { switchPanels(NEWCATEGORYLISTSTATE) }
+        jmiSavList = JMenuItem("View all lists"); jmLists.add(jmiSavList); jmiSavList.addActionListener{ switchPanels(SAVEDLISTSTATE); jpSavedLists.loadLists() }
             // Settings
         jmiSettings = JMenuItem("Change save location"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ val csd = ChangeSaveDirectory(); csd.setLocationRelativeTo(this) }
         jmiSettings = JMenuItem("Go back to main menu"); jmSettings.add(jmiSettings); jmiSettings.addActionListener{ switchPanels(MENUSTATE) }
@@ -282,10 +289,10 @@ class WindowDisplay : JFrame() {
             // Recipes
         jmiNewRec = JMenuItem("Create new recipe"); jmRecipes.add(jmiNewRec); jmiNewRec.addActionListener{ switchPanels(NEWRECIPESTATE) }
         jmiSavRec = JMenu("View all saved recipes"); jmRecipes.add(jmiSavRec)
-        jmiDesRec = JMenuItem("Desserts"); jmiSavRec.add(jmiDesRec); jmiDesRec.addActionListener{ switchPanels(SAVEDDESSERTRECIPESTATE); SavDesRecPan.loadRecipes() }
-        jmiExtraRec = JMenuItem("Extras"); jmiSavRec.add(jmiExtraRec); jmiExtraRec.addActionListener{ switchPanels(SAVEDEXTRARECIPESTATE); SavExtRecPan.loadRecipes() }
-        jmiMeatRec = JMenuItem("Meats"); jmiSavRec.add(jmiMeatRec); jmiMeatRec.addActionListener{ switchPanels(SAVEDMEATRECIPESTATE); SavMeaRecPan.loadRecipes() }
-        jmiFavRec = JMenuItem("View all favorite recipes"); jmRecipes.add(jmiFavRec); jmiFavRec.addActionListener{ switchPanels(FAVORITERECIPESTATE); FavRecPane.loadRecipes(false) }
+        jmiDesRec = JMenuItem("Desserts"); jmiSavRec.add(jmiDesRec); jmiDesRec.addActionListener{ switchPanels(SAVEDDESSERTRECIPESTATE); jpSavedDessert.loadRecipes() }
+        jmiExtraRec = JMenuItem("Extras"); jmiSavRec.add(jmiExtraRec); jmiExtraRec.addActionListener{ switchPanels(SAVEDEXTRARECIPESTATE); jpSavedExtra.loadRecipes() }
+        jmiMeatRec = JMenuItem("Meats"); jmiSavRec.add(jmiMeatRec); jmiMeatRec.addActionListener{ switchPanels(SAVEDMEATRECIPESTATE); jpSavedMeat.loadRecipes() }
+        jmiFavRec = JMenuItem("View all favorite recipes"); jmRecipes.add(jmiFavRec); jmiFavRec.addActionListener{ switchPanels(FAVORITERECIPESTATE); jpFavoriteRecipe.loadRecipes(false) }
         jmiRanRec = JMenuItem("Get random saved recipe"); jmRecipes.add(jmiRanRec); jmiRanRec.addActionListener { switchPanels(RANDOMRECIPESTATE);  }
             // Extras
         jmiCalc = JMenuItem("Calculator"); jmExtras.add(jmiCalc); jmiCalc.addActionListener { switchPanels(CALCULATORSTATE) }
@@ -313,6 +320,7 @@ class WindowDisplay : JFrame() {
             RANDOMRECIPESTATE -> "Get Random Recipe"
             ADDMEASURESTATE -> "Add Measurement"
             CONVERSIONSTATE -> "Measurement Conversion Table"
+            NEWCATEGORYLISTSTATE -> "Categorised List"
             else -> TITLE
         }
     }
@@ -335,27 +343,29 @@ class WindowDisplay : JFrame() {
             RANDOMRECIPESTATE -> Dimension(1030, 410)
             ADDMEASURESTATE -> Dimension(435, 260)
             CONVERSIONSTATE -> Dimension(500, 500)
+            NEWCATEGORYLISTSTATE -> Dimension(509, 842)
             else -> Dimension(693, 645)
         }
     }
 
     private fun showPanel(panel: JPanel, state: Int) {
         MenuPane.isVisible = false
-        NewRecPane.isVisible = false
-        SavRecPane.isVisible = false
-        FavRecPane.isVisible = false
-        NewProConListPane.isVisible = false
-        SavListPane.isVisible = false
-        NewToDoListPane.isVisible = false
-        SavDesRecPan.isVisible = false
-        SavExtRecPan.isVisible = false
-        SavMeaRecPan.isVisible = false
-        NewNorListPane.isVisible = false
-        CalcPane.isVisible = false
-        RanRecPan.isVisible = false
-        MeasPane.isVisible = false
-        ConvPane.isVisible = false
-        cl.show(mainPane, panels[state])
+        jpNewRecipe.isVisible = false
+        jpSavedRecipe.isVisible = false
+        jpFavoriteRecipe.isVisible = false
+        jpProConList.isVisible = false
+        jpSavedLists.isVisible = false
+        jpTodoList.isVisible = false
+        jpSavedDessert.isVisible = false
+        jpSavedExtra.isVisible = false
+        jpSavedMeat.isVisible = false
+        jpPlainList.isVisible = false
+        jpCalculator.isVisible = false
+        jpRandomRecipe.isVisible = false
+        jpMeasurement.isVisible = false
+        jpConversion.isVisible = false
+        jpCategoryList.isVisible = false
+        clMain.show(mainPane, panels[state])
         darkMode(panel)
         panel.isVisible = true
         pack()

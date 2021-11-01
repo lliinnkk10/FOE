@@ -23,15 +23,15 @@ class HintTextField(private var hint: String) : JTextField() {
             override fun focusGained(e: FocusEvent) {
                 focus = true
 
-                //text = if (text == hint) "" else text
-                //font = gainFont
+                text = if (text == hint) "" else text
+                font = gainFont
             }
 
             override fun focusLost(e: FocusEvent) {
 
                 focus = false
 
-                /*if (text == hint || text.isEmpty()) {
+                if (text == hint || text.isEmpty()) {
                     text = hint
                     font = lostFont
                     foreground = Color.GRAY
@@ -39,40 +39,10 @@ class HintTextField(private var hint: String) : JTextField() {
                     text = text
                     font = gainFont
                     foreground = Color.BLACK
-                }*/
+                }
             }
         })
     }
 
-    override fun paintComponent(g: Graphics) {
-        super.paintComponent(g)
-
-        if(focus) {
-            font = gainFont
-            foreground = Color.BLACK
-        } else {
-            font = lostFont
-            foreground = Color.BLACK
-            g.drawString(hint, this.x, this.y)
-        }
-
-
-        if(focus) {
-            text = if(text == hint) "" else text
-            font = gainFont
-        } else {
-            if(text == hint || text.isEmpty()) {
-                text = hint
-                font = lostFont
-                foreground = Color.GRAY
-            } else {
-                text = text
-                font = gainFont
-                foreground = Color.BLACK
-            }
-        }
-
-
-    }
 
 }

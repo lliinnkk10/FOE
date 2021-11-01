@@ -3,6 +3,7 @@ package com.github.atheera.recipemanager.gui.panels.list
 import com.github.atheera.recipemanager.*
 import com.github.atheera.recipemanager.extras.CJPanel
 import com.github.atheera.recipemanager.extras.HintTextField
+import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteListTD
 import net.miginfocom.swing.MigLayout
 import java.awt.Dimension
@@ -85,7 +86,9 @@ class NewTodoListPanel : CJPanel(MigLayout("align center")) {
     }
 
     fun darkmode(){
-        border = createBorder("Here you can make a list of things to do")
+        ReadSettings()
+
+        this.border = createBorder("Here you can make a list of things to do")
 
         darkMode(this)
         darkModeOut(jpOuter)

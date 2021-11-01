@@ -1,7 +1,7 @@
 package com.github.atheera.recipemanager.gui.panels.recipe
 
 import com.github.atheera.recipemanager.*
-import com.github.atheera.recipemanager.Icon.copy
+import com.github.atheera.recipemanager.Icons.copy
 import com.github.atheera.recipemanager.extras.*
 import com.github.atheera.recipemanager.gui.exc
 import com.github.atheera.recipemanager.save.read.ReadSettings

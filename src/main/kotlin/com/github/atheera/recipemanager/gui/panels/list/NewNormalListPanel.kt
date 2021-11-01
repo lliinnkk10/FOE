@@ -8,6 +8,7 @@ import com.github.atheera.recipemanager.extras.ToolTipLabel
 import com.github.atheera.recipemanager.gui.info
 import com.github.atheera.recipemanager.listCategories
 import com.github.atheera.recipemanager.listPath
+import com.github.atheera.recipemanager.save.read.ReadSettings
 import com.github.atheera.recipemanager.save.write.WriteNormalList
 import com.github.atheera.recipemanager.upperCaseFirstWords
 import net.miginfocom.swing.MigLayout
@@ -20,7 +21,7 @@ class NewNormalListPanel : CJPanel(MigLayout()) {
 
     companion object Text {
         const val TITLEHINT = "Enter the list title here"
-        const val ITEMHINT = "Name the item for the list here"
+        const val ITEMHINT = "Name an item for the list here"
     }
 
     var htfTitle = HintTextField(TITLEHINT)
@@ -77,7 +78,9 @@ class NewNormalListPanel : CJPanel(MigLayout()) {
     }
 
     fun darkmode() {
-        border = createBorder("This is just a plain list")
+        ReadSettings()
+
+        this.border = createBorder("This is just a plain list")
 
         darkMode(this)
         darkModeOut(jpListOut)

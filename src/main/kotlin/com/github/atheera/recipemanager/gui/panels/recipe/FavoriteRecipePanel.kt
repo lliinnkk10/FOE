@@ -1,7 +1,7 @@
 package com.github.atheera.recipemanager.gui.panels.recipe
 
 import com.github.atheera.recipemanager.*
-import com.github.atheera.recipemanager.Icon.delete
+import com.github.atheera.recipemanager.Icons.delete
 import com.github.atheera.recipemanager.Images.buttonPress
 import com.github.atheera.recipemanager.extras.ButtonRecipeCard
 import com.github.atheera.recipemanager.extras.HintTextField
